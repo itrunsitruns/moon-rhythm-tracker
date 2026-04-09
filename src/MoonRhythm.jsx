@@ -601,7 +601,7 @@ export default function MoonRhythm() {
       {/* Header */}
       <div style={{ padding: "20px 16px 8px", borderBottom: "1px solid #1a1a2e", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
         <div>
-          <h1 style={{ margin: 0, fontSize: 20, letterSpacing: 2, color: todayCfg.color, fontFamily: "serif" }}>🌙 {t("appTitle")}</h1>
+          <h1 style={{ margin: 0, fontSize: 20, letterSpacing: 2, color: todayCfg.color, fontFamily: "serif" }}>🌙 Moonyou 你的月亮</h1>
           <div style={{ fontSize: 11, color: "#666", fontFamily: "monospace", marginTop: 2 }}>
             {cycleDay ? t("cycleDay", { n: cycleDay }) : "—"} · {todayPhaseLabel} · {todayMoon.emoji} {todayMoon.name}
           </div>
