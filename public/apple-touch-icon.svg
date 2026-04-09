@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <rect width="180" height="180" rx="36" fill="#0A0A0F"/>
+  <circle cx="90" cy="80" r="44" fill="#D4A017" opacity="0.9"/>
+  <circle cx="108" cy="72" r="36" fill="#0A0A0F"/>
+  <text x="90" y="158" text-anchor="middle" font-size="22" font-family="serif" fill="#888">月亮節奏</text>
+</svg>
