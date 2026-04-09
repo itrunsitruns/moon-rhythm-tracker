@@ -44,7 +44,7 @@ function getFastingAdvice(cycleDay, cycleLen, t) {
 function addDays(date, n) { const d = new Date(date); d.setDate(d.getDate() + n); return d; }
 function daysBetween(a, b) { return Math.round((b - a) / 86400000); }
 function fmt(d) { return `${d.getMonth() + 1}/${d.getDate()}`; }
-function isoDate(d) { return d.toISOString().split("T")[0]; }
+function isoDate(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 function parseLocal(s) { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); }
 
 function getPhase(date, periodStart, cycleLen) {
@@ -467,6 +467,49 @@ function DateDetail({ dateKey, periodStart, cycleLen, logs, onSaveLog, onDeleteL
 }
 
 // ══════════════════════════════════
+// ── Guide view ──
+// ══════════════════════════════════
+function GuideView() {
+  const { t } = useLang();
+  const sectionStyle = { background: "#111118", borderRadius: 12, padding: 16, marginBottom: 12 };
+  const headStyle = { fontSize: 15, color: "#D4A017", marginBottom: 10, fontFamily: "serif" };
+  const paraStyle = { fontSize: 12, color: "#aaa", lineHeight: 1.7, fontFamily: "monospace", marginBottom: 8 };
+  const phaseRow = (color, text) => (
+    <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+      <div style={{ width: 4, borderRadius: 2, background: color, flexShrink: 0 }} />
+      <div style={paraStyle}>{text}</div>
+    </div>
+  );
+
+  return (
+    <div>
+      {/* How to use */}
+      <div style={sectionStyle}>
+        <div style={headStyle}>📖 {t("guide.howToUse")}</div>
+        {["guide.step1", "guide.step2", "guide.step3", "guide.step4"].map(k => (
+          <div key={k} style={paraStyle}>{t(k)}</div>
+        ))}
+      </div>
+
+      {/* Cycle phases */}
+      <div style={sectionStyle}>
+        <div style={headStyle}>🔄 {t("guidePhaseTitle")}</div>
+        {phaseRow("#8B1A1A", t("guide.menstrual"))}
+        {phaseRow("#D4A017", t("guide.follicular"))}
+        {phaseRow("#FF6B6B", t("guide.ovulation"))}
+        {phaseRow("#7B68AE", t("guide.luteal"))}
+      </div>
+
+      {/* Moon & cycle */}
+      <div style={sectionStyle}>
+        <div style={headStyle}>🌙 {t("guideMoonTitle")}</div>
+        <div style={paraStyle}>{t("guide.moonInfo")}</div>
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════
 // ── Main App ──
 // ══════════════════════════════════
 export default function MoonRhythm() {
@@ -665,6 +708,9 @@ export default function MoonRhythm() {
           </div>
         )}
 
+        {/* ─── GUIDE ─── */}
+        {view === "guide" && <GuideView />}
+
         {/* ─── SETTINGS ─── */}
         {view === "settings" && (
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -723,6 +769,7 @@ export default function MoonRhythm() {
       <div style={{ position: "sticky", bottom: 0, display: "flex", background: "#0A0A0F", borderTop: "1px solid #1a1a2e" }}>
         {navBtn(`🌙 ${t("dashboard")}`, "dashboard")}
         {navBtn(`📅 ${t("calendar")}`, "calendar")}
+        {navBtn(`📖 ${t("guide")}`, "guide")}
         {navBtn(`⚙️ ${t("settings")}`, "settings")}
       </div>
     </div>

@@ -9,8 +9,8 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["icon-192.svg", "icon-512.svg", "apple-touch-icon.svg"],
       manifest: {
-        name: "月亮節奏 Moon Rhythm",
-        short_name: "月亮節奏",
+        name: "Moonyou — Moon Rhythm Tracker",
+        short_name: "Moonyou",
         description: "Menstrual cycle + fasting + fertility tracker with real lunar phases",
         theme_color: "#0A0A0F",
         background_color: "#0A0A0F",

@@ -2,10 +2,11 @@ import { createContext, useContext, useState, useCallback } from "react";
 
 const translations = {
   // ── App chrome ──
-  appTitle: { zh: "月亮節奏", en: "Moon Rhythm" },
+  appTitle: { zh: "Moonyou", en: "Moonyou" },
   dashboard: { zh: "儀表板", en: "Dashboard" },
   calendar: { zh: "日曆", en: "Calendar" },
   settings: { zh: "設定", en: "Settings" },
+  guide: { zh: "指南", en: "Guide" },
 
   // ── Header ──
   cycleDay: { zh: "週期第 {n} 天", en: "Cycle day {n}" },
@@ -158,6 +159,49 @@ const translations = {
   "event.fertile": { zh: "⚠️ 明天進入危險期", en: "⚠️ Fertile window starts tomorrow" },
   "event.fasting": { zh: "🔥 72h 斷食窗口", en: "🔥 72h fasting window opens" },
   "event.period": { zh: "🌑 月經快來了", en: "🌑 Period expected in 2 days" },
+
+  // ── Guide tab ──
+  guideTitle: { zh: "使用指南", en: "User Guide" },
+  guidePhaseTitle: { zh: "週期階段說明", en: "Cycle Phases" },
+  guideFastingTitle: { zh: "斷食建議", en: "Fasting Advice" },
+  guideMoonTitle: { zh: "月相與週期", en: "Moon & Cycle" },
+  "guide.menstrual": {
+    zh: "月經期（第1–5天）：身體正在排出子宮內膜，適合輕斷食12–14h，注意補鐵補血。",
+    en: "Menstrual (Day 1–5): Body sheds uterine lining. Light fasting 12–14h recommended. Focus on iron intake.",
+  },
+  "guide.follicular": {
+    zh: "濾泡期（第6–10天）：雌激素上升、代謝旺盛，是斷食黃金窗口，可挑戰72h長斷食。",
+    en: "Follicular (Day 6–10): Estrogen rises, metabolism peaks. Prime fasting window — can attempt 72h fasts.",
+  },
+  "guide.ovulation": {
+    zh: "排卵期（排卵前5天～後1天）：受孕機率最高的危險期。停止長斷食，最多12–14h。",
+    en: "Ovulation (5 days before → 1 day after): Highest fertility window. Stop extended fasts, max 12–14h.",
+  },
+  "guide.luteal": {
+    zh: "黃體期（排卵後～下次月經前）：黃體素上升，容易情緒波動。適合穩定斷食12–14h，補碳水穩情緒。",
+    en: "Luteal (After ovulation → next period): Progesterone rises, mood swings common. Steady 12–14h fasting, add carbs.",
+  },
+  "guide.moonInfo": {
+    zh: "App 顯示真實天文月相。有研究指出月經週期與月亮週期（29.5天）可能存在微妙同步。新月適合內省休息，滿月能量最旺。",
+    en: "The app shows real astronomical moon phases. Some research suggests menstrual cycles may subtly sync with the lunar cycle (29.5 days). New moon suits rest & reflection; full moon brings peak energy.",
+  },
+  "guide.howToUse": { zh: "如何使用", en: "How to Use" },
+  "guide.step1": {
+    zh: "1. 在「設定」頁輸入月經第一天與平均週期長度",
+    en: "1. Go to Settings and enter your period start date & average cycle length",
+  },
+  "guide.step2": {
+    zh: "2. 選擇目標：斷食優化、避孕、或備孕",
+    en: "2. Choose your goal: Fasting, Avoid (contraception), or Conceive",
+  },
+  "guide.step3": {
+    zh: "3. 每日查看儀表板了解當前階段與建議",
+    en: "3. Check the Dashboard daily for your current phase & advice",
+  },
+  "guide.step4": {
+    zh: "4. 在日曆頁記錄斷食時數、基礎體溫與分泌物",
+    en: "4. Use Calendar to log fasting hours, BBT & cervical mucus",
+  },
 };
 
 const LangContext = createContext();
