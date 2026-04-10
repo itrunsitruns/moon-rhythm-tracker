@@ -505,6 +505,11 @@ function GuideView() {
         <div style={headStyle}>🌙 {t("guideMoonTitle")}</div>
         <div style={paraStyle}>{t("guide.moonInfo")}</div>
       </div>
+
+      {/* Medical disclaimer */}
+      <div style={{ fontSize: 10, color: "#555", fontFamily: "monospace", lineHeight: 1.6, textAlign: "center", padding: "0 8px", marginTop: 4 }}>
+        {t("disclaimer")}
+      </div>
     </div>
   );
 }
@@ -762,6 +767,10 @@ export default function MoonRhythm() {
 
             <div style={{ fontSize: 11, color: "#555", fontFamily: "monospace", marginTop: 8, lineHeight: 1.6, whiteSpace: "pre-line" }}>
               {t("settingsNote")}
+            </div>
+
+            <div style={{ fontSize: 10, color: "#555", fontFamily: "monospace", lineHeight: 1.6, textAlign: "center", padding: "0 8px" }}>
+              {t("disclaimer")}
             </div>
           </div>
         )}

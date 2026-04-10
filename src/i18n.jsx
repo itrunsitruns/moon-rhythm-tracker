@@ -202,6 +202,10 @@ const translations = {
     zh: "4. 在日曆頁記錄斷食時數、基礎體溫與分泌物",
     en: "4. Use Calendar to log fasting hours, BBT & cervical mucus",
   },
+  disclaimer: {
+    zh: "本工具僅供個人健康參考，不構成醫療建議。如有健康疑慮，請諮詢專業醫療人員。",
+    en: "This tool is for personal reference only and does not constitute medical advice. Please consult a healthcare professional for any health concerns.",
+  },
 };
 
 const LangContext = createContext();
