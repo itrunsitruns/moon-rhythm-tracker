@@ -116,7 +116,7 @@ const translations = {
   },
 
   // ── Google Calendar ──
-  syncToGCal: { zh: "同步到 Google Calendar", en: "Sync to Google Calendar" },
+  syncToGCal: { zh: "連接 Google Calendar", en: "Connect Google Calendar" },
   syncing: { zh: "同步中…", en: "Syncing…" },
   syncDone: { zh: "✓ 已同步 {n} 個事件", en: "✓ Synced {n} events" },
   syncError: { zh: "同步失敗，請重試", en: "Sync failed, please retry" },
