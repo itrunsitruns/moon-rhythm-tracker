@@ -206,6 +206,135 @@ const translations = {
     zh: "本工具僅供個人健康參考，不構成醫療建議。如有健康疑慮，請諮詢專業醫療人員。",
     en: "This tool is for personal reference only and does not constitute medical advice. Please consult a healthcare professional for any health concerns.",
   },
+
+  // ══════════════════════════════════
+  // ── Moonyou＋ deep cycle guidance (premium) ──
+  // ══════════════════════════════════
+  deepTitle: { zh: "深度週期指南", en: "Deep Cycle Guidance" },
+  deepPreviewBadge: { zh: "預覽", en: "PREVIEW" },
+  deepPremiumNote: {
+    zh: "這是 Moonyou＋ 進階內容。免費版只顯示一句話建議,進階版針對你目前的階段給出完整的飲食、運動、補充與荷爾蒙說明。",
+    en: "This is Moonyou＋ premium content. The free tier shows a one-line tip; the premium tier gives full nutrition, exercise, supplement and hormone guidance tailored to your current phase.",
+  },
+  deepUnlockCta: { zh: "解鎖 Moonyou＋", en: "Unlock Moonyou＋" },
+  previewPlusLabel: { zh: "Moonyou＋ 進階內容(預覽)", en: "Moonyou＋ premium content (preview)" },
+  previewPlusNote: {
+    zh: "開啟後,儀表板會顯示完整的深度週期指南;關閉則只看免費版的一句話建議。用來比較兩者差異。",
+    en: "When on, the dashboard shows full deep cycle guidance; when off, you see only the free one-line tip. Use it to compare the two.",
+  },
+  deepFreeTag: { zh: "免費版", en: "FREE" },
+  deepPlusTag: { zh: "Moonyou＋", en: "Moonyou＋" },
+
+  "deep.label.protocol": { zh: "斷食協議", en: "Fasting protocol" },
+  "deep.label.eat": { zh: "建議吃", en: "Eat" },
+  "deep.label.avoid": { zh: "避免", en: "Avoid" },
+  "deep.label.move": { zh: "運動", en: "Movement" },
+  "deep.label.support": { zh: "補充品", en: "Supplements" },
+  "deep.label.hormone": { zh: "身體訊號", en: "What's happening" },
+
+  // —— Menstrual ——
+  "deep.menstrual.protocol": {
+    zh: "溫和 12–14h,進食窗口放在白天(如 10:00–18:00),晚上讓身體休息。這幾天不要嘗試長斷食。",
+    en: "Gentle 12–14h with a daytime eating window (e.g. 10:00–18:00); rest at night. Avoid extended fasts these days.",
+  },
+  "deep.menstrual.eat": {
+    zh: "富鐵食物(紅肉、肝、菠菜、紅豆)、搭配維生素 C 幫助吸收、溫熱湯品、Omega-3 抗發炎。",
+    en: "Iron-rich foods (red meat, liver, spinach, beans) with vitamin C to aid absorption, warm soups, Omega-3.",
+  },
+  "deep.menstrual.avoid": {
+    zh: "生冷食物、過量咖啡因、酒精、過鹹(容易水腫與經痛加劇)。",
+    en: "Cold/raw foods, excess caffeine, alcohol, high salt (worsens bloating & cramps).",
+  },
+  "deep.menstrual.move": {
+    zh: "散步、輕瑜伽、伸展。避免高強度訓練,身體正需要修復。",
+    en: "Walking, gentle yoga, stretching. Skip high-intensity — your body needs to recover.",
+  },
+  "deep.menstrual.support": {
+    zh: "鐵、鎂(緩解經痛)、維生素 C。",
+    en: "Iron, magnesium (eases cramps), vitamin C.",
+  },
+  "deep.menstrual.hormone": {
+    zh: "雌激素與黃體素都在最低點,子宮內膜正在排出,能量自然偏低——順著它休息。",
+    en: "Estrogen and progesterone are at their lowest as the lining sheds; low energy is normal — lean into rest.",
+  },
+
+  // —— Follicular ——
+  "deep.follicular.protocol": {
+    zh: "斷食黃金期!胰島素敏感度最好,可挑戰 16:8、24h 甚至 72h 長斷食,最容易進入生酮與自噬。",
+    en: "Prime fasting window! Insulin sensitivity peaks — try 16:8, 24h, even 72h fasts; ketosis & autophagy come easily.",
+  },
+  "deep.follicular.eat": {
+    zh: "復食以優質蛋白、發酵食物(幫助雌激素代謝)、十字花科蔬菜、亞麻籽/南瓜籽。",
+    en: "Break fasts with quality protein, fermented foods (support estrogen metabolism), cruciferous veg, flax/pumpkin seeds.",
+  },
+  "deep.follicular.avoid": {
+    zh: "精緻糖與過度加工碳水——別浪費這段高代謝期。",
+    en: "Refined sugar & processed carbs — don't waste this high-metabolism window.",
+  },
+  "deep.follicular.move": {
+    zh: "最適合衝刺:高強度間歇(HIIT)、重訓。身體恢復最快、增肌效率最高。",
+    en: "Go hard: HIIT and strength training. Fastest recovery and best muscle-building of the month.",
+  },
+  "deep.follicular.support": {
+    zh: "益生菌、維生素 B 群、亞麻籽(平衡雌激素)。",
+    en: "Probiotics, B-complex, flaxseed (estrogen balance).",
+  },
+  "deep.follicular.hormone": {
+    zh: "雌激素穩定上升,精力、專注、心情、代謝全在高點——這是你一個月裡的「巔峰週」。",
+    en: "Rising estrogen lifts energy, focus, mood and metabolism — this is your peak week of the month.",
+  },
+
+  // —— Ovulation ——
+  "deep.ovulation.protocol": {
+    zh: "停止長斷食,回到溫和 12–14h。這是受孕窗口,身體需要能量,不該處於極端壓力。",
+    en: "Stop extended fasts; return to gentle 12–14h. This is the fertile window — your body needs energy, not extra stress.",
+  },
+  "deep.ovulation.eat": {
+    zh: "抗氧化蔬果(莓果、深色蔬菜)、足夠纖維幫助代謝多餘雌激素、充足蛋白。",
+    en: "Antioxidant produce (berries, dark veg), plenty of fiber to clear excess estrogen, adequate protein.",
+  },
+  "deep.ovulation.avoid": {
+    zh: "極端熱量限制與長斷食——這幾天對壓力最敏感。",
+    en: "Extreme calorie restriction and long fasts — your body is most stress-sensitive now.",
+  },
+  "deep.ovulation.move": {
+    zh: "可做中高強度,但開始往下調。外向期適合團體或社交型運動。",
+    en: "Moderate-to-high intensity is fine but start tapering. Great time for group or social workouts.",
+  },
+  "deep.ovulation.support": {
+    zh: "抗氧化劑、鋅、纖維。",
+    en: "Antioxidants, zinc, fiber.",
+  },
+  "deep.ovulation.hormone": {
+    zh: "雌激素達頂峰後排卵,睪固酮短暫上升,精力與性慾高——但身體正全力排卵,別逼它斷食。",
+    en: "Estrogen peaks then ovulation fires; a testosterone bump lifts drive — but your body is working hard, so ease off fasting.",
+  },
+
+  // —— Luteal ——
+  "deep.luteal.protocol": {
+    zh: "穩定 12–14h,不要長斷食(會放大壓力與嘴饞)。經前一週尤其溫和,以穩定血糖為主。",
+    en: "Steady 12–14h, no long fasts (they amplify stress & cravings). Especially gentle the week before your period — prioritize stable blood sugar.",
+  },
+  "deep.luteal.eat": {
+    zh: "複合碳水(地瓜、糙米、南瓜)穩血糖與情緒、鎂(黑巧克力、堅果)、色胺酸(火雞、香蕉)助眠。",
+    en: "Complex carbs (sweet potato, brown rice, squash) for mood & blood sugar, magnesium (dark chocolate, nuts), tryptophan (turkey, banana) for sleep.",
+  },
+  "deep.luteal.avoid": {
+    zh: "重鹹、咖啡因、酒精、精緻糖——都會放大 PMS 與水腫。",
+    en: "High salt, caffeine, alcohol, refined sugar — all magnify PMS & bloating.",
+  },
+  "deep.luteal.move": {
+    zh: "低強度為主:瑜伽、皮拉提斯、散步,重訓減量。",
+    en: "Keep it low-intensity: yoga, Pilates, walking; scale back heavy lifting.",
+  },
+  "deep.luteal.support": {
+    zh: "鎂、維生素 B6(緩解 PMS)、鈣。",
+    en: "Magnesium, vitamin B6 (eases PMS), calcium.",
+  },
+  "deep.luteal.hormone": {
+    zh: "黃體素上升主導,基礎體溫升高,胰島素敏感度下降——疲倦、嘴饞、情緒波動都正常,溫柔對待自己。",
+    en: "Progesterone takes over, BBT rises, insulin sensitivity dips — fatigue, cravings and mood swings are normal; be gentle with yourself.",
+  },
 };
 
 const LangContext = createContext();

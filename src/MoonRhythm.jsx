@@ -256,6 +256,83 @@ function FastingStats({ logs, periodStart, cycleLen }) {
 }
 
 // ══════════════════════════════════
+// ── Moonyou＋ Deep Guidance (premium) ──
+// ══════════════════════════════════
+function deepKey(phase) {
+  if (phase === "menstrual") return "menstrual";
+  if (phase === "follicular_gold" || phase === "follicular_late") return "follicular";
+  if (phase === "ovulation") return "ovulation";
+  return "luteal"; // luteal + safe
+}
+
+function DeepGuidance({ phase, preview, onUnlock }) {
+  const { t } = useLang();
+  const [open, setOpen] = useState(true);
+  const dk = deepKey(phase);
+  const rows = [
+    ["⏳", t("deep.label.protocol"), t(`deep.${dk}.protocol`)],
+    ["🍽️", t("deep.label.eat"), t(`deep.${dk}.eat`)],
+    ["🚫", t("deep.label.avoid"), t(`deep.${dk}.avoid`)],
+    ["🏃", t("deep.label.move"), t(`deep.${dk}.move`)],
+    ["💊", t("deep.label.support"), t(`deep.${dk}.support`)],
+    ["🩸", t("deep.label.hormone"), t(`deep.${dk}.hormone`)],
+  ];
+
+  return (
+    <div style={{
+      background: "linear-gradient(160deg, #16130A 0%, #111118 70%)",
+      border: "1px solid #D4A01755", borderRadius: 12, padding: 16, marginBottom: 12,
+      boxShadow: "0 0 0 1px #D4A01711, 0 4px 20px #00000040",
+    }}>
+      {/* Header */}
+      <div onClick={() => setOpen(o => !o)} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ fontSize: 15, color: "#D4A017", fontFamily: "serif" }}>✦ {t("deepTitle")}</span>
+          <span style={{ fontSize: 9, color: "#0A0A0F", background: "#D4A017", borderRadius: 4, padding: "1px 6px", fontFamily: "monospace", fontWeight: "bold" }}>
+            {t("deepPlusTag")}
+          </span>
+          {preview && (
+            <span style={{ fontSize: 9, color: "#D4A017", border: "1px solid #D4A01766", borderRadius: 4, padding: "1px 5px", fontFamily: "monospace" }}>
+              {t("deepPreviewBadge")}
+            </span>
+          )}
+        </div>
+        <span style={{ color: "#888", fontSize: 12 }}>{open ? "▾" : "▸"}</span>
+      </div>
+
+      {open && (
+        <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+          {rows.map(([icon, label, body], i) => (
+            <div key={i} style={{ display: "flex", gap: 10 }}>
+              <div style={{ fontSize: 15, flexShrink: 0, width: 20, textAlign: "center" }}>{icon}</div>
+              <div>
+                <div style={{ fontSize: 11, color: "#D4A017", fontFamily: "monospace", marginBottom: 2 }}>{label}</div>
+                <div style={{ fontSize: 12.5, color: "#cfcfcf", lineHeight: 1.65 }}>{body}</div>
+              </div>
+            </div>
+          ))}
+
+          {preview && (
+            <div style={{ marginTop: 6, borderTop: "1px dashed #D4A01733", paddingTop: 12 }}>
+              <div style={{ fontSize: 11, color: "#888", lineHeight: 1.6, marginBottom: 10, fontFamily: "monospace" }}>
+                {t("deepPremiumNote")}
+              </div>
+              <button onClick={onUnlock} style={{
+                width: "100%", padding: 11, background: "#D4A017", color: "#0A0A0F",
+                border: "none", borderRadius: 8, fontFamily: "serif", fontSize: 13, fontWeight: "bold",
+                cursor: "pointer",
+              }}>
+                ✦ {t("deepUnlockCta")}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ══════════════════════════════════
 // ── Calendar grid ──
 // ══════════════════════════════════
 function CalendarGrid({ periodStart, cycleLen, year, month, logs, onSelectDate, selectedDate, flags, ovDetected }) {
@@ -524,6 +601,8 @@ export default function MoonRhythm() {
   const [periodStart, setPeriodStart] = useLocalStorage("moon-periodStart", isoDate(addDays(new Date(), -5)));
   const [goals, setGoals] = useLocalStorage("moon-goals", ["fasting"]);
   const [logs, setLogs] = useLocalStorage("moon-logs", {});
+  // Premium preview: lets us SHOW the Moonyou＋ content while evaluating whether it's worth charging for.
+  const [premiumPreview, setPremiumPreview] = useLocalStorage("moon-premiumPreview", true);
 
   const flags = useGoalFlags(goals);
 
@@ -664,6 +743,11 @@ export default function MoonRhythm() {
               )}
             </div>
 
+            {/* Moonyou＋ deep guidance (premium content — shown in preview while evaluating) */}
+            {flags.showFasting && premiumPreview && (
+              <DeepGuidance phase={todayPhase} preview={true} onUnlock={() => setView("settings")} />
+            )}
+
             {/* Fertility bar */}
             {flags.showFertility && (
               <div style={{ background: "#111118", borderRadius: 12, padding: 16, marginBottom: 12 }}>
@@ -749,6 +833,23 @@ export default function MoonRhythm() {
                 })}
               </div>
               <div style={{ fontSize: 10, color: "#555", fontFamily: "monospace", marginTop: 4 }}>{t("goalExclusive")}</div>
+            </div>
+
+            {/* Moonyou＋ preview toggle */}
+            <div style={{ borderTop: "1px solid #1a1a2e", paddingTop: 16 }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+                <label style={{ fontSize: 12, color: "#D4A017", fontFamily: "monospace" }}>✦ {t("previewPlusLabel")}</label>
+                <button onClick={() => setPremiumPreview(p => !p)} style={{
+                  width: 46, height: 26, borderRadius: 13, flexShrink: 0, cursor: "pointer", position: "relative",
+                  background: premiumPreview ? "#D4A017" : "#2a2a3e", border: "none", transition: "background 0.2s",
+                }}>
+                  <span style={{
+                    position: "absolute", top: 3, left: premiumPreview ? 23 : 3, width: 20, height: 20,
+                    borderRadius: "50%", background: "#0A0A0F", transition: "left 0.2s",
+                  }} />
+                </button>
+              </div>
+              <div style={{ fontSize: 10, color: "#555", fontFamily: "monospace", marginTop: 6, lineHeight: 1.6 }}>{t("previewPlusNote")}</div>
             </div>
 
             <div style={{ borderTop: "1px solid #1a1a2e", paddingTop: 16 }}>
