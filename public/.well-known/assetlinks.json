@@ -1,0 +1,14 @@
+[
+  {
+    "_comment": "Digital Asset Links for the Google Play TWA. REPLACE the placeholders below after you generate the Android package (see GOOGLE-PLAY.md). You must list BOTH your upload key fingerprint AND the Google Play App Signing key fingerprint. This file must be reachable at https://YOUR-DOMAIN/.well-known/assetlinks.json",
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.moonyou.twa",
+      "sha256_cert_fingerprints": [
+        "REPLACE_WITH_UPLOAD_KEY_SHA256",
+        "REPLACE_WITH_PLAY_APP_SIGNING_SHA256"
+      ]
+    }
+  }
+]
