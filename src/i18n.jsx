@@ -217,6 +217,12 @@ const translations = {
     en: "This is Moonyou＋ premium content. The free tier shows a one-line tip; the premium tier gives full nutrition, exercise, supplement and hormone guidance tailored to your current phase.",
   },
   deepUnlockCta: { zh: "解鎖 Moonyou＋", en: "Unlock Moonyou＋" },
+  plusPrice: { zh: "US$1", en: "US$1" },
+  plusPriceNote: {
+    zh: "一次 US$1 解鎖 Moonyou＋(深度指南 ＋ AI 顧問)。真人諮詢等延伸服務在裡面再另外開通。",
+    en: "One-time US$1 unlocks Moonyou＋ (deep guidance + AI coach). Extended services like real consults unlock separately inside.",
+  },
+  addonTag: { zh: "延伸加購", en: "Add-on" },
   previewPlusLabel: { zh: "Moonyou＋ 進階內容(預覽)", en: "Moonyou＋ premium content (preview)" },
   previewPlusNote: {
     zh: "開啟後,儀表板會顯示完整的深度週期指南;關閉則只看免費版的一句話建議。用來比較兩者差異。",
@@ -232,8 +238,8 @@ const translations = {
   "consult.dataLabel": { zh: "依據你的數據", en: "Based on your data" },
   "consult.lockedTitle": { zh: "Moonyou＋ 健康顧問", en: "Moonyou＋ Health Coach" },
   "consult.lockedDesc": {
-    zh: "解鎖後,AI 顧問會讀你記錄的週期、斷食與體溫,每天給你一段為你個人化的建議;也能預約真人營養師做深度諮詢。",
-    en: "Unlock to get a daily personalized note from the AI coach — reading your cycle, fasting and temperature logs — plus the option to book a real nutritionist for a deep consult.",
+    zh: "一次 US$1 解鎖:AI 顧問會讀你記錄的週期、斷食與體溫,每天給你一段為你個人化的建議。解鎖後還能另外加購真人營養師深度諮詢。",
+    en: "Unlock for a one-time US$1: the AI coach reads your cycle, fasting and temperature logs and gives you a personalized note each day. Real nutritionist consults are available as an add-on once unlocked.",
   },
 
   "consult.greeting": { zh: "嗨,根據你的記錄——你現在在{phase}、週期第 {day} 天。", en: "Hi — based on your logs, you're in your {phase}, cycle day {day}." },

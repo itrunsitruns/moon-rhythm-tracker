@@ -322,7 +322,7 @@ function DeepGuidance({ phase, preview, onUnlock }) {
                 border: "none", borderRadius: 8, fontFamily: "serif", fontSize: 13, fontWeight: "bold",
                 cursor: "pointer",
               }}>
-                ✦ {t("deepUnlockCta")}
+                ✦ {t("deepUnlockCta")} · {t("plusPrice")}
               </button>
             </div>
           )}
@@ -589,7 +589,7 @@ function ConsultantView({ phase, cycleDay, cycleLen, logs, periodStart, goals, o
         <div style={{ fontSize: 16, color: "#D4A017", fontFamily: "serif", marginBottom: 8 }}>{t("consult.lockedTitle")}</div>
         <div style={{ fontSize: 12.5, color: "#aaa", lineHeight: 1.7, marginBottom: 16 }}>{t("consult.lockedDesc")}</div>
         <button onClick={onUnlock} style={{ padding: "11px 24px", background: "#D4A017", color: "#0A0A0F", border: "none", borderRadius: 8, fontFamily: "serif", fontSize: 13, fontWeight: "bold", cursor: "pointer" }}>
-          ✦ {t("deepUnlockCta")}
+          ✦ {t("deepUnlockCta")} · {t("plusPrice")}
         </button>
       </div>
     );
@@ -626,8 +626,9 @@ function ConsultantView({ phase, cycleDay, cycleLen, logs, periodStart, goals, o
       <div style={{ background: "#111118", border: "1px solid #4A9E8E33", borderRadius: 12, padding: 16 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
           <div style={{ fontSize: 14, color: "#4A9E8E", fontFamily: "serif" }}>👩‍⚕️ {t("consult.humanTitle")}</div>
-          <div style={{ fontSize: 11, color: "#4A9E8E", fontFamily: "monospace", flexShrink: 0 }}>{t("consult.humanPrice")}</div>
+          <div style={{ fontSize: 9, color: "#4A9E8E", border: "1px solid #4A9E8E55", borderRadius: 4, padding: "1px 6px", fontFamily: "monospace", flexShrink: 0 }}>{t("addonTag")}</div>
         </div>
+        <div style={{ fontSize: 11, color: "#4A9E8E", fontFamily: "monospace", marginBottom: 8 }}>{t("consult.humanPrice")}</div>
         <div style={{ fontSize: 12, color: "#aaa", lineHeight: 1.7, marginBottom: 12 }}>{t("consult.humanDesc")}</div>
         <button onClick={onUnlock} style={{ width: "100%", padding: 11, background: "transparent", color: "#4A9E8E", border: "1px solid #4A9E8E55", borderRadius: 8, fontFamily: "monospace", fontSize: 12, cursor: "pointer" }}>
           {t("consult.humanCta")} →
