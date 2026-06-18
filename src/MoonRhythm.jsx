@@ -544,6 +544,105 @@ function DateDetail({ dateKey, periodStart, cycleLen, logs, onSaveLog, onDeleteL
 }
 
 // ══════════════════════════════════
+// ── Moonyou＋ Consultant ──
+// ══════════════════════════════════
+// Assembles a personalized note from the user's own logged data.
+// (Rule-based now; designed to be swapped for a real Claude call later.)
+function generateConsultAdvice({ phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected }, t) {
+  const dk = deepKey(phase);
+  const stats = computeStats(logs, periodStart, cycleLen, t);
+  const suggested = PHASE_DEFAULT_HOURS[phase] || 12;
+  const weekAvg = Number(stats.weekAvg) || 0;
+  const phaseLabel = t(`phase.${phase}`).replace(" 🔥", "");
+  const lines = [];
+
+  lines.push(t("consult.greeting", { phase: phaseLabel, day: cycleDay ?? "—" }));
+
+  if (goals.includes("fasting")) {
+    if (weekAvg <= 0) lines.push(t("consult.fastNone", { suggested }));
+    else if (weekAvg + 1 < suggested && suggested >= 24) lines.push(t("consult.fastRoom", { avg: weekAvg, suggested }));
+    else lines.push(t("consult.fastGood", { avg: weekAvg }));
+  }
+
+  lines.push(t("consult.nutrition", { eat: t(`deep.${dk}.eat`) }));
+
+  if (goals.includes("conceive")) lines.push(t(phase === "ovulation" ? "consult.conceiveOv" : "consult.conceiveOff"));
+  else if (goals.includes("avoid")) lines.push(t(phase === "ovulation" ? "consult.avoidOv" : "consult.avoidOff"));
+
+  if (ovDetected.length) lines.push(t("consult.ovDetected"));
+
+  lines.push(t("consult.closing"));
+  return { lines, weekAvg, suggested };
+}
+
+function ConsultantView({ phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected, premium, onUnlock }) {
+  const { t } = useLang();
+  const advice = useMemo(
+    () => generateConsultAdvice({ phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected }, t),
+    [phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected, t]
+  );
+
+  if (!premium) {
+    return (
+      <div style={{ background: "linear-gradient(160deg, #16130A 0%, #111118 70%)", border: "1px solid #D4A01744", borderRadius: 12, padding: 20, textAlign: "center" }}>
+        <div style={{ fontSize: 32, marginBottom: 8 }}>✦</div>
+        <div style={{ fontSize: 16, color: "#D4A017", fontFamily: "serif", marginBottom: 8 }}>{t("consult.lockedTitle")}</div>
+        <div style={{ fontSize: 12.5, color: "#aaa", lineHeight: 1.7, marginBottom: 16 }}>{t("consult.lockedDesc")}</div>
+        <button onClick={onUnlock} style={{ padding: "11px 24px", background: "#D4A017", color: "#0A0A0F", border: "none", borderRadius: 8, fontFamily: "serif", fontSize: 13, fontWeight: "bold", cursor: "pointer" }}>
+          ✦ {t("deepUnlockCta")}
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      {/* AI coach card */}
+      <div style={{ background: "linear-gradient(160deg, #16130A 0%, #111118 70%)", border: "1px solid #D4A01755", borderRadius: 12, padding: 16, boxShadow: "0 4px 20px #00000040" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+          <span style={{ fontSize: 22 }}>🌙</span>
+          <div>
+            <div style={{ fontSize: 15, color: "#D4A017", fontFamily: "serif" }}>{t("consult.title")}</div>
+            <div style={{ fontSize: 9, color: "#888", fontFamily: "monospace" }}>
+              {t("consult.aiBadge")} · {t("consult.dataLabel")}
+            </div>
+          </div>
+        </div>
+
+        <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+          {advice.lines.map((line, i) => (
+            <div key={i} style={{ fontSize: 13, color: "#d6d6d6", lineHeight: 1.7, paddingLeft: 12, borderLeft: "2px solid #D4A01733" }}>
+              {line}
+            </div>
+          ))}
+        </div>
+
+        <div style={{ fontSize: 10, color: "#666", fontFamily: "monospace", lineHeight: 1.6, marginTop: 14, borderTop: "1px dashed #D4A01722", paddingTop: 10 }}>
+          {t("consult.aiNote")}
+        </div>
+      </div>
+
+      {/* Human nutritionist upsell */}
+      <div style={{ background: "#111118", border: "1px solid #4A9E8E33", borderRadius: 12, padding: 16 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+          <div style={{ fontSize: 14, color: "#4A9E8E", fontFamily: "serif" }}>👩‍⚕️ {t("consult.humanTitle")}</div>
+          <div style={{ fontSize: 11, color: "#4A9E8E", fontFamily: "monospace", flexShrink: 0 }}>{t("consult.humanPrice")}</div>
+        </div>
+        <div style={{ fontSize: 12, color: "#aaa", lineHeight: 1.7, marginBottom: 12 }}>{t("consult.humanDesc")}</div>
+        <button onClick={onUnlock} style={{ width: "100%", padding: 11, background: "transparent", color: "#4A9E8E", border: "1px solid #4A9E8E55", borderRadius: 8, fontFamily: "monospace", fontSize: 12, cursor: "pointer" }}>
+          {t("consult.humanCta")} →
+        </button>
+      </div>
+
+      {/* Disclaimer */}
+      <div style={{ fontSize: 10, color: "#555", fontFamily: "monospace", lineHeight: 1.6, textAlign: "center", padding: "0 8px" }}>
+        {t("disclaimer")}
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════
 // ── Guide view ──
 // ══════════════════════════════════
 function GuideView() {
@@ -673,7 +772,7 @@ export default function MoonRhythm() {
       flex: 1, padding: "10px 0", background: view === v ? "#1a1a2e" : "transparent",
       color: view === v ? todayCfg.color : "#666", border: "none",
       borderTop: view === v ? `2px solid ${todayCfg.color}` : "2px solid transparent",
-      fontFamily: "monospace", fontSize: 12, cursor: "pointer",
+      fontFamily: "monospace", fontSize: 10.5, cursor: "pointer", whiteSpace: "nowrap",
     }}>{label}</button>
   );
 
@@ -799,6 +898,14 @@ export default function MoonRhythm() {
           </div>
         )}
 
+        {/* ─── CONSULTANT (Moonyou＋) ─── */}
+        {view === "consult" && (
+          <ConsultantView
+            phase={todayPhase} cycleDay={cycleDay} cycleLen={cycleLen}
+            logs={logs} periodStart={periodStart} goals={goals} ovDetected={ovDetected}
+            premium={premiumPreview} onUnlock={() => setView("settings")} />
+        )}
+
         {/* ─── GUIDE ─── */}
         {view === "guide" && <GuideView />}
 
@@ -881,6 +988,7 @@ export default function MoonRhythm() {
       <div style={{ position: "sticky", bottom: 0, display: "flex", background: "#0A0A0F", borderTop: "1px solid #1a1a2e" }}>
         {navBtn(`🌙 ${t("dashboard")}`, "dashboard")}
         {navBtn(`📅 ${t("calendar")}`, "calendar")}
+        {navBtn(`✦ ${t("consult")}`, "consult")}
         {navBtn(`📖 ${t("guide")}`, "guide")}
         {navBtn(`⚙️ ${t("settings")}`, "settings")}
       </div>
