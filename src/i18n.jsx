@@ -258,6 +258,9 @@ const translations = {
   tarotReversed: { zh: "逆位", en: "Reversed" },
   tarotHint: { zh: "輕觸抽出今天的指引", en: "Tap to draw your guidance" },
   tarotNote: { zh: "每天一張,午夜換新。僅供娛樂與自我覺察。", en: "One card a day, renewed at midnight. For fun & self-reflection only." },
+  tarotLight: { zh: "光", en: "Light" },
+  tarotShadow: { zh: "影 · 同時留意", en: "Shadow · also present" },
+  tarotBothNote: { zh: "每天一張,午夜換新。光與影同時存在——一切都是同時的。僅供娛樂與自我覺察。", en: "One card a day, renewed at midnight. Light and shadow coexist — it's all at once. For fun & self-reflection only." },
   previewPlusLabel: { zh: "Moonyou＋ 進階內容(預覽)", en: "Moonyou＋ premium content (preview)" },
   previewPlusNote: {
     zh: "開啟後,儀表板會顯示完整的深度週期指南;關閉則只看免費版的一句話建議。用來比較兩者差異。",
