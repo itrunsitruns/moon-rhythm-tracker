@@ -4,7 +4,7 @@ name: Deploy Moonyou to GitHub Pages
 # phone. Runs on every push to the working branch.
 on:
   push:
-    branches: ["claude/standalone-cocreation-app-939vhb"]
+    branches: ["main", "claude/standalone-cocreation-app-939vhb"]
   workflow_dispatch:
 
 permissions:
