@@ -250,6 +250,14 @@ const translations = {
   "sign.capricorn": { zh: "摩羯座", en: "Capricorn" },
   "sign.aquarius": { zh: "水瓶座", en: "Aquarius" },
   "sign.pisces": { zh: "雙魚座", en: "Pisces" },
+
+  // ── Daily Tarot ──
+  tarotTitle: { zh: "每日塔羅", en: "Daily Tarot" },
+  tarotReveal: { zh: "翻開今日的牌", en: "Reveal today's card" },
+  tarotUpright: { zh: "正位", en: "Upright" },
+  tarotReversed: { zh: "逆位", en: "Reversed" },
+  tarotHint: { zh: "輕觸抽出今天的指引", en: "Tap to draw your guidance" },
+  tarotNote: { zh: "每天一張,午夜換新。僅供娛樂與自我覺察。", en: "One card a day, renewed at midnight. For fun & self-reflection only." },
   previewPlusLabel: { zh: "Moonyou＋ 進階內容(預覽)", en: "Moonyou＋ premium content (preview)" },
   previewPlusNote: {
     zh: "開啟後,儀表板會顯示完整的深度週期指南;關閉則只看免費版的一句話建議。用來比較兩者差異。",

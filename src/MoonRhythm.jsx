@@ -3,6 +3,7 @@ import useLocalStorage from "./useLocalStorage";
 import { useLang } from "./i18n";
 import { syncToGoogleCalendar, downloadICS } from "./googleCalendar";
 import { getVedicPositions } from "./astrology";
+import { getDailyDraw } from "./tarot";
 
 // ── Phase configuration ──
 const PHASE_CONFIG = {
@@ -291,6 +292,77 @@ function AstroCard() {
       {row(t("astroMoon"), pos.moon, false)}
       {row(t("astroMercury"), pos.mercury, true)}
       <div style={{ fontSize: 10, color: "#5a5470", fontFamily: "monospace", lineHeight: 1.6, marginTop: 8 }}>{t("astroNote")}</div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════
+// ── Daily Tarot card ──
+// ══════════════════════════════════
+function TarotCard() {
+  const { t, lang } = useLang();
+  const draw = useMemo(() => getDailyDraw(new Date()), []);
+  const [revealedDay, setRevealedDay] = useLocalStorage("moon-tarotRevealed", "");
+  const revealed = revealedDay === draw.dayKey;
+
+  const card = draw.card;
+  const name = lang === "zh" ? card.zh : card.en;
+  const meaning = draw.reversed
+    ? (lang === "zh" ? card.rv_zh : card.rv_en)
+    : (lang === "zh" ? card.up_zh : card.up_en);
+
+  const cardFace = (faceUp) => (
+    <div style={{
+      width: 132, height: 210, borderRadius: 12, flexShrink: 0,
+      background: faceUp ? "linear-gradient(160deg, #1A1530 0%, #0E0B1A 100%)" : "linear-gradient(160deg, #15131F 0%, #0A0A0F 100%)",
+      border: "1.5px solid #D4A01788", boxShadow: "0 6px 24px #00000055",
+      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+      position: "relative", overflow: "hidden", cursor: faceUp ? "default" : "pointer",
+    }}>
+      {faceUp ? (
+        <>
+          <span style={{ position: "absolute", top: 8, left: 10, fontSize: 11, color: "#D4A017", fontFamily: "serif" }}>{card.n}</span>
+          <span style={{ position: "absolute", top: 8, right: 10, fontSize: 11, color: "#D4A017" }}>✦</span>
+          <span style={{ fontSize: 52, transform: draw.reversed ? "rotate(180deg)" : "none", lineHeight: 1 }}>{card.glyph}</span>
+          <span style={{ marginTop: 14, fontSize: 14, color: "#e8e0ff", fontFamily: "serif", textAlign: "center", padding: "0 6px" }}>{name}</span>
+        </>
+      ) : (
+        <>
+          <span style={{ fontSize: 40, color: "#D4A01766" }}>🌙</span>
+          <span style={{ position: "absolute", inset: 8, border: "1px solid #D4A01733", borderRadius: 8 }} />
+        </>
+      )}
+    </div>
+  );
+
+  return (
+    <div style={{ background: "linear-gradient(160deg, #120F1C 0%, #111118 70%)", border: "1px solid #D4A01744", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+      <div style={{ fontSize: 14, color: "#D4A017", fontFamily: "serif", marginBottom: 12 }}>🔮 {t("tarotTitle")}</div>
+
+      {!revealed ? (
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+          <div onClick={() => setRevealedDay(draw.dayKey)}>{cardFace(false)}</div>
+          <button onClick={() => setRevealedDay(draw.dayKey)} style={{
+            padding: "10px 22px", background: "#D4A017", color: "#0A0A0F", border: "none",
+            borderRadius: 8, fontFamily: "serif", fontSize: 13, fontWeight: "bold", cursor: "pointer",
+          }}>✦ {t("tarotReveal")}</button>
+          <div style={{ fontSize: 11, color: "#666", fontFamily: "monospace" }}>{t("tarotHint")}</div>
+        </div>
+      ) : (
+        <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
+          {cardFace(true)}
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 16, color: "#e8e0ff", fontFamily: "serif", marginBottom: 4 }}>{name}</div>
+            <div style={{ display: "inline-block", fontSize: 10, fontFamily: "monospace", padding: "2px 8px", borderRadius: 4, marginBottom: 10,
+              color: draw.reversed ? "#FF8FA3" : "#4A9E8E", border: `1px solid ${draw.reversed ? "#FF8FA355" : "#4A9E8E55"}` }}>
+              {draw.reversed ? t("tarotReversed") : t("tarotUpright")}
+            </div>
+            <div style={{ fontSize: 13, color: "#cfc6ea", lineHeight: 1.7 }}>{meaning}</div>
+          </div>
+        </div>
+      )}
+
+      <div style={{ fontSize: 10, color: "#5a5470", fontFamily: "monospace", lineHeight: 1.6, marginTop: 12 }}>{t("tarotNote")}</div>
     </div>
   );
 }
@@ -873,6 +945,9 @@ export default function MoonRhythm() {
 
             {/* Vedic sidereal astrology — Sun / Moon / Mercury */}
             <AstroCard />
+
+            {/* Daily tarot draw */}
+            <TarotCard />
 
             {/* Moonyou＋ deep guidance (unlocked — included with the paid app) */}
             {flags.showFasting && (
