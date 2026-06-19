@@ -87,10 +87,26 @@ function dayKey(date) {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 }
 
-// Deterministic daily draw — same card & orientation all day for a date.
-export function getDailyDraw(date = new Date()) {
-  const h = hashStr(dayKey(date) + "🌙moonyou");
+// Deterministic daily draw — same card & orientation all day for a date,
+// but unique per person via a persistent per-device seed.
+export function getDailyDraw(date = new Date(), seed = "") {
+  const h = hashStr(dayKey(date) + "🌙moonyou" + seed);
   const idx = h % MAJOR_ARCANA.length;
   const reversed = (Math.floor(h / MAJOR_ARCANA.length) % 2) === 1;
   return { card: MAJOR_ARCANA[idx], reversed, idx, dayKey: dayKey(date) };
+}
+
+// A stable random seed unique to this device (created once, then persisted),
+// so each person's daily draw differs.
+export function getPersonalSeed() {
+  try {
+    let s = localStorage.getItem("moon-tarotSeed");
+    if (!s) {
+      s = Math.random().toString(36).slice(2) + Date.now().toString(36);
+      localStorage.setItem("moon-tarotSeed", s);
+    }
+    return s;
+  } catch {
+    return "anon";
+  }
 }

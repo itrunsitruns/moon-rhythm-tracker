@@ -3,7 +3,7 @@ import useLocalStorage from "./useLocalStorage";
 import { useLang } from "./i18n";
 import { syncToGoogleCalendar, downloadICS } from "./googleCalendar";
 import { getVedicPositions } from "./astrology";
-import { getDailyDraw } from "./tarot";
+import { getDailyDraw, getPersonalSeed } from "./tarot";
 
 // ── Phase configuration ──
 const PHASE_CONFIG = {
@@ -301,7 +301,8 @@ function AstroCard() {
 // ══════════════════════════════════
 function TarotCard() {
   const { t, lang } = useLang();
-  const draw = useMemo(() => getDailyDraw(new Date()), []);
+  const [seed] = useState(getPersonalSeed);
+  const draw = useMemo(() => getDailyDraw(new Date(), seed), [seed]);
   const [revealedDay, setRevealedDay] = useLocalStorage("moon-tarotRevealed", "");
   const revealed = revealedDay === draw.dayKey;
 
@@ -479,10 +480,13 @@ function CalendarGrid({ periodStart, cycleLen, year, month, logs, onSelectDate, 
         background: isSelected ? cfg.color + "22" : cfg.bg,
         borderLeft: `3px solid ${isOvDetected ? "#FF6B6B" : cfg.color}`,
         borderRadius: 6, padding: "3px 5px", cursor: "pointer", position: "relative",
-        outline: isToday ? `2px solid ${cfg.color}` : isSelected ? `1px solid ${cfg.color}88` : "none",
-        minHeight: 48, boxShadow: flags.showAvoidWarn && isDanger ? "inset 0 0 0 1px #FF6B6B88" : "none",
+        outline: isToday ? "3px solid #FFD24A" : isSelected ? `1px solid ${cfg.color}88` : "none",
+        outlineOffset: isToday ? "-2px" : 0, zIndex: isToday ? 1 : "auto",
+        minHeight: 48,
+        boxShadow: isToday ? "0 0 8px 1px #FFD24A88"
+          : flags.showAvoidWarn && isDanger ? "inset 0 0 0 1px #FF6B6B88" : "none",
       }}>
-        <div style={{ fontSize: 10, color: "#aaa", fontFamily: "monospace" }}>{d}{badge}</div>
+        <div style={{ fontSize: 10, color: isToday ? "#FFD24A" : "#aaa", fontWeight: isToday ? "bold" : "normal", fontFamily: "monospace" }}>{d}{badge}</div>
         <div style={{ fontSize: 13 }}>{moon.emoji}</div>
         {log && log.hours > 0 && (
           <div style={{ position: "absolute", bottom: 2, right: 3, fontSize: 8, color: "#4A9E8E", fontFamily: "monospace" }}>
