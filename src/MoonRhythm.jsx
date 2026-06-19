@@ -218,7 +218,7 @@ function FastingStats({ logs, periodStart, cycleLen }) {
       <div style={{ fontSize: 14, color: "#ccc", marginBottom: 12, fontFamily: "serif" }}>{t("statsTitle")}</div>
 
       {!hasData ? (
-        <div style={{ fontSize: 12, color: "#555", fontFamily: "monospace", textAlign: "center", padding: 12 }}>{t("noData")}</div>
+        <div style={{ fontSize: 12, color: "#8a8a8a", fontFamily: "monospace", textAlign: "center", padding: 12 }}>{t("noData")}</div>
       ) : (
         <>
           {/* Week & Month row */}
@@ -226,12 +226,12 @@ function FastingStats({ logs, periodStart, cycleLen }) {
             <div style={{ background: "#0A0A0F", borderRadius: 8, padding: 10 }}>
               <div style={{ fontSize: 10, color: "#666", fontFamily: "monospace" }}>{t("thisWeek")}</div>
               <div style={{ fontSize: 18, color: "#D4A017", fontFamily: "monospace" }}>{stats.weekTotal}h</div>
-              <div style={{ fontSize: 10, color: "#555", fontFamily: "monospace" }}>{t("avgPerDay")} {stats.weekAvg}h</div>
+              <div style={{ fontSize: 10, color: "#8a8a8a", fontFamily: "monospace" }}>{t("avgPerDay")} {stats.weekAvg}h</div>
             </div>
             <div style={{ background: "#0A0A0F", borderRadius: 8, padding: 10 }}>
               <div style={{ fontSize: 10, color: "#666", fontFamily: "monospace" }}>{t("thisMonth")}</div>
               <div style={{ fontSize: 18, color: "#4A9E8E", fontFamily: "monospace" }}>{stats.monthTotal}h</div>
-              <div style={{ fontSize: 10, color: "#555", fontFamily: "monospace" }}>{t("completionRate")} {stats.monthRate}%</div>
+              <div style={{ fontSize: 10, color: "#8a8a8a", fontFamily: "monospace" }}>{t("completionRate")} {stats.monthRate}%</div>
             </div>
           </div>
 
@@ -247,7 +247,7 @@ function FastingStats({ logs, periodStart, cycleLen }) {
                   background: i === 3 ? "#D4A017" : "#D4A01755",
                   transition: "height 0.3s",
                 }} />
-                <div style={{ fontSize: 8, color: "#555", fontFamily: "monospace" }}>{w.label}</div>
+                <div style={{ fontSize: 8, color: "#8a8a8a", fontFamily: "monospace" }}>{w.label}</div>
               </div>
             ))}
           </div>
@@ -291,7 +291,7 @@ function AstroCard() {
       {row(t("astroSun"), pos.sun, false)}
       {row(t("astroMoon"), pos.moon, false)}
       {row(t("astroMercury"), pos.mercury, true)}
-      <div style={{ fontSize: 10, color: "#5a5470", fontFamily: "monospace", lineHeight: 1.6, marginTop: 8 }}>{t("astroNote")}</div>
+      <div style={{ fontSize: 10, color: "#9a91b8", fontFamily: "monospace", lineHeight: 1.6, marginTop: 8 }}>{t("astroNote")}</div>
     </div>
   );
 }
@@ -308,9 +308,9 @@ function TarotCard() {
 
   const card = draw.card;
   const name = lang === "zh" ? card.zh : card.en;
-  const meaning = draw.reversed
-    ? (lang === "zh" ? card.rv_zh : card.rv_en)
-    : (lang === "zh" ? card.up_zh : card.up_en);
+  // Always upright. Both facets are shown together — light and shadow coexist.
+  const lightText = lang === "zh" ? card.up_zh : card.up_en;
+  const shadowText = lang === "zh" ? card.rv_zh : card.rv_en;
 
   const cardFace = (faceUp) => (
     <div style={{
@@ -324,7 +324,7 @@ function TarotCard() {
         <>
           <span style={{ position: "absolute", top: 8, left: 10, fontSize: 11, color: "#D4A017", fontFamily: "serif" }}>{card.n}</span>
           <span style={{ position: "absolute", top: 8, right: 10, fontSize: 11, color: "#D4A017" }}>✦</span>
-          <span style={{ fontSize: 52, transform: draw.reversed ? "rotate(180deg)" : "none", lineHeight: 1 }}>{card.glyph}</span>
+          <span style={{ fontSize: 52, lineHeight: 1 }}>{card.glyph}</span>
           <span style={{ marginTop: 14, fontSize: 14, color: "#e8e0ff", fontFamily: "serif", textAlign: "center", padding: "0 6px" }}>{name}</span>
         </>
       ) : (
@@ -347,23 +347,28 @@ function TarotCard() {
             padding: "10px 22px", background: "#D4A017", color: "#0A0A0F", border: "none",
             borderRadius: 8, fontFamily: "serif", fontSize: 13, fontWeight: "bold", cursor: "pointer",
           }}>✦ {t("tarotReveal")}</button>
-          <div style={{ fontSize: 11, color: "#666", fontFamily: "monospace" }}>{t("tarotHint")}</div>
+          <div style={{ fontSize: 11, color: "#888", fontFamily: "monospace" }}>{t("tarotHint")}</div>
         </div>
       ) : (
-        <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
+        <div style={{ display: "flex", gap: 14, alignItems: "flex-start" }}>
           {cardFace(true)}
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 16, color: "#e8e0ff", fontFamily: "serif", marginBottom: 4 }}>{name}</div>
-            <div style={{ display: "inline-block", fontSize: 10, fontFamily: "monospace", padding: "2px 8px", borderRadius: 4, marginBottom: 10,
-              color: draw.reversed ? "#FF8FA3" : "#4A9E8E", border: `1px solid ${draw.reversed ? "#FF8FA355" : "#4A9E8E55"}` }}>
-              {draw.reversed ? t("tarotReversed") : t("tarotUpright")}
+            <div style={{ fontSize: 16, color: "#e8e0ff", fontFamily: "serif", marginBottom: 10 }}>{name}</div>
+            {/* Light facet */}
+            <div style={{ marginBottom: 10 }}>
+              <div style={{ fontSize: 10, fontFamily: "monospace", color: "#E8C45A", marginBottom: 2 }}>☀︎ {t("tarotLight")}</div>
+              <div style={{ fontSize: 13, color: "#e6dffb", lineHeight: 1.6 }}>{lightText}</div>
             </div>
-            <div style={{ fontSize: 13, color: "#cfc6ea", lineHeight: 1.7 }}>{meaning}</div>
+            {/* Shadow facet — coexisting */}
+            <div>
+              <div style={{ fontSize: 10, fontFamily: "monospace", color: "#9d8cd4", marginBottom: 2 }}>☾ {t("tarotShadow")}</div>
+              <div style={{ fontSize: 13, color: "#bdb4d6", lineHeight: 1.6 }}>{shadowText}</div>
+            </div>
           </div>
         </div>
       )}
 
-      <div style={{ fontSize: 10, color: "#5a5470", fontFamily: "monospace", lineHeight: 1.6, marginTop: 12 }}>{t("tarotNote")}</div>
+      <div style={{ fontSize: 10, color: "#9a91b8", fontFamily: "monospace", lineHeight: 1.6, marginTop: 12 }}>{t("tarotBothNote")}</div>
     </div>
   );
 }
@@ -739,7 +744,7 @@ function ConsultantView({ phase, cycleDay, cycleLen, logs, periodStart, goals, o
       </div>
 
       {/* Disclaimer */}
-      <div style={{ fontSize: 10, color: "#555", fontFamily: "monospace", lineHeight: 1.6, textAlign: "center", padding: "0 8px" }}>
+      <div style={{ fontSize: 10, color: "#8a8a8a", fontFamily: "monospace", lineHeight: 1.6, textAlign: "center", padding: "0 8px" }}>
         {t("disclaimer")}
       </div>
     </div>
@@ -787,7 +792,7 @@ function GuideView() {
       </div>
 
       {/* Medical disclaimer */}
-      <div style={{ fontSize: 10, color: "#555", fontFamily: "monospace", lineHeight: 1.6, textAlign: "center", padding: "0 8px", marginTop: 4 }}>
+      <div style={{ fontSize: 10, color: "#8a8a8a", fontFamily: "monospace", lineHeight: 1.6, textAlign: "center", padding: "0 8px", marginTop: 4 }}>
         {t("disclaimer")}
       </div>
     </div>
@@ -1050,7 +1055,7 @@ export default function MoonRhythm() {
                   );
                 })}
               </div>
-              <div style={{ fontSize: 10, color: "#555", fontFamily: "monospace", marginTop: 4 }}>{t("goalExclusive")}</div>
+              <div style={{ fontSize: 10, color: "#8a8a8a", fontFamily: "monospace", marginTop: 4 }}>{t("goalExclusive")}</div>
             </div>
 
             <div style={{ borderTop: "1px solid #1a1a2e", paddingTop: 16 }}>
@@ -1067,11 +1072,11 @@ export default function MoonRhythm() {
               }}>{t("downloadICS")}</button>
             </div>
 
-            <div style={{ fontSize: 11, color: "#555", fontFamily: "monospace", marginTop: 8, lineHeight: 1.6, whiteSpace: "pre-line" }}>
+            <div style={{ fontSize: 11, color: "#8a8a8a", fontFamily: "monospace", marginTop: 8, lineHeight: 1.6, whiteSpace: "pre-line" }}>
               {t("settingsNote")}
             </div>
 
-            <div style={{ fontSize: 10, color: "#555", fontFamily: "monospace", lineHeight: 1.6, textAlign: "center", padding: "0 8px" }}>
+            <div style={{ fontSize: 10, color: "#8a8a8a", fontFamily: "monospace", lineHeight: 1.6, textAlign: "center", padding: "0 8px" }}>
               {t("disclaimer")}
             </div>
           </div>
