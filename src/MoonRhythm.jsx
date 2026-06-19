@@ -2,6 +2,7 @@ import { useState, useCallback, useMemo } from "react";
 import useLocalStorage from "./useLocalStorage";
 import { useLang } from "./i18n";
 import { syncToGoogleCalendar, downloadICS } from "./googleCalendar";
+import { getVedicPositions } from "./astrology";
 
 // ── Phase configuration ──
 const PHASE_CONFIG = {
@@ -251,6 +252,45 @@ function FastingStats({ logs, periodStart, cycleLen }) {
           </div>
         </>
       )}
+    </div>
+  );
+}
+
+// ══════════════════════════════════
+// ── Vedic astrology card (Sun / Moon / Mercury) ──
+// ══════════════════════════════════
+function AstroCard() {
+  const { t } = useLang();
+  const pos = useMemo(() => {
+    try { return getVedicPositions(new Date()); } catch { return null; }
+  }, []);
+  if (!pos) return null;
+
+  const row = (label, body, showMotion) => (
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "6px 0", borderBottom: "1px solid #ffffff08" }}>
+      <span style={{ fontSize: 12, color: "#888", fontFamily: "monospace" }}>{label}</span>
+      <span style={{ fontSize: 13, color: "#cfc6ea" }}>
+        <span style={{ fontSize: 15, marginRight: 4 }}>{body.glyph}</span>
+        {t(`sign.${body.key}`)}
+        {showMotion && (
+          <span style={{ fontSize: 10, fontFamily: "monospace", marginLeft: 6, color: body.retrograde ? "#FF6B6B" : "#4A9E8E" }}>
+            {body.retrograde ? `℞ ${t("astroRetro")}` : t("astroDirect")}
+          </span>
+        )}
+      </span>
+    </div>
+  );
+
+  return (
+    <div style={{ background: "linear-gradient(160deg, #120F1C 0%, #111118 70%)", border: "1px solid #7B68AE44", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+        <span style={{ fontSize: 14, color: "#9d8cd4", fontFamily: "serif" }}>✦ {t("astroTitle")}</span>
+        <span style={{ fontSize: 9, color: "#9d8cd4", border: "1px solid #7B68AE66", borderRadius: 4, padding: "1px 6px", fontFamily: "monospace" }}>{t("astroSystem")}</span>
+      </div>
+      {row(t("astroSun"), pos.sun, false)}
+      {row(t("astroMoon"), pos.moon, false)}
+      {row(t("astroMercury"), pos.mercury, true)}
+      <div style={{ fontSize: 10, color: "#5a5470", fontFamily: "monospace", lineHeight: 1.6, marginTop: 8 }}>{t("astroNote")}</div>
     </div>
   );
 }
@@ -688,7 +728,7 @@ export default function MoonRhythm() {
   const [periodStart, setPeriodStart] = useLocalStorage("moon-periodStart", isoDate(addDays(new Date(), -5)));
   const [goals, setGoals] = useLocalStorage("moon-goals", ["fasting"]);
   const [logs, setLogs] = useLocalStorage("moon-logs", {});
-  // Paid-download model: everyone who has the app paid US$1, so the full
+  // Paid-download model: everyone who has the app paid US$1.99, so the full
   // Moonyou＋ base (deep guidance + AI coach) is always unlocked. Extended
   // services (real nutritionist consult) are separate paid add-ons.
 
@@ -830,6 +870,9 @@ export default function MoonRhythm() {
                 </div>
               )}
             </div>
+
+            {/* Vedic sidereal astrology — Sun / Moon / Mercury */}
+            <AstroCard />
 
             {/* Moonyou＋ deep guidance (unlocked — included with the paid app) */}
             {flags.showFasting && (

@@ -217,12 +217,39 @@ const translations = {
     en: "This is Moonyou＋ premium content. The free tier shows a one-line tip; the premium tier gives full nutrition, exercise, supplement and hormone guidance tailored to your current phase.",
   },
   deepUnlockCta: { zh: "解鎖 Moonyou＋", en: "Unlock Moonyou＋" },
-  plusPrice: { zh: "US$1", en: "US$1" },
+  plusPrice: { zh: "US$1.99", en: "US$1.99" },
   plusPriceNote: {
-    zh: "一次 US$1 解鎖 Moonyou＋(深度指南 ＋ AI 顧問)。真人諮詢等延伸服務在裡面再另外開通。",
-    en: "One-time US$1 unlocks Moonyou＋ (deep guidance + AI coach). Extended services like real consults unlock separately inside.",
+    zh: "一次 US$1.99 解鎖 Moonyou＋(深度指南 ＋ AI 顧問)。真人諮詢等延伸服務在裡面再另外開通。",
+    en: "One-time US$1.99 unlocks Moonyou＋ (deep guidance + AI coach). Extended services like real consults unlock separately inside.",
   },
   addonTag: { zh: "延伸加購", en: "Add-on" },
+
+  // ══════════════════════════════════
+  // ── Vedic astrology (sidereal) ──
+  // ══════════════════════════════════
+  astroTitle: { zh: "今日星象", en: "Today's Sky" },
+  astroSystem: { zh: "吠陀・恆星黃道", en: "Vedic · Sidereal" },
+  astroSun: { zh: "太陽", en: "Sun" },
+  astroMoon: { zh: "月亮", en: "Moon" },
+  astroMercury: { zh: "水星", en: "Mercury" },
+  astroRetro: { zh: "逆行", en: "Retrograde" },
+  astroDirect: { zh: "順行", en: "Direct" },
+  astroNote: {
+    zh: "採用吠陀占星(恆星黃道,Lahiri ayanamsa),星座對齊真實星群。",
+    en: "Vedic astrology (sidereal zodiac, Lahiri ayanamsa) — signs aligned with the actual constellations.",
+  },
+  "sign.aries": { zh: "牡羊座", en: "Aries" },
+  "sign.taurus": { zh: "金牛座", en: "Taurus" },
+  "sign.gemini": { zh: "雙子座", en: "Gemini" },
+  "sign.cancer": { zh: "巨蟹座", en: "Cancer" },
+  "sign.leo": { zh: "獅子座", en: "Leo" },
+  "sign.virgo": { zh: "處女座", en: "Virgo" },
+  "sign.libra": { zh: "天秤座", en: "Libra" },
+  "sign.scorpio": { zh: "天蠍座", en: "Scorpio" },
+  "sign.sagittarius": { zh: "射手座", en: "Sagittarius" },
+  "sign.capricorn": { zh: "摩羯座", en: "Capricorn" },
+  "sign.aquarius": { zh: "水瓶座", en: "Aquarius" },
+  "sign.pisces": { zh: "雙魚座", en: "Pisces" },
   previewPlusLabel: { zh: "Moonyou＋ 進階內容(預覽)", en: "Moonyou＋ premium content (preview)" },
   previewPlusNote: {
     zh: "開啟後,儀表板會顯示完整的深度週期指南;關閉則只看免費版的一句話建議。用來比較兩者差異。",
@@ -238,8 +265,8 @@ const translations = {
   "consult.dataLabel": { zh: "依據你的數據", en: "Based on your data" },
   "consult.lockedTitle": { zh: "Moonyou＋ 健康顧問", en: "Moonyou＋ Health Coach" },
   "consult.lockedDesc": {
-    zh: "一次 US$1 解鎖:AI 顧問會讀你記錄的週期、斷食與體溫,每天給你一段為你個人化的建議。解鎖後還能另外加購真人營養師深度諮詢。",
-    en: "Unlock for a one-time US$1: the AI coach reads your cycle, fasting and temperature logs and gives you a personalized note each day. Real nutritionist consults are available as an add-on once unlocked.",
+    zh: "一次 US$1.99 解鎖:AI 顧問會讀你記錄的週期、斷食與體溫,每天給你一段為你個人化的建議。解鎖後還能另外加購真人營養師深度諮詢。",
+    en: "Unlock for a one-time US$1.99: the AI coach reads your cycle, fasting and temperature logs and gives you a personalized note each day. Real nutritionist consults are available as an add-on once unlocked.",
   },
 
   "consult.greeting": { zh: "嗨,根據你的記錄——你現在在{phase}、週期第 {day} 天。", en: "Hi — based on your logs, you're in your {phase}, cycle day {day}." },
