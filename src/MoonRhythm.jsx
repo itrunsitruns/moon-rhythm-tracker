@@ -575,25 +575,12 @@ function generateConsultAdvice({ phase, cycleDay, cycleLen, logs, periodStart, g
   return { lines, weekAvg, suggested };
 }
 
-function ConsultantView({ phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected, premium, onUnlock }) {
+function ConsultantView({ phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected, onBook }) {
   const { t } = useLang();
   const advice = useMemo(
     () => generateConsultAdvice({ phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected }, t),
     [phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected, t]
   );
-
-  if (!premium) {
-    return (
-      <div style={{ background: "linear-gradient(160deg, #16130A 0%, #111118 70%)", border: "1px solid #D4A01744", borderRadius: 12, padding: 20, textAlign: "center" }}>
-        <div style={{ fontSize: 32, marginBottom: 8 }}>✦</div>
-        <div style={{ fontSize: 16, color: "#D4A017", fontFamily: "serif", marginBottom: 8 }}>{t("consult.lockedTitle")}</div>
-        <div style={{ fontSize: 12.5, color: "#aaa", lineHeight: 1.7, marginBottom: 16 }}>{t("consult.lockedDesc")}</div>
-        <button onClick={onUnlock} style={{ padding: "11px 24px", background: "#D4A017", color: "#0A0A0F", border: "none", borderRadius: 8, fontFamily: "serif", fontSize: 13, fontWeight: "bold", cursor: "pointer" }}>
-          ✦ {t("deepUnlockCta")} · {t("plusPrice")}
-        </button>
-      </div>
-    );
-  }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -630,7 +617,7 @@ function ConsultantView({ phase, cycleDay, cycleLen, logs, periodStart, goals, o
         </div>
         <div style={{ fontSize: 11, color: "#4A9E8E", fontFamily: "monospace", marginBottom: 8 }}>{t("consult.humanPrice")}</div>
         <div style={{ fontSize: 12, color: "#aaa", lineHeight: 1.7, marginBottom: 12 }}>{t("consult.humanDesc")}</div>
-        <button onClick={onUnlock} style={{ width: "100%", padding: 11, background: "transparent", color: "#4A9E8E", border: "1px solid #4A9E8E55", borderRadius: 8, fontFamily: "monospace", fontSize: 12, cursor: "pointer" }}>
+        <button onClick={onBook} style={{ width: "100%", padding: 11, background: "transparent", color: "#4A9E8E", border: "1px solid #4A9E8E55", borderRadius: 8, fontFamily: "monospace", fontSize: 12, cursor: "pointer" }}>
           {t("consult.humanCta")} →
         </button>
       </div>
@@ -701,8 +688,9 @@ export default function MoonRhythm() {
   const [periodStart, setPeriodStart] = useLocalStorage("moon-periodStart", isoDate(addDays(new Date(), -5)));
   const [goals, setGoals] = useLocalStorage("moon-goals", ["fasting"]);
   const [logs, setLogs] = useLocalStorage("moon-logs", {});
-  // Premium preview: lets us SHOW the Moonyou＋ content while evaluating whether it's worth charging for.
-  const [premiumPreview, setPremiumPreview] = useLocalStorage("moon-premiumPreview", true);
+  // Paid-download model: everyone who has the app paid US$1, so the full
+  // Moonyou＋ base (deep guidance + AI coach) is always unlocked. Extended
+  // services (real nutritionist consult) are separate paid add-ons.
 
   const flags = useGoalFlags(goals);
 
@@ -843,9 +831,9 @@ export default function MoonRhythm() {
               )}
             </div>
 
-            {/* Moonyou＋ deep guidance (premium content — shown in preview while evaluating) */}
-            {flags.showFasting && premiumPreview && (
-              <DeepGuidance phase={todayPhase} preview={true} onUnlock={() => setView("settings")} />
+            {/* Moonyou＋ deep guidance (unlocked — included with the paid app) */}
+            {flags.showFasting && (
+              <DeepGuidance phase={todayPhase} preview={false} />
             )}
 
             {/* Fertility bar */}
@@ -904,7 +892,7 @@ export default function MoonRhythm() {
           <ConsultantView
             phase={todayPhase} cycleDay={cycleDay} cycleLen={cycleLen}
             logs={logs} periodStart={periodStart} goals={goals} ovDetected={ovDetected}
-            premium={premiumPreview} onUnlock={() => setView("settings")} />
+            premium={true} onBook={() => {}} />
         )}
 
         {/* ─── GUIDE ─── */}
@@ -941,23 +929,6 @@ export default function MoonRhythm() {
                 })}
               </div>
               <div style={{ fontSize: 10, color: "#555", fontFamily: "monospace", marginTop: 4 }}>{t("goalExclusive")}</div>
-            </div>
-
-            {/* Moonyou＋ preview toggle */}
-            <div style={{ borderTop: "1px solid #1a1a2e", paddingTop: 16 }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-                <label style={{ fontSize: 12, color: "#D4A017", fontFamily: "monospace" }}>✦ {t("previewPlusLabel")}</label>
-                <button onClick={() => setPremiumPreview(p => !p)} style={{
-                  width: 46, height: 26, borderRadius: 13, flexShrink: 0, cursor: "pointer", position: "relative",
-                  background: premiumPreview ? "#D4A017" : "#2a2a3e", border: "none", transition: "background 0.2s",
-                }}>
-                  <span style={{
-                    position: "absolute", top: 3, left: premiumPreview ? 23 : 3, width: 20, height: 20,
-                    borderRadius: "50%", background: "#0A0A0F", transition: "left 0.2s",
-                  }} />
-                </button>
-              </div>
-              <div style={{ fontSize: 10, color: "#555", fontFamily: "monospace", marginTop: 6, lineHeight: 1.6 }}>{t("previewPlusNote")}</div>
             </div>
 
             <div style={{ borderTop: "1px solid #1a1a2e", paddingTop: 16 }}>
