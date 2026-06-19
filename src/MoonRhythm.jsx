@@ -2,6 +2,8 @@ import { useState, useCallback, useMemo } from "react";
 import useLocalStorage from "./useLocalStorage";
 import { useLang } from "./i18n";
 import { syncToGoogleCalendar, downloadICS } from "./googleCalendar";
+import { getVedicPositions } from "./astrology";
+import { getDailyDraw } from "./tarot";
 
 // ── Phase configuration ──
 const PHASE_CONFIG = {
@@ -256,6 +258,193 @@ function FastingStats({ logs, periodStart, cycleLen }) {
 }
 
 // ══════════════════════════════════
+// ── Vedic astrology card (Sun / Moon / Mercury) ──
+// ══════════════════════════════════
+function AstroCard() {
+  const { t } = useLang();
+  const pos = useMemo(() => {
+    try { return getVedicPositions(new Date()); } catch { return null; }
+  }, []);
+  if (!pos) return null;
+
+  const row = (label, body, showMotion) => (
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "6px 0", borderBottom: "1px solid #ffffff08" }}>
+      <span style={{ fontSize: 12, color: "#888", fontFamily: "monospace" }}>{label}</span>
+      <span style={{ fontSize: 13, color: "#cfc6ea" }}>
+        <span style={{ fontSize: 15, marginRight: 4 }}>{body.glyph}</span>
+        {t(`sign.${body.key}`)}
+        {showMotion && (
+          <span style={{ fontSize: 10, fontFamily: "monospace", marginLeft: 6, color: body.retrograde ? "#FF6B6B" : "#4A9E8E" }}>
+            {body.retrograde ? `℞ ${t("astroRetro")}` : t("astroDirect")}
+          </span>
+        )}
+      </span>
+    </div>
+  );
+
+  return (
+    <div style={{ background: "linear-gradient(160deg, #120F1C 0%, #111118 70%)", border: "1px solid #7B68AE44", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+        <span style={{ fontSize: 14, color: "#9d8cd4", fontFamily: "serif" }}>✦ {t("astroTitle")}</span>
+        <span style={{ fontSize: 9, color: "#9d8cd4", border: "1px solid #7B68AE66", borderRadius: 4, padding: "1px 6px", fontFamily: "monospace" }}>{t("astroSystem")}</span>
+      </div>
+      {row(t("astroSun"), pos.sun, false)}
+      {row(t("astroMoon"), pos.moon, false)}
+      {row(t("astroMercury"), pos.mercury, true)}
+      <div style={{ fontSize: 10, color: "#5a5470", fontFamily: "monospace", lineHeight: 1.6, marginTop: 8 }}>{t("astroNote")}</div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════
+// ── Daily Tarot card ──
+// ══════════════════════════════════
+function TarotCard() {
+  const { t, lang } = useLang();
+  const draw = useMemo(() => getDailyDraw(new Date()), []);
+  const [revealedDay, setRevealedDay] = useLocalStorage("moon-tarotRevealed", "");
+  const revealed = revealedDay === draw.dayKey;
+
+  const card = draw.card;
+  const name = lang === "zh" ? card.zh : card.en;
+  const meaning = draw.reversed
+    ? (lang === "zh" ? card.rv_zh : card.rv_en)
+    : (lang === "zh" ? card.up_zh : card.up_en);
+
+  const cardFace = (faceUp) => (
+    <div style={{
+      width: 132, height: 210, borderRadius: 12, flexShrink: 0,
+      background: faceUp ? "linear-gradient(160deg, #1A1530 0%, #0E0B1A 100%)" : "linear-gradient(160deg, #15131F 0%, #0A0A0F 100%)",
+      border: "1.5px solid #D4A01788", boxShadow: "0 6px 24px #00000055",
+      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+      position: "relative", overflow: "hidden", cursor: faceUp ? "default" : "pointer",
+    }}>
+      {faceUp ? (
+        <>
+          <span style={{ position: "absolute", top: 8, left: 10, fontSize: 11, color: "#D4A017", fontFamily: "serif" }}>{card.n}</span>
+          <span style={{ position: "absolute", top: 8, right: 10, fontSize: 11, color: "#D4A017" }}>✦</span>
+          <span style={{ fontSize: 52, transform: draw.reversed ? "rotate(180deg)" : "none", lineHeight: 1 }}>{card.glyph}</span>
+          <span style={{ marginTop: 14, fontSize: 14, color: "#e8e0ff", fontFamily: "serif", textAlign: "center", padding: "0 6px" }}>{name}</span>
+        </>
+      ) : (
+        <>
+          <span style={{ fontSize: 40, color: "#D4A01766" }}>🌙</span>
+          <span style={{ position: "absolute", inset: 8, border: "1px solid #D4A01733", borderRadius: 8 }} />
+        </>
+      )}
+    </div>
+  );
+
+  return (
+    <div style={{ background: "linear-gradient(160deg, #120F1C 0%, #111118 70%)", border: "1px solid #D4A01744", borderRadius: 12, padding: 16, marginBottom: 12 }}>
+      <div style={{ fontSize: 14, color: "#D4A017", fontFamily: "serif", marginBottom: 12 }}>🔮 {t("tarotTitle")}</div>
+
+      {!revealed ? (
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+          <div onClick={() => setRevealedDay(draw.dayKey)}>{cardFace(false)}</div>
+          <button onClick={() => setRevealedDay(draw.dayKey)} style={{
+            padding: "10px 22px", background: "#D4A017", color: "#0A0A0F", border: "none",
+            borderRadius: 8, fontFamily: "serif", fontSize: 13, fontWeight: "bold", cursor: "pointer",
+          }}>✦ {t("tarotReveal")}</button>
+          <div style={{ fontSize: 11, color: "#666", fontFamily: "monospace" }}>{t("tarotHint")}</div>
+        </div>
+      ) : (
+        <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
+          {cardFace(true)}
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: 16, color: "#e8e0ff", fontFamily: "serif", marginBottom: 4 }}>{name}</div>
+            <div style={{ display: "inline-block", fontSize: 10, fontFamily: "monospace", padding: "2px 8px", borderRadius: 4, marginBottom: 10,
+              color: draw.reversed ? "#FF8FA3" : "#4A9E8E", border: `1px solid ${draw.reversed ? "#FF8FA355" : "#4A9E8E55"}` }}>
+              {draw.reversed ? t("tarotReversed") : t("tarotUpright")}
+            </div>
+            <div style={{ fontSize: 13, color: "#cfc6ea", lineHeight: 1.7 }}>{meaning}</div>
+          </div>
+        </div>
+      )}
+
+      <div style={{ fontSize: 10, color: "#5a5470", fontFamily: "monospace", lineHeight: 1.6, marginTop: 12 }}>{t("tarotNote")}</div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════
+// ── Moonyou＋ Deep Guidance (premium) ──
+// ══════════════════════════════════
+function deepKey(phase) {
+  if (phase === "menstrual") return "menstrual";
+  if (phase === "follicular_gold" || phase === "follicular_late") return "follicular";
+  if (phase === "ovulation") return "ovulation";
+  return "luteal"; // luteal + safe
+}
+
+function DeepGuidance({ phase, preview, onUnlock }) {
+  const { t } = useLang();
+  const [open, setOpen] = useState(true);
+  const dk = deepKey(phase);
+  const rows = [
+    ["⏳", t("deep.label.protocol"), t(`deep.${dk}.protocol`)],
+    ["🍽️", t("deep.label.eat"), t(`deep.${dk}.eat`)],
+    ["🚫", t("deep.label.avoid"), t(`deep.${dk}.avoid`)],
+    ["🏃", t("deep.label.move"), t(`deep.${dk}.move`)],
+    ["💊", t("deep.label.support"), t(`deep.${dk}.support`)],
+    ["🩸", t("deep.label.hormone"), t(`deep.${dk}.hormone`)],
+  ];
+
+  return (
+    <div style={{
+      background: "linear-gradient(160deg, #16130A 0%, #111118 70%)",
+      border: "1px solid #D4A01755", borderRadius: 12, padding: 16, marginBottom: 12,
+      boxShadow: "0 0 0 1px #D4A01711, 0 4px 20px #00000040",
+    }}>
+      {/* Header */}
+      <div onClick={() => setOpen(o => !o)} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ fontSize: 15, color: "#D4A017", fontFamily: "serif" }}>✦ {t("deepTitle")}</span>
+          <span style={{ fontSize: 9, color: "#0A0A0F", background: "#D4A017", borderRadius: 4, padding: "1px 6px", fontFamily: "monospace", fontWeight: "bold" }}>
+            {t("deepPlusTag")}
+          </span>
+          {preview && (
+            <span style={{ fontSize: 9, color: "#D4A017", border: "1px solid #D4A01766", borderRadius: 4, padding: "1px 5px", fontFamily: "monospace" }}>
+              {t("deepPreviewBadge")}
+            </span>
+          )}
+        </div>
+        <span style={{ color: "#888", fontSize: 12 }}>{open ? "▾" : "▸"}</span>
+      </div>
+
+      {open && (
+        <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+          {rows.map(([icon, label, body], i) => (
+            <div key={i} style={{ display: "flex", gap: 10 }}>
+              <div style={{ fontSize: 15, flexShrink: 0, width: 20, textAlign: "center" }}>{icon}</div>
+              <div>
+                <div style={{ fontSize: 11, color: "#D4A017", fontFamily: "monospace", marginBottom: 2 }}>{label}</div>
+                <div style={{ fontSize: 12.5, color: "#cfcfcf", lineHeight: 1.65 }}>{body}</div>
+              </div>
+            </div>
+          ))}
+
+          {preview && (
+            <div style={{ marginTop: 6, borderTop: "1px dashed #D4A01733", paddingTop: 12 }}>
+              <div style={{ fontSize: 11, color: "#888", lineHeight: 1.6, marginBottom: 10, fontFamily: "monospace" }}>
+                {t("deepPremiumNote")}
+              </div>
+              <button onClick={onUnlock} style={{
+                width: "100%", padding: 11, background: "#D4A017", color: "#0A0A0F",
+                border: "none", borderRadius: 8, fontFamily: "serif", fontSize: 13, fontWeight: "bold",
+                cursor: "pointer",
+              }}>
+                ✦ {t("deepUnlockCta")} · {t("plusPrice")}
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ══════════════════════════════════
 // ── Calendar grid ──
 // ══════════════════════════════════
 function CalendarGrid({ periodStart, cycleLen, year, month, logs, onSelectDate, selectedDate, flags, ovDetected }) {
@@ -467,6 +656,93 @@ function DateDetail({ dateKey, periodStart, cycleLen, logs, onSaveLog, onDeleteL
 }
 
 // ══════════════════════════════════
+// ── Moonyou＋ Consultant ──
+// ══════════════════════════════════
+// Assembles a personalized note from the user's own logged data.
+// (Rule-based now; designed to be swapped for a real Claude call later.)
+function generateConsultAdvice({ phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected }, t) {
+  const dk = deepKey(phase);
+  const stats = computeStats(logs, periodStart, cycleLen, t);
+  const suggested = PHASE_DEFAULT_HOURS[phase] || 12;
+  const weekAvg = Number(stats.weekAvg) || 0;
+  const phaseLabel = t(`phase.${phase}`).replace(" 🔥", "");
+  const lines = [];
+
+  lines.push(t("consult.greeting", { phase: phaseLabel, day: cycleDay ?? "—" }));
+
+  if (goals.includes("fasting")) {
+    if (weekAvg <= 0) lines.push(t("consult.fastNone", { suggested }));
+    else if (weekAvg + 1 < suggested && suggested >= 24) lines.push(t("consult.fastRoom", { avg: weekAvg, suggested }));
+    else lines.push(t("consult.fastGood", { avg: weekAvg }));
+  }
+
+  lines.push(t("consult.nutrition", { eat: t(`deep.${dk}.eat`) }));
+
+  if (goals.includes("conceive")) lines.push(t(phase === "ovulation" ? "consult.conceiveOv" : "consult.conceiveOff"));
+  else if (goals.includes("avoid")) lines.push(t(phase === "ovulation" ? "consult.avoidOv" : "consult.avoidOff"));
+
+  if (ovDetected.length) lines.push(t("consult.ovDetected"));
+
+  lines.push(t("consult.closing"));
+  return { lines, weekAvg, suggested };
+}
+
+function ConsultantView({ phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected, onBook }) {
+  const { t } = useLang();
+  const advice = useMemo(
+    () => generateConsultAdvice({ phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected }, t),
+    [phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected, t]
+  );
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+      {/* AI coach card */}
+      <div style={{ background: "linear-gradient(160deg, #16130A 0%, #111118 70%)", border: "1px solid #D4A01755", borderRadius: 12, padding: 16, boxShadow: "0 4px 20px #00000040" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+          <span style={{ fontSize: 22 }}>🌙</span>
+          <div>
+            <div style={{ fontSize: 15, color: "#D4A017", fontFamily: "serif" }}>{t("consult.title")}</div>
+            <div style={{ fontSize: 9, color: "#888", fontFamily: "monospace" }}>
+              {t("consult.aiBadge")} · {t("consult.dataLabel")}
+            </div>
+          </div>
+        </div>
+
+        <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 10 }}>
+          {advice.lines.map((line, i) => (
+            <div key={i} style={{ fontSize: 13, color: "#d6d6d6", lineHeight: 1.7, paddingLeft: 12, borderLeft: "2px solid #D4A01733" }}>
+              {line}
+            </div>
+          ))}
+        </div>
+
+        <div style={{ fontSize: 10, color: "#666", fontFamily: "monospace", lineHeight: 1.6, marginTop: 14, borderTop: "1px dashed #D4A01722", paddingTop: 10 }}>
+          {t("consult.aiNote")}
+        </div>
+      </div>
+
+      {/* Human nutritionist upsell */}
+      <div style={{ background: "#111118", border: "1px solid #4A9E8E33", borderRadius: 12, padding: 16 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+          <div style={{ fontSize: 14, color: "#4A9E8E", fontFamily: "serif" }}>👩‍⚕️ {t("consult.humanTitle")}</div>
+          <div style={{ fontSize: 9, color: "#4A9E8E", border: "1px solid #4A9E8E55", borderRadius: 4, padding: "1px 6px", fontFamily: "monospace", flexShrink: 0 }}>{t("addonTag")}</div>
+        </div>
+        <div style={{ fontSize: 11, color: "#4A9E8E", fontFamily: "monospace", marginBottom: 8 }}>{t("consult.humanPrice")}</div>
+        <div style={{ fontSize: 12, color: "#aaa", lineHeight: 1.7, marginBottom: 12 }}>{t("consult.humanDesc")}</div>
+        <button onClick={onBook} style={{ width: "100%", padding: 11, background: "transparent", color: "#4A9E8E", border: "1px solid #4A9E8E55", borderRadius: 8, fontFamily: "monospace", fontSize: 12, cursor: "pointer" }}>
+          {t("consult.humanCta")} →
+        </button>
+      </div>
+
+      {/* Disclaimer */}
+      <div style={{ fontSize: 10, color: "#555", fontFamily: "monospace", lineHeight: 1.6, textAlign: "center", padding: "0 8px" }}>
+        {t("disclaimer")}
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════
 // ── Guide view ──
 // ══════════════════════════════════
 function GuideView() {
@@ -524,6 +800,9 @@ export default function MoonRhythm() {
   const [periodStart, setPeriodStart] = useLocalStorage("moon-periodStart", isoDate(addDays(new Date(), -5)));
   const [goals, setGoals] = useLocalStorage("moon-goals", ["fasting"]);
   const [logs, setLogs] = useLocalStorage("moon-logs", {});
+  // Paid-download model: everyone who has the app paid US$1.99, so the full
+  // Moonyou＋ base (deep guidance + AI coach) is always unlocked. Extended
+  // services (real nutritionist consult) are separate paid add-ons.
 
   const flags = useGoalFlags(goals);
 
@@ -594,7 +873,7 @@ export default function MoonRhythm() {
       flex: 1, padding: "10px 0", background: view === v ? "#1a1a2e" : "transparent",
       color: view === v ? todayCfg.color : "#666", border: "none",
       borderTop: view === v ? `2px solid ${todayCfg.color}` : "2px solid transparent",
-      fontFamily: "monospace", fontSize: 12, cursor: "pointer",
+      fontFamily: "monospace", fontSize: 10.5, cursor: "pointer", whiteSpace: "nowrap",
     }}>{label}</button>
   );
 
@@ -664,6 +943,17 @@ export default function MoonRhythm() {
               )}
             </div>
 
+            {/* Vedic sidereal astrology — Sun / Moon / Mercury */}
+            <AstroCard />
+
+            {/* Daily tarot draw */}
+            <TarotCard />
+
+            {/* Moonyou＋ deep guidance (unlocked — included with the paid app) */}
+            {flags.showFasting && (
+              <DeepGuidance phase={todayPhase} preview={false} />
+            )}
+
             {/* Fertility bar */}
             {flags.showFertility && (
               <div style={{ background: "#111118", borderRadius: 12, padding: 16, marginBottom: 12 }}>
@@ -713,6 +1003,14 @@ export default function MoonRhythm() {
               <div style={{ marginTop: 12, fontSize: 11, color: "#666", fontFamily: "monospace", textAlign: "center" }}>{t("clickToView")}</div>
             )}
           </div>
+        )}
+
+        {/* ─── CONSULTANT (Moonyou＋) ─── */}
+        {view === "consult" && (
+          <ConsultantView
+            phase={todayPhase} cycleDay={cycleDay} cycleLen={cycleLen}
+            logs={logs} periodStart={periodStart} goals={goals} ovDetected={ovDetected}
+            premium={true} onBook={() => {}} />
         )}
 
         {/* ─── GUIDE ─── */}
@@ -780,6 +1078,7 @@ export default function MoonRhythm() {
       <div style={{ position: "sticky", bottom: 0, display: "flex", background: "#0A0A0F", borderTop: "1px solid #1a1a2e" }}>
         {navBtn(`🌙 ${t("dashboard")}`, "dashboard")}
         {navBtn(`📅 ${t("calendar")}`, "calendar")}
+        {navBtn(`✦ ${t("consult")}`, "consult")}
         {navBtn(`📖 ${t("guide")}`, "guide")}
         {navBtn(`⚙️ ${t("settings")}`, "settings")}
       </div>

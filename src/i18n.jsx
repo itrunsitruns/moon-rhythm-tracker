@@ -206,6 +206,213 @@ const translations = {
     zh: "本工具僅供個人健康參考，不構成醫療建議。如有健康疑慮，請諮詢專業醫療人員。",
     en: "This tool is for personal reference only and does not constitute medical advice. Please consult a healthcare professional for any health concerns.",
   },
+
+  // ══════════════════════════════════
+  // ── Moonyou＋ deep cycle guidance (premium) ──
+  // ══════════════════════════════════
+  deepTitle: { zh: "深度週期指南", en: "Deep Cycle Guidance" },
+  deepPreviewBadge: { zh: "預覽", en: "PREVIEW" },
+  deepPremiumNote: {
+    zh: "這是 Moonyou＋ 進階內容。免費版只顯示一句話建議,進階版針對你目前的階段給出完整的飲食、運動、補充與荷爾蒙說明。",
+    en: "This is Moonyou＋ premium content. The free tier shows a one-line tip; the premium tier gives full nutrition, exercise, supplement and hormone guidance tailored to your current phase.",
+  },
+  deepUnlockCta: { zh: "解鎖 Moonyou＋", en: "Unlock Moonyou＋" },
+  plusPrice: { zh: "US$1.99", en: "US$1.99" },
+  plusPriceNote: {
+    zh: "一次 US$1.99 解鎖 Moonyou＋(深度指南 ＋ AI 顧問)。真人諮詢等延伸服務在裡面再另外開通。",
+    en: "One-time US$1.99 unlocks Moonyou＋ (deep guidance + AI coach). Extended services like real consults unlock separately inside.",
+  },
+  addonTag: { zh: "延伸加購", en: "Add-on" },
+
+  // ══════════════════════════════════
+  // ── Vedic astrology (sidereal) ──
+  // ══════════════════════════════════
+  astroTitle: { zh: "今日星象", en: "Today's Sky" },
+  astroSystem: { zh: "吠陀・恆星黃道", en: "Vedic · Sidereal" },
+  astroSun: { zh: "太陽", en: "Sun" },
+  astroMoon: { zh: "月亮", en: "Moon" },
+  astroMercury: { zh: "水星", en: "Mercury" },
+  astroRetro: { zh: "逆行", en: "Retrograde" },
+  astroDirect: { zh: "順行", en: "Direct" },
+  astroNote: {
+    zh: "採用吠陀占星(恆星黃道,Lahiri ayanamsa),星座對齊真實星群。",
+    en: "Vedic astrology (sidereal zodiac, Lahiri ayanamsa) — signs aligned with the actual constellations.",
+  },
+  "sign.aries": { zh: "牡羊座", en: "Aries" },
+  "sign.taurus": { zh: "金牛座", en: "Taurus" },
+  "sign.gemini": { zh: "雙子座", en: "Gemini" },
+  "sign.cancer": { zh: "巨蟹座", en: "Cancer" },
+  "sign.leo": { zh: "獅子座", en: "Leo" },
+  "sign.virgo": { zh: "處女座", en: "Virgo" },
+  "sign.libra": { zh: "天秤座", en: "Libra" },
+  "sign.scorpio": { zh: "天蠍座", en: "Scorpio" },
+  "sign.sagittarius": { zh: "射手座", en: "Sagittarius" },
+  "sign.capricorn": { zh: "摩羯座", en: "Capricorn" },
+  "sign.aquarius": { zh: "水瓶座", en: "Aquarius" },
+  "sign.pisces": { zh: "雙魚座", en: "Pisces" },
+
+  // ── Daily Tarot ──
+  tarotTitle: { zh: "每日塔羅", en: "Daily Tarot" },
+  tarotReveal: { zh: "翻開今日的牌", en: "Reveal today's card" },
+  tarotUpright: { zh: "正位", en: "Upright" },
+  tarotReversed: { zh: "逆位", en: "Reversed" },
+  tarotHint: { zh: "輕觸抽出今天的指引", en: "Tap to draw your guidance" },
+  tarotNote: { zh: "每天一張,午夜換新。僅供娛樂與自我覺察。", en: "One card a day, renewed at midnight. For fun & self-reflection only." },
+  previewPlusLabel: { zh: "Moonyou＋ 進階內容(預覽)", en: "Moonyou＋ premium content (preview)" },
+  previewPlusNote: {
+    zh: "開啟後,儀表板會顯示完整的深度週期指南;關閉則只看免費版的一句話建議。用來比較兩者差異。",
+    en: "When on, the dashboard shows full deep cycle guidance; when off, you see only the free one-line tip. Use it to compare the two.",
+  },
+
+  // ══════════════════════════════════
+  // ── Moonyou＋ Consultant (premium) ──
+  // ══════════════════════════════════
+  consult: { zh: "顧問", en: "Coach" },
+  "consult.title": { zh: "你的健康顧問", en: "Your Health Coach" },
+  "consult.aiBadge": { zh: "AI 顧問", en: "AI Coach" },
+  "consult.dataLabel": { zh: "依據你的數據", en: "Based on your data" },
+  "consult.lockedTitle": { zh: "Moonyou＋ 健康顧問", en: "Moonyou＋ Health Coach" },
+  "consult.lockedDesc": {
+    zh: "一次 US$1.99 解鎖:AI 顧問會讀你記錄的週期、斷食與體溫,每天給你一段為你個人化的建議。解鎖後還能另外加購真人營養師深度諮詢。",
+    en: "Unlock for a one-time US$1.99: the AI coach reads your cycle, fasting and temperature logs and gives you a personalized note each day. Real nutritionist consults are available as an add-on once unlocked.",
+  },
+
+  "consult.greeting": { zh: "嗨,根據你的記錄——你現在在{phase}、週期第 {day} 天。", en: "Hi — based on your logs, you're in your {phase}, cycle day {day}." },
+  "consult.fastNone": { zh: "我看到你這週還沒記錄斷食。這個階段適合 {suggested} 小時左右,從今天開始試試,我才能更準地幫你調。", en: "I notice you haven't logged any fasting this week. This phase suits around {suggested}h — start today and I can tune it for you more precisely." },
+  "consult.fastRoom": { zh: "你這週平均斷食 {avg} 小時。這個階段你的身體其實扛得住更長——可以慢慢往 {suggested} 小時靠近,但別勉強。", en: "You've averaged {avg}h of fasting this week. Your body can handle more in this phase — ease toward {suggested}h, but don't force it." },
+  "consult.fastGood": { zh: "你這週平均斷食 {avg} 小時,節奏穩穩的,很好,保持。", en: "You've averaged {avg}h of fasting this week — a steady rhythm. Nicely done, keep it up." },
+  "consult.nutrition": { zh: "飲食上,這幾天我建議:{eat}", en: "On food, for these days I'd suggest: {eat}" },
+  "consult.conceiveOv": { zh: "你正在備孕,而現在就是黃金受孕窗口——把握這幾天,同時別讓身體餓著。", en: "You're trying to conceive, and this is your prime fertile window — seize these days, and don't let your body run on empty." },
+  "consult.conceiveOff": { zh: "備孕方面,現在非排卵期,放輕鬆養好身體,等排卵窗口再衝刺。", en: "For conception, you're outside the fertile window now — rest and nourish, then focus when ovulation comes." },
+  "consult.avoidOv": { zh: "你選了避孕——現在是危險期,務必做好防護。", en: "You've set avoidance — this is your fertile window, so be sure to use protection." },
+  "consult.avoidOff": { zh: "避孕方面,目前風險較低,但仍建議規律防護。", en: "For contraception, risk is lower right now, but regular protection is still advised." },
+  "consult.ovDetected": { zh: "另外,你最近的體溫/分泌物顯示可能正在排卵,我把這個納進考量了。", en: "Also, your recent temperature/mucus suggests you may be ovulating — I've factored that in." },
+  "consult.closing": { zh: "有任何不舒服或想更深入,隨時可以預約真人營養師。照顧好自己 🌙", en: "If anything feels off or you want to go deeper, you can book a real nutritionist any time. Take care of yourself 🌙" },
+
+  "consult.aiNote": {
+    zh: "目前這段建議由 app 依你的數據即時組成;正式版會由 Claude AI 生成,更像對話、更貼近你。",
+    en: "For now this note is assembled live from your data; the production version will be generated by Claude AI — more conversational and personal.",
+  },
+  "consult.humanTitle": { zh: "真人營養師・深度諮詢", en: "Real Nutritionist · Deep Consult" },
+  "consult.humanDesc": {
+    zh: "想要更專業、為你量身的計畫?預約一對一,由合格營養師看你的完整數據,給你專屬方案。",
+    en: "Want a more professional, tailored plan? Book one-on-one — a qualified nutritionist reviews your full data and builds a plan just for you.",
+  },
+  "consult.humanPrice": { zh: "一次 NT$880 起", en: "From NT$880 / session" },
+  "consult.humanCta": { zh: "預約諮詢", en: "Book a consult" },
+  deepFreeTag: { zh: "免費版", en: "FREE" },
+  deepPlusTag: { zh: "Moonyou＋", en: "Moonyou＋" },
+
+  "deep.label.protocol": { zh: "斷食協議", en: "Fasting protocol" },
+  "deep.label.eat": { zh: "建議吃", en: "Eat" },
+  "deep.label.avoid": { zh: "避免", en: "Avoid" },
+  "deep.label.move": { zh: "運動", en: "Movement" },
+  "deep.label.support": { zh: "補充品", en: "Supplements" },
+  "deep.label.hormone": { zh: "身體訊號", en: "What's happening" },
+
+  // —— Menstrual ——
+  "deep.menstrual.protocol": {
+    zh: "溫和 12–14h,進食窗口放在白天(如 10:00–18:00),晚上讓身體休息。這幾天不要嘗試長斷食。",
+    en: "Gentle 12–14h with a daytime eating window (e.g. 10:00–18:00); rest at night. Avoid extended fasts these days.",
+  },
+  "deep.menstrual.eat": {
+    zh: "富鐵食物(紅肉、肝、菠菜、紅豆)、搭配維生素 C 幫助吸收、溫熱湯品、Omega-3 抗發炎。",
+    en: "Iron-rich foods (red meat, liver, spinach, beans) with vitamin C to aid absorption, warm soups, Omega-3.",
+  },
+  "deep.menstrual.avoid": {
+    zh: "生冷食物、過量咖啡因、酒精、過鹹(容易水腫與經痛加劇)。",
+    en: "Cold/raw foods, excess caffeine, alcohol, high salt (worsens bloating & cramps).",
+  },
+  "deep.menstrual.move": {
+    zh: "散步、輕瑜伽、伸展。避免高強度訓練,身體正需要修復。",
+    en: "Walking, gentle yoga, stretching. Skip high-intensity — your body needs to recover.",
+  },
+  "deep.menstrual.support": {
+    zh: "鐵、鎂(緩解經痛)、維生素 C。",
+    en: "Iron, magnesium (eases cramps), vitamin C.",
+  },
+  "deep.menstrual.hormone": {
+    zh: "雌激素與黃體素都在最低點,子宮內膜正在排出,能量自然偏低——順著它休息。",
+    en: "Estrogen and progesterone are at their lowest as the lining sheds; low energy is normal — lean into rest.",
+  },
+
+  // —— Follicular ——
+  "deep.follicular.protocol": {
+    zh: "斷食黃金期!胰島素敏感度最好,可挑戰 16:8、24h 甚至 72h 長斷食,最容易進入生酮與自噬。",
+    en: "Prime fasting window! Insulin sensitivity peaks — try 16:8, 24h, even 72h fasts; ketosis & autophagy come easily.",
+  },
+  "deep.follicular.eat": {
+    zh: "復食以優質蛋白、發酵食物(幫助雌激素代謝)、十字花科蔬菜、亞麻籽/南瓜籽。",
+    en: "Break fasts with quality protein, fermented foods (support estrogen metabolism), cruciferous veg, flax/pumpkin seeds.",
+  },
+  "deep.follicular.avoid": {
+    zh: "精緻糖與過度加工碳水——別浪費這段高代謝期。",
+    en: "Refined sugar & processed carbs — don't waste this high-metabolism window.",
+  },
+  "deep.follicular.move": {
+    zh: "最適合衝刺:高強度間歇(HIIT)、重訓。身體恢復最快、增肌效率最高。",
+    en: "Go hard: HIIT and strength training. Fastest recovery and best muscle-building of the month.",
+  },
+  "deep.follicular.support": {
+    zh: "益生菌、維生素 B 群、亞麻籽(平衡雌激素)。",
+    en: "Probiotics, B-complex, flaxseed (estrogen balance).",
+  },
+  "deep.follicular.hormone": {
+    zh: "雌激素穩定上升,精力、專注、心情、代謝全在高點——這是你一個月裡的「巔峰週」。",
+    en: "Rising estrogen lifts energy, focus, mood and metabolism — this is your peak week of the month.",
+  },
+
+  // —— Ovulation ——
+  "deep.ovulation.protocol": {
+    zh: "停止長斷食,回到溫和 12–14h。這是受孕窗口,身體需要能量,不該處於極端壓力。",
+    en: "Stop extended fasts; return to gentle 12–14h. This is the fertile window — your body needs energy, not extra stress.",
+  },
+  "deep.ovulation.eat": {
+    zh: "抗氧化蔬果(莓果、深色蔬菜)、足夠纖維幫助代謝多餘雌激素、充足蛋白。",
+    en: "Antioxidant produce (berries, dark veg), plenty of fiber to clear excess estrogen, adequate protein.",
+  },
+  "deep.ovulation.avoid": {
+    zh: "極端熱量限制與長斷食——這幾天對壓力最敏感。",
+    en: "Extreme calorie restriction and long fasts — your body is most stress-sensitive now.",
+  },
+  "deep.ovulation.move": {
+    zh: "可做中高強度,但開始往下調。外向期適合團體或社交型運動。",
+    en: "Moderate-to-high intensity is fine but start tapering. Great time for group or social workouts.",
+  },
+  "deep.ovulation.support": {
+    zh: "抗氧化劑、鋅、纖維。",
+    en: "Antioxidants, zinc, fiber.",
+  },
+  "deep.ovulation.hormone": {
+    zh: "雌激素達頂峰後排卵,睪固酮短暫上升,精力與性慾高——但身體正全力排卵,別逼它斷食。",
+    en: "Estrogen peaks then ovulation fires; a testosterone bump lifts drive — but your body is working hard, so ease off fasting.",
+  },
+
+  // —— Luteal ——
+  "deep.luteal.protocol": {
+    zh: "穩定 12–14h,不要長斷食(會放大壓力與嘴饞)。經前一週尤其溫和,以穩定血糖為主。",
+    en: "Steady 12–14h, no long fasts (they amplify stress & cravings). Especially gentle the week before your period — prioritize stable blood sugar.",
+  },
+  "deep.luteal.eat": {
+    zh: "複合碳水(地瓜、糙米、南瓜)穩血糖與情緒、鎂(黑巧克力、堅果)、色胺酸(火雞、香蕉)助眠。",
+    en: "Complex carbs (sweet potato, brown rice, squash) for mood & blood sugar, magnesium (dark chocolate, nuts), tryptophan (turkey, banana) for sleep.",
+  },
+  "deep.luteal.avoid": {
+    zh: "重鹹、咖啡因、酒精、精緻糖——都會放大 PMS 與水腫。",
+    en: "High salt, caffeine, alcohol, refined sugar — all magnify PMS & bloating.",
+  },
+  "deep.luteal.move": {
+    zh: "低強度為主:瑜伽、皮拉提斯、散步,重訓減量。",
+    en: "Keep it low-intensity: yoga, Pilates, walking; scale back heavy lifting.",
+  },
+  "deep.luteal.support": {
+    zh: "鎂、維生素 B6(緩解 PMS)、鈣。",
+    en: "Magnesium, vitamin B6 (eases PMS), calcium.",
+  },
+  "deep.luteal.hormone": {
+    zh: "黃體素上升主導,基礎體溫升高,胰島素敏感度下降——疲倦、嘴饞、情緒波動都正常,溫柔對待自己。",
+    en: "Progesterone takes over, BBT rises, insulin sensitivity dips — fatigue, cravings and mood swings are normal; be gentle with yourself.",
+  },
 };
 
 const LangContext = createContext();
