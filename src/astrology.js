@@ -35,23 +35,33 @@ function siderealSign(tropLon, date) {
   return { idx, key: SIGN_KEYS[idx], glyph: SIGN_GLYPHS[idx], deg: sid % 30 };
 }
 
-// Returns sidereal sign placements for Sun, Moon and Mercury (with retrograde).
+// Returns sidereal sign placements for Sun, Moon and Mercury (with motion).
 export function getVedicPositions(date = new Date()) {
   const sunLon = Astronomy.SunPosition(date).elon;
   const moonLon = Astronomy.EclipticGeoMoon(date).lon;
   const mercLon = eclLonOfDate(Astronomy.Body.Mercury, date);
 
-  // Retrograde: is Mercury's longitude decreasing over the last 2 days?
-  const past = new Date(date.getTime() - 2 * 86400000);
-  const mercPast = eclLonOfDate(Astronomy.Body.Mercury, past);
-  let delta = mercLon - mercPast;
-  if (delta > 180) delta -= 360;
-  if (delta < -180) delta += 360;
-  const retrograde = delta < 0;
+  // Mercury motion: use a centered (yesterday→tomorrow) velocity so we don't
+  // lag the station by a couple of days. Near zero velocity = stationary (留),
+  // the turning point; we also note which way it's about to turn.
+  const DAY = 86400000;
+  const STATION = 0.10; // °/2-day band that counts as stationary
+  const wrap = (x) => { let v = x; if (v > 180) v -= 360; if (v < -180) v += 360; return v; };
+  const before = eclLonOfDate(Astronomy.Body.Mercury, new Date(date.getTime() - DAY));
+  const after = eclLonOfDate(Astronomy.Body.Mercury, new Date(date.getTime() + DAY));
+  const vel = wrap(after - before);
+
+  let motion = "direct", turning = null;
+  if (vel < -STATION) motion = "retro";
+  else if (vel <= STATION) {
+    motion = "station";
+    const ahead = eclLonOfDate(Astronomy.Body.Mercury, new Date(date.getTime() + 2 * DAY));
+    turning = wrap(ahead - mercLon) < 0 ? "retro" : "direct";
+  }
 
   return {
     sun: siderealSign(sunLon, date),
     moon: siderealSign(moonLon, date),
-    mercury: { ...siderealSign(mercLon, date), retrograde },
+    mercury: { ...siderealSign(mercLon, date), motion, turning, retrograde: motion === "retro" },
   };
 }

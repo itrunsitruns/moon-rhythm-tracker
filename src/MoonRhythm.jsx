@@ -274,8 +274,13 @@ function AstroCard() {
         <span style={{ fontSize: 15, marginRight: 4 }}>{body.glyph}</span>
         {t(`sign.${body.key}`)}
         {showMotion && (
-          <span style={{ fontSize: 10, fontFamily: "monospace", marginLeft: 6, color: body.retrograde ? "#FF6B6B" : "#4A9E8E" }}>
-            {body.retrograde ? `℞ ${t("astroRetro")}` : t("astroDirect")}
+          <span style={{ fontSize: 10, fontFamily: "monospace", marginLeft: 6,
+            color: body.motion === "retro" ? "#FF6B6B" : body.motion === "station" ? "#E8C45A" : "#4A9E8E" }}>
+            {body.motion === "retro"
+              ? `℞ ${t("astroRetro")}`
+              : body.motion === "station"
+                ? `${t("astroStation")}${body.turning === "retro" ? " · " + t("astroTurningRetro") : body.turning === "direct" ? " · " + t("astroTurningDirect") : ""}`
+                : t("astroDirect")}
           </span>
         )}
       </span>

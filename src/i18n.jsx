@@ -234,6 +234,9 @@ const translations = {
   astroMercury: { zh: "水星", en: "Mercury" },
   astroRetro: { zh: "逆行", en: "Retrograde" },
   astroDirect: { zh: "順行", en: "Direct" },
+  astroStation: { zh: "停滯(留)", en: "Stationary" },
+  astroTurningRetro: { zh: "轉逆行", en: "turning retrograde" },
+  astroTurningDirect: { zh: "轉順行", en: "turning direct" },
   astroNote: {
     zh: "採用吠陀占星(恆星黃道,Lahiri ayanamsa),星座對齊真實星群。",
     en: "Vedic astrology (sidereal zodiac, Lahiri ayanamsa) — signs aligned with the actual constellations.",
