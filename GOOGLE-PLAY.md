@@ -92,20 +92,61 @@
 
 ## 💰 定價(已決定)
 
-> **已決定:付費 app,US$1.99,沒有免費版。** 延伸服務(真人營養師諮詢、塔羅等)之後用 Google Play 內購當加購。
+> **已決定(2026-10-03 更新):付費 app,US$0.99,沒有免費版。**(原本是 US$1.99) 延伸服務(真人營養師諮詢、塔羅等)之後用 Google Play 內購當加購。
 
-> **Google Play 規則:免費 app 上架後不能改成付費。** 付費必須在建立 app 時就選「付費」,所以建立應用程式那一步要選「付費」並填 US$1.99。
+> **Google Play 規則:免費 app 上架後不能改成付費。** 付費必須在建立 app 時就選「付費」,所以建立應用程式那一步要選「付費」並填 US$0.99。
 
-> 一句提醒:US$1.99 經 Google 抽成(15–30%)後,你實拿約 US$1.4–1.7。利潤主要靠延伸加購。
+> 一句提醒:US$0.99 經 Google 抽成後,你實拿約 US$0.84(個人開發者年營收 100 萬美元以下抽 15%;各國含稅價由 Play 自動換算,實拿可能再少一點)。利潤主要靠延伸加購。
 
 備查——兩種收費方式:
-- **付費 app(本案採用)**:使用者下載前先付一次 US$1.99(Google 抽 15–30%)。最簡單。
+- **付費 app(本案採用)**:使用者下載前先付一次 US$0.99(Google 抽 15–30%)。最簡單。
 - **免費 + 應用程式內購買(IAP)**:先免費裝,內購解鎖。需用 **Google Play 帳款服務**(政策上,Android app 內賣數位內容**不能**改用 Stripe 等外部金流)。
 
 ⚠️ **和 Stripe 付費牆的關係**:Stripe 那條路是給**網頁版**用的。同一套網頁包進 Android app 後,若裡面出現 Stripe 付費牆會**違反 Play 政策**。建議的乾淨切法:
 - **Android(Play)**:付費 app,用 Google 金流;app 內完全解鎖
 - **網頁版**:Stripe 付費牆
 - 讓 app 偵測「我是不是在 Play 版裡」來決定要不要顯示 Stripe 付費牆(這部分我可以幫你實作)
+
+---
+
+## ⏳ 新帳號一定要先跑的:12 人封閉測試 14 天
+
+2023-11-13 之後註冊的**個人**開發者帳號,正式上架前必須先跑封閉測試:
+
+- 至少 **12 個測試者**,**連續 14 天**保持加入(中途掉到 12 人以下就重新計算)
+- 跑完才能在 Play Console 申請正式版存取權
+- 組織帳號免除這條,但要 D-U-N-S 編號
+
+做法:Play Console → 測試 → **封閉測試** → 建立測試群組(用 email 名單或 Google 群組)→ 上傳同一個 `.aab` → 把加入連結傳給測試者。
+付費 app 的測試者安裝時要不要付費,目前未查證,開測前再確認。
+
+---
+
+## 🩺 Health apps declaration(健康 app 申報)
+
+Play Console → 政策 → **應用程式內容** → Health apps。Moonyou 會勾到的大概是:
+
+- **Period tracking(經期追蹤)**
+- 斷食/營養相關的項目(依表單上當時的選項名稱)
+
+注意事項(2026-10-03 已在 app 內調整):
+- Moonyou **不是醫療器材、不是避孕方法**。app 內已把「避孕/安全期」改成「避開易孕期/低受孕期」並加註「日曆推算不是避孕方法」——表單若問是否為受監管的醫療器材,答 **否**,文案也要保持一致,不要寫「避孕」功能
+- 斷食建議只給「長斷食/短斷食」,不建議具體時數;時數由使用者自訂
+- 「個人化顧問」是 app 內依規則組成的文字,**不要**在商店頁寫成 AI
+- 「真人營養師諮詢」尚未開放,app 內按鈕是停用的「即將推出」;正式開放前商店頁不要宣傳它
+
+---
+
+## 📅 Google 日曆同步(OAuth)上架前要處理
+
+app 裡「連接 Google Calendar」用的是 Google OAuth(`calendar.events` 權限)。目前 OAuth 應用程式是 **Testing** 狀態:只有加進 Test users 名單的帳號能用,其他人會看到 403。
+
+上架前三選一:
+1. **Google Auth Platform → Branding** 填完(app 名稱、支援 email、首頁、隱私權政策網址、授權網域 `moonyou.vercel.app`),再到 **Audience → Publish app**。不送審也能用,但使用者會看到「未經驗證」警告,且有 100 人上限
+2. 送 Google 驗證(敏感權限:需隱私權政策、網域驗證、示範影片),審核需要時間
+3. 改成不需授權的「加入 Google 日曆」連結(未實作)
+
+`.ics 備份`那顆按鈕不需要 OAuth,任何人都能用。
 
 ---
 
@@ -131,7 +172,7 @@ Moonyou — Moon Rhythm
 ### 簡短說明 / Short description（≤ 80 字元）
 中文:
 ```
-整合月經週期、間歇斷食與受孕／安全期的個人追蹤,對齊真實月相。
+整合月經週期、間歇斷食與受孕機率參考的個人追蹤,對齊真實月相。
 ```
 English:
 ```
@@ -142,13 +183,13 @@ Cycle, fasting & fertility tracker that syncs with the real lunar phases.
 ```
 🌙 Moonyou — 你的身體,有自己的月亮。
 
-Moonyou 是一款整合月經週期、間歇性斷食、與受孕／安全期追蹤的個人化健康工具。不只是記錄經期——它會根據你的週期階段,動態調整斷食建議、標示安全與危險期,並顯示真實月相,讓你一眼掌握身體的節奏。
+Moonyou 是一款整合月經週期、間歇性斷食、與受孕機率參考的個人化健康工具。不只是記錄經期——它會根據你的週期階段,動態調整斷食建議、標示推算的易孕期,並顯示真實月相,讓你一眼掌握身體的節奏。
 
 核心功能：
-• 週期追蹤 — 輸入月經第一天,自動計算排卵日、危險期、安全期
-• 智慧斷食建議 — 經期輕斷食(12–14h)、濾泡期黃金窗口(可達 72h)、排卵期停長斷食、黃體期溫和斷食
+• 週期追蹤 — 輸入月經第一天,自動推算排卵日與易孕期
+• 智慧斷食建議 — 依週期階段建議長斷食或短斷食:經期短斷食、濾泡期是長斷食的好時機、排卵期只做短斷食、黃體期溫和斷食。時數由你自己決定,也能加入自己常用的時數
 • 真實月相 — 日曆上的月亮對應天空中真正的月相,觀察身體週期與自然的同步
-• 目標自訂 — 斷食優化、避孕、備孕三種目標,可複選組合,介面自動調整
+• 目標自訂 — 斷食優化、避開易孕期、備孕三種目標,可複選組合,介面自動調整
 • 斷食記錄與統計 — 每日記錄斷食時數,查看週／月統計、完成率、趨勢圖
 • BBT 與分泌物追蹤 — 輸入基礎體溫與分泌物狀態,動態修正排卵日預測
 • 行事曆匯出 — 一鍵匯出 .ics,加入 Google 或 Apple 行事曆
@@ -157,19 +198,19 @@ Moonyou 是一款整合月經週期、間歇性斷食、與受孕／安全期追
 
 🔒 隱私承諾:你的所有資料 100% 儲存在裝置本機,不需要註冊,不收集、不上傳任何個人資料。你的身體數據只屬於你。
 
-本工具僅供個人健康參考,不構成醫療建議。如有健康疑慮,請諮詢專業醫療人員。
+本工具僅供個人健康參考,不構成醫療建議,日曆推算也不是避孕方法。如有健康疑慮,請諮詢專業醫療人員。
 
 —
 
 🌙 Moonyou — Your body has its own moon.
 
-Moonyou is a personalized health tool that brings together menstrual cycle tracking, intermittent fasting guidance, and fertility/safe-period awareness in one beautiful interface. It's not just a period tracker: it dynamically adjusts fasting recommendations to your cycle phase, marks fertile and safe windows, and shows real lunar phases so you can see your body's rhythm alongside nature's.
+Moonyou is a personalized health tool that brings together menstrual cycle tracking, intermittent fasting guidance, and fertility awareness in one beautiful interface. It's not just a period tracker: it dynamically adjusts fasting recommendations to your cycle phase, marks your estimated fertile window, and shows real lunar phases so you can see your body's rhythm alongside nature's.
 
 Key features:
-• Cycle tracking — enter your period start; ovulation, fertile window & safe days are calculated automatically
-• Smart fasting advice — light fasting during menstruation (12–14h), golden window in the follicular phase (up to 72h), pause long fasts at ovulation, gentle fasting in the luteal phase
+• Cycle tracking — enter your period start; ovulation and fertile window are estimated automatically
+• Smart fasting advice — long or short fasts by phase: short fasts during menstruation, the follicular phase is the best time for a long fast, short fasts only around ovulation, gentle fasting in the luteal phase. You choose the hours, and can save your own favorite lengths
 • Real moon phases — calendar emojis reflect the actual moon in the sky
-• Flexible goals — Fasting, Contraception, or Conception, combinable; the interface adapts
+• Flexible goals — Fasting, Avoid pregnancy, or Conceive, combinable; the interface adapts
 • Fasting log & stats — daily hours, weekly/monthly stats, completion rate, trends
 • BBT & cervical mucus tracking — refine ovulation predictions
 • Calendar export — one-tap .ics to Google or Apple Calendar
@@ -178,7 +219,7 @@ Key features:
 
 🔒 Privacy promise: 100% of your data is stored locally on your device. No registration, no collection, nothing uploaded. Your body data belongs to you and only you.
 
-This app is for personal reference only and does not constitute medical advice. Consult a healthcare professional for any health concerns.
+This app is for personal reference only and does not constitute medical advice, and calendar estimates are not a contraceptive method. Consult a healthcare professional for any health concerns.
 ```
 
 ### 其他欄位

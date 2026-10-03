@@ -27,19 +27,28 @@ function getMoonPhase(date, t) {
   return { emoji: MOON_EMOJIS[idx], name: t(`moon.${idx}`) };
 }
 
-// ── Default fasting hours by phase ──
-const PHASE_DEFAULT_HOURS = {
-  menstrual: 12, follicular_gold: 72, follicular_late: 36,
-  ovulation: 12, luteal: 12, safe: 12,
+// ── Fasting type by phase (long / short — the user picks the hours) ──
+const PHASE_FAST_KIND = {
+  menstrual: "short", follicular_gold: "long", follicular_late: "both",
+  ovulation: "short", luteal: "short", safe: "short",
 };
+
+const DEFAULT_FAST_PRESETS = [12, 16, 24];
 
 function getFastingAdvice(cycleDay, cycleLen, t) {
   const ovDay = cycleLen - 14;
-  if (cycleDay <= 5) return { fast: t("fast.menstrual"), tip: t("tip.menstrual"), defaultH: 12 };
-  if (cycleDay <= 10) return { fast: t("fast.follicular_gold"), tip: t("tip.follicular_gold"), defaultH: 72 };
-  if (cycleDay < ovDay - 5) return { fast: t("fast.follicular_late"), tip: t("tip.follicular_late"), defaultH: 36 };
-  if (cycleDay >= ovDay - 5 && cycleDay <= ovDay + 1) return { fast: t("fast.ovulation"), tip: t("tip.ovulation"), defaultH: 12 };
-  return { fast: t("fast.luteal"), tip: t("tip.luteal"), defaultH: 12 };
+  // Same order as getPhase: the fertile window wins over the follicular window
+  if (cycleDay <= 5) return { fast: t("fast.menstrual"), tip: t("tip.menstrual") };
+  if (cycleDay >= ovDay - 5 && cycleDay <= ovDay + 1) return { fast: t("fast.ovulation"), tip: t("tip.ovulation") };
+  if (cycleDay <= 10) return { fast: t("fast.follicular_gold"), tip: t("tip.follicular_gold") };
+  if (cycleDay < ovDay - 5) return { fast: t("fast.follicular_late"), tip: t("tip.follicular_late") };
+  return { fast: t("fast.luteal"), tip: t("tip.luteal") };
+}
+
+function fertilityLevel(fertility) {
+  if (fertility > 60) return { key: "fertilityHigh", color: "#FF6B6B" };
+  if (fertility > 25) return { key: "fertilityMid", color: "#D4A017" };
+  return { key: "fertilityLow", color: "#4A9E8E" };
 }
 
 // ── Utilities ──
@@ -139,11 +148,8 @@ function computeStats(logs, periodStart, cycleLen, t) {
   // This month
   const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
   const monthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
-  let monthTotal = 0, monthSuggested = 0, monthDays = 0;
-  const pStart = parseLocal(periodStart);
+  let monthTotal = 0, monthDays = 0;
   for (let d = new Date(monthStart); d <= monthEnd && d <= today; d = addDays(d, 1)) {
-    const phase = getPhase(d, pStart, cycleLen);
-    monthSuggested += PHASE_DEFAULT_HOURS[phase] || 12;
     const log = logs[isoDate(d)];
     if (log && log.hours) { monthTotal += log.hours; monthDays++; }
   }
@@ -164,7 +170,7 @@ function computeStats(logs, periodStart, cycleLen, t) {
   const daysInWeekSoFar = Math.max(1, (today.getDay() + 6) % 7 + 1);
   return {
     weekTotal, weekAvg: weekTotal > 0 ? (weekTotal / daysInWeekSoFar).toFixed(1) : 0,
-    monthTotal, monthRate: monthSuggested > 0 ? Math.round((monthTotal / monthSuggested) * 100) : 0,
+    monthTotal, monthDays,
     weeks, maxWeek: Math.max(...weeks.map(w => w.total), 1),
   };
 }
@@ -231,7 +237,7 @@ function FastingStats({ logs, periodStart, cycleLen }) {
             <div style={{ background: "#0A0A0F", borderRadius: 8, padding: 10 }}>
               <div style={{ fontSize: 10, color: "#666", fontFamily: "monospace" }}>{t("thisMonth")}</div>
               <div style={{ fontSize: 18, color: "#4A9E8E", fontFamily: "monospace" }}>{stats.monthTotal}h</div>
-              <div style={{ fontSize: 10, color: "#8a8a8a", fontFamily: "monospace" }}>{t("completionRate")} {stats.monthRate}%</div>
+              <div style={{ fontSize: 10, color: "#8a8a8a", fontFamily: "monospace" }}>{t("completionRate", { n: stats.monthDays })}</div>
             </div>
           </div>
 
@@ -524,20 +530,21 @@ function CalendarGrid({ periodStart, cycleLen, year, month, logs, onSelectDate, 
 // ══════════════════════════════════
 const MUCUS_OPTIONS = ["none", "sticky", "eggwhite", "watery"];
 
-function DateDetail({ dateKey, periodStart, cycleLen, logs, onSaveLog, onDeleteLog, flags, ovDetected }) {
+function DateDetail({ dateKey, periodStart, cycleLen, logs, onSaveLog, onDeleteLog, flags, ovDetected, fastPresets }) {
   const { t } = useLang();
   const date = parseLocal(dateKey);
   const phase = getPhase(date, periodStart, cycleLen);
   const cfg = PHASE_CONFIG[phase];
   const moon = getMoonPhase(date, t);
   const cDay = getCycleDay(date, periodStart, cycleLen);
-  const fasting = cDay ? getFastingAdvice(cDay, cycleLen, t) : { fast: "—", tip: "", defaultH: 12 };
+  const fasting = cDay ? getFastingAdvice(cDay, cycleLen, t) : { fast: "—", tip: "" };
   const fertility = getFertility(date, periodStart, cycleLen);
+  const fLevel = fertilityLevel(fertility);
   const isDanger = phase === "ovulation";
   const isOvDetected = ovDetected.includes(dateKey);
 
   const existing = logs[dateKey];
-  const [hours, setHours] = useState(existing?.hours ?? fasting.defaultH);
+  const [hours, setHours] = useState(existing?.hours ?? "");
   const [bbt, setBbt] = useState(existing?.bbt ?? "");
   const [mucus, setMucus] = useState(existing?.mucus ?? "none");
   const [editing, setEditing] = useState(!existing);
@@ -547,7 +554,7 @@ function DateDetail({ dateKey, periodStart, cycleLen, logs, onSaveLog, onDeleteL
   if (dateKey !== prevKey) {
     setPrevKey(dateKey);
     const ex = logs[dateKey];
-    setHours(ex?.hours ?? fasting.defaultH);
+    setHours(ex?.hours ?? "");
     setBbt(ex?.bbt ?? "");
     setMucus(ex?.mucus ?? "none");
     setEditing(!ex);
@@ -597,7 +604,7 @@ function DateDetail({ dateKey, periodStart, cycleLen, logs, onSaveLog, onDeleteL
       )}
       {flags.showFertility && (
         <div style={{ fontSize: 12, color: "#aaa", marginBottom: 4 }}>
-          {t("pregnancyRisk")}：<span style={{ color: fertility > 60 ? "#FF6B6B" : "#4A9E8E" }}>{fertility}%</span>
+          {t("pregnancyRisk")}：<span style={{ color: fLevel.color }}>{t(fLevel.key)}</span>
         </div>
       )}
       {flags.showConceive && (
@@ -624,6 +631,17 @@ function DateDetail({ dateKey, periodStart, cycleLen, logs, onSaveLog, onDeleteL
                   onChange={e => setHours(e.target.value)} style={{ ...inputStyle, flex: 1 }} />
                 <span style={{ color: "#666", fontSize: 12, fontFamily: "monospace" }}>{t("fastHoursUnit")}</span>
               </div>
+              {fastPresets?.length > 0 && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 6 }}>
+                  {fastPresets.map(h => (
+                    <button key={h} type="button" onClick={() => setHours(h)} style={{
+                      padding: "4px 10px", background: Number(hours) === h ? "#1a1a2e" : "transparent",
+                      color: Number(hours) === h ? cfg.color : "#888", border: `1px solid ${Number(hours) === h ? cfg.color + "66" : "#2a2a3e"}`,
+                      borderRadius: 12, fontFamily: "monospace", fontSize: 11, cursor: "pointer",
+                    }}>{h}h</button>
+                  ))}
+                </div>
+              )}
             </div>
           )}
           {/* BBT */}
@@ -673,11 +691,12 @@ function DateDetail({ dateKey, periodStart, cycleLen, logs, onSaveLog, onDeleteL
 // ── Moonyou＋ Consultant ──
 // ══════════════════════════════════
 // Assembles a personalized note from the user's own logged data.
-// (Rule-based now; designed to be swapped for a real Claude call later.)
+// Rule-based, computed on-device — don't label it as AI.
 function generateConsultAdvice({ phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected }, t) {
   const dk = deepKey(phase);
   const stats = computeStats(logs, periodStart, cycleLen, t);
-  const suggested = PHASE_DEFAULT_HOURS[phase] || 12;
+  const fastKind = PHASE_FAST_KIND[phase] || "short";
+  const kind = t(`fastKind_${fastKind}`);
   const weekAvg = Number(stats.weekAvg) || 0;
   const phaseLabel = t(`phase.${phase}`).replace(" 🔥", "");
   const lines = [];
@@ -685,8 +704,8 @@ function generateConsultAdvice({ phase, cycleDay, cycleLen, logs, periodStart, g
   lines.push(t("consult.greeting", { phase: phaseLabel, day: cycleDay ?? "—" }));
 
   if (goals.includes("fasting")) {
-    if (weekAvg <= 0) lines.push(t("consult.fastNone", { suggested }));
-    else if (weekAvg + 1 < suggested && suggested >= 24) lines.push(t("consult.fastRoom", { avg: weekAvg, suggested }));
+    if (weekAvg <= 0) lines.push(t("consult.fastNone", { kind }));
+    else if (fastKind === "long" && weekAvg < 16) lines.push(t("consult.fastRoom", { avg: weekAvg }));
     else lines.push(t("consult.fastGood", { avg: weekAvg }));
   }
 
@@ -698,10 +717,10 @@ function generateConsultAdvice({ phase, cycleDay, cycleLen, logs, periodStart, g
   if (ovDetected.length) lines.push(t("consult.ovDetected"));
 
   lines.push(t("consult.closing"));
-  return { lines, weekAvg, suggested };
+  return { lines, weekAvg };
 }
 
-function ConsultantView({ phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected, onBook }) {
+function ConsultantView({ phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected }) {
   const { t } = useLang();
   const advice = useMemo(
     () => generateConsultAdvice({ phase, cycleDay, cycleLen, logs, periodStart, goals, ovDetected }, t),
@@ -710,7 +729,7 @@ function ConsultantView({ phase, cycleDay, cycleLen, logs, periodStart, goals, o
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      {/* AI coach card */}
+      {/* Personalized coach card */}
       <div style={{ background: "linear-gradient(160deg, #16130A 0%, #111118 70%)", border: "1px solid #D4A01755", borderRadius: 12, padding: 16, boxShadow: "0 4px 20px #00000040" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
           <span style={{ fontSize: 22 }}>🌙</span>
@@ -743,8 +762,9 @@ function ConsultantView({ phase, cycleDay, cycleLen, logs, periodStart, goals, o
         </div>
         <div style={{ fontSize: 11, color: "#4A9E8E", fontFamily: "monospace", marginBottom: 8 }}>{t("consult.humanPrice")}</div>
         <div style={{ fontSize: 12, color: "#aaa", lineHeight: 1.7, marginBottom: 12 }}>{t("consult.humanDesc")}</div>
-        <button onClick={onBook} style={{ width: "100%", padding: 11, background: "transparent", color: "#4A9E8E", border: "1px solid #4A9E8E55", borderRadius: 8, fontFamily: "monospace", fontSize: 12, cursor: "pointer" }}>
-          {t("consult.humanCta")} →
+        {/* Booking isn't live yet — keep the button disabled until it is */}
+        <button disabled style={{ width: "100%", padding: 11, background: "transparent", color: "#666", border: "1px solid #2a2a3e", borderRadius: 8, fontFamily: "monospace", fontSize: 12, cursor: "default" }}>
+          {t("consult.humanCta")}
         </button>
       </div>
 
@@ -814,8 +834,10 @@ export default function MoonRhythm() {
   const [periodStart, setPeriodStart] = useLocalStorage("moon-periodStart", isoDate(addDays(new Date(), -5)));
   const [goals, setGoals] = useLocalStorage("moon-goals", ["fasting"]);
   const [logs, setLogs] = useLocalStorage("moon-logs", {});
-  // Paid-download model: everyone who has the app paid US$1.99, so the full
-  // Moonyou＋ base (deep guidance + AI coach) is always unlocked. Extended
+  const [fastPresets, setFastPresets] = useLocalStorage("moon-fastPresets", DEFAULT_FAST_PRESETS);
+  const [presetInput, setPresetInput] = useState("");
+  // Paid-download model: everyone who has the app paid US$0.99, so the full
+  // Moonyou＋ base (deep guidance + coach) is always unlocked. Extended
   // services (real nutritionist consult) are separate paid add-ons.
 
   const flags = useGoalFlags(goals);
@@ -849,7 +871,7 @@ export default function MoonRhythm() {
   const dangerEnd = addDays(ovDate, 1);
   const diff = daysBetween(pStart, today);
   const cycleDay = diff >= 0 ? (diff % cycleLen) + 1 : null;
-  const todayFasting = cycleDay ? getFastingAdvice(cycleDay, cycleLen, t) : { fast: "—", tip: "", defaultH: 12 };
+  const todayFasting = cycleDay ? getFastingAdvice(cycleDay, cycleLen, t) : { fast: "—", tip: "" };
 
   // Dynamic ovulation detection
   const ovDetected = useMemo(() => detectOvulationFromLogs(logs), [logs]);
@@ -974,9 +996,9 @@ export default function MoonRhythm() {
                 <div style={{ fontSize: 13, color: "#888", marginBottom: 6, fontFamily: "monospace" }}>{t("pregnancyRisk")}</div>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <div style={{ flex: 1, height: 8, background: "#1a1a2e", borderRadius: 4, overflow: "hidden" }}>
-                    <div style={{ width: `${fertility}%`, height: "100%", background: fertility > 60 ? "#FF6B6B" : fertility > 25 ? "#D4A017" : "#4A9E8E", borderRadius: 4, transition: "width 0.3s" }} />
+                    <div style={{ width: `${fertility}%`, height: "100%", background: fertilityLevel(fertility).color, borderRadius: 4, transition: "width 0.3s" }} />
                   </div>
-                  <span style={{ fontSize: 14, fontFamily: "monospace", color: fertility > 60 ? "#FF6B6B" : "#4A9E8E", minWidth: 36 }}>{fertility}%</span>
+                  <span style={{ fontSize: 14, fontFamily: "monospace", color: fertilityLevel(fertility).color, minWidth: 36 }}>{t(fertilityLevel(fertility).key)}</span>
                 </div>
                 <div style={{ fontSize: 11, color: "#666", marginTop: 6, fontFamily: "monospace" }}>
                   {t("ovulationEstimate")}：{fmt(ovDate)} · {t("dangerPeriod")}：{fmt(dangerStart)}–{fmt(dangerEnd)}
@@ -1012,7 +1034,7 @@ export default function MoonRhythm() {
               logs={logs} onSelectDate={setSelectedDate} selectedDate={selectedDate} flags={flags} ovDetected={ovDetected} />
             {selectedDate ? (
               <DateDetail dateKey={selectedDate} periodStart={pStart} cycleLen={cycleLen}
-                logs={logs} onSaveLog={saveLog} onDeleteLog={deleteLog} flags={flags} ovDetected={ovDetected} />
+                logs={logs} onSaveLog={saveLog} onDeleteLog={deleteLog} flags={flags} ovDetected={ovDetected} fastPresets={fastPresets} />
             ) : (
               <div style={{ marginTop: 12, fontSize: 11, color: "#666", fontFamily: "monospace", textAlign: "center" }}>{t("clickToView")}</div>
             )}
@@ -1024,7 +1046,7 @@ export default function MoonRhythm() {
           <ConsultantView
             phase={todayPhase} cycleDay={cycleDay} cycleLen={cycleLen}
             logs={logs} periodStart={periodStart} goals={goals} ovDetected={ovDetected}
-            premium={true} onBook={() => {}} />
+            premium={true} />
         )}
 
         {/* ─── GUIDE ─── */}
@@ -1062,6 +1084,34 @@ export default function MoonRhythm() {
               </div>
               <div style={{ fontSize: 10, color: "#8a8a8a", fontFamily: "monospace", marginTop: 4 }}>{t("goalExclusive")}</div>
             </div>
+
+            {flags.showFastingLog && (
+              <div>
+                <label style={{ fontSize: 12, color: "#888", fontFamily: "monospace", display: "block", marginBottom: 8 }}>{t("fastPresetsLabel")}</label>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 8 }}>
+                  {fastPresets.map(h => (
+                    <span key={h} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "4px 6px 4px 10px", border: "1px solid #2a2a3e", borderRadius: 12, fontFamily: "monospace", fontSize: 12, color: "#aaa" }}>
+                      {h}h
+                      <button onClick={() => setFastPresets(prev => prev.filter(x => x !== h))} aria-label={`remove ${h}h`}
+                        style={{ background: "none", border: "none", color: "#666", cursor: "pointer", fontSize: 12, padding: 0 }}>✕</button>
+                    </span>
+                  ))}
+                </div>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <input type="number" min={1} max={168} step={1} value={presetInput} placeholder={t("fastPresetPlaceholder")}
+                    onChange={e => setPresetInput(e.target.value)}
+                    style={{ flex: 1, padding: 8, background: "#0A0A0F", color: "#ddd", border: "1px solid #2a2a3e", borderRadius: 6, fontFamily: "monospace", fontSize: 13, boxSizing: "border-box" }} />
+                  <button onClick={() => {
+                    const h = Math.round(Number(presetInput));
+                    if (h >= 1 && h <= 168) setFastPresets(prev => prev.includes(h) ? prev : [...prev, h].sort((a, b) => a - b));
+                    setPresetInput("");
+                  }} style={{ padding: "8px 14px", background: "#1a1a2e", color: "#aaa", border: "1px solid #2a2a3e", borderRadius: 6, fontFamily: "monospace", fontSize: 12, cursor: "pointer" }}>
+                    {t("fastPresetAdd")}
+                  </button>
+                </div>
+                <div style={{ fontSize: 10, color: "#8a8a8a", fontFamily: "monospace", marginTop: 4 }}>{t("fastPresetsNote")}</div>
+              </div>
+            )}
 
             <div style={{ borderTop: "1px solid #1a1a2e", paddingTop: 16 }}>
               <label style={{ fontSize: 12, color: "#888", fontFamily: "monospace", display: "block", marginBottom: 8 }}>Google Calendar</label>
