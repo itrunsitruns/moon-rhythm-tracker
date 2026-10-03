@@ -6,6 +6,41 @@
 const SCOPES = "https://www.googleapis.com/auth/calendar.events";
 const DISCOVERY_DOC = "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest";
 
+/** YYYY-MM-DD in local time (toISOString() is UTC and shifts dates a day early east of UTC). */
+function localISO(d) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+/** Start of the cycle that contains today (or periodStart itself if it is in the future). */
+function currentCycleStart(periodStart, cycleLen) {
+  const start = new Date(periodStart + "T00:00:00");
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const diff = Math.round((today - start) / 86400000);
+  if (diff > 0) start.setDate(start.getDate() + Math.floor(diff / cycleLen) * cycleLen);
+  return start;
+}
+
+/**
+ * The reminder dates for one cycle. The long-fast window (cycle day 6) is
+ * skipped when it falls inside the fertile window, which happens on short cycles.
+ */
+function cycleEvents(cycleStart, cycleLen, t) {
+  const ovDay = cycleLen - 14;
+  const at = (offset) => { const d = new Date(cycleStart); d.setDate(d.getDate() + offset); return d; };
+  const items = [
+    // 1) Fertile window warning: 1 day before it starts (ovDay - 5)
+    { date: at(ovDay - 6), summary: t("event.fertile"), desc: t("tip.ovulation"), colorId: "11" }, // tomato
+  ];
+  // 2) Long-fast window: cycle day 6, only if it is before the fertile window
+  if (6 < ovDay - 5) {
+    items.push({ date: at(5), summary: t("event.fasting"), desc: t("tip.follicular_gold"), colorId: "5" }); // banana
+  }
+  // 3) Period coming: 2 days before the next cycle starts
+  items.push({ date: at(cycleLen - 2), summary: t("event.period"), desc: t("tip.menstrual"), colorId: "6" }); // tangerine
+  return items;
+}
+
 let tokenClient = null;
 let gapiInited = false;
 let gisInited = false;
@@ -76,6 +111,12 @@ function requestAccessToken() {
  * @param {{ summary, description, date, colorId }} evt
  *   date is an ISO string like "2026-04-15"
  */
+function nextDay(iso) {
+  const d = new Date(iso + "T00:00:00");
+  d.setDate(d.getDate() + 1);
+  return localISO(d);
+}
+
 async function createEvent({ summary, description, date, colorId }) {
   const resp = await window.gapi.client.calendar.events.insert({
     calendarId: "primary",
@@ -83,7 +124,7 @@ async function createEvent({ summary, description, date, colorId }) {
       summary,
       description,
       start: { date },
-      end: { date },
+      end: { date: nextDay(date) },
       colorId,
       reminders: {
         useDefault: false,
@@ -114,45 +155,20 @@ export async function syncToGoogleCalendar({ periodStart, cycleLen, numCycles = 
   await requestAccessToken();
 
   let count = 0;
-  const start = new Date(periodStart + "T00:00:00");
+  const start = currentCycleStart(periodStart, cycleLen);
 
   for (let c = 0; c < numCycles; c++) {
     const cycleStart = new Date(start);
     cycleStart.setDate(cycleStart.getDate() + c * cycleLen);
-    const ovDay = cycleLen - 14;
-
-    // 1) Fertile window warning: 1 day before danger starts (ovDay - 6)
-    const fertileWarnDate = new Date(cycleStart);
-    fertileWarnDate.setDate(fertileWarnDate.getDate() + ovDay - 6);
-    await createEvent({
-      summary: t("event.fertile"),
-      description: t("tip.ovulation"),
-      date: fertileWarnDate.toISOString().split("T")[0],
-      colorId: "11", // tomato
-    });
-    count++;
-
-    // 2) Golden fasting window: cycle day 6
-    const fastingDate = new Date(cycleStart);
-    fastingDate.setDate(fastingDate.getDate() + 5); // day 6
-    await createEvent({
-      summary: t("event.fasting"),
-      description: t("tip.follicular_gold"),
-      date: fastingDate.toISOString().split("T")[0],
-      colorId: "5", // banana
-    });
-    count++;
-
-    // 3) Period coming: 2 days before next cycle starts
-    const periodWarnDate = new Date(cycleStart);
-    periodWarnDate.setDate(periodWarnDate.getDate() + cycleLen - 2);
-    await createEvent({
-      summary: t("event.period"),
-      description: t("tip.menstrual"),
-      date: periodWarnDate.toISOString().split("T")[0],
-      colorId: "6", // tangerine
-    });
-    count++;
+    for (const item of cycleEvents(cycleStart, cycleLen, t)) {
+      await createEvent({
+        summary: item.summary,
+        description: item.desc,
+        date: localISO(item.date),
+        colorId: item.colorId,
+      });
+      count++;
+    }
   }
 
   return count;
@@ -180,28 +196,13 @@ function icsNextDay(d) {
  */
 export function downloadICS({ periodStart, cycleLen, numCycles = 6, t }) {
   const events = [];
-  const start = new Date(periodStart + "T00:00:00");
+  const start = currentCycleStart(periodStart, cycleLen);
   const now = new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
 
   for (let c = 0; c < numCycles; c++) {
     const cycleStart = new Date(start);
     cycleStart.setDate(cycleStart.getDate() + c * cycleLen);
-    const ovDay = cycleLen - 14;
-
-    const fertileWarnDate = new Date(cycleStart);
-    fertileWarnDate.setDate(fertileWarnDate.getDate() + ovDay - 6);
-
-    const fastingDate = new Date(cycleStart);
-    fastingDate.setDate(fastingDate.getDate() + 5);
-
-    const periodWarnDate = new Date(cycleStart);
-    periodWarnDate.setDate(periodWarnDate.getDate() + cycleLen - 2);
-
-    const items = [
-      { date: fertileWarnDate, summary: t("event.fertile"), desc: t("tip.ovulation") },
-      { date: fastingDate, summary: t("event.fasting"), desc: t("tip.follicular_gold") },
-      { date: periodWarnDate, summary: t("event.period"), desc: t("tip.menstrual") },
-    ];
+    const items = cycleEvents(cycleStart, cycleLen, t);
 
     items.forEach((item, i) => {
       const uid = `moon-rhythm-${c}-${i}-${Date.now()}@moonrhythm`;
