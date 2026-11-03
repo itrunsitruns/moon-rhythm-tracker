@@ -54,13 +54,13 @@ It's not just a period tracker. It dynamically adjusts fasting recommendations b
 ### 📱 如何加到手機桌面 / How to Add to Your Home Screen
 
 **iPhone (Safari)：**
-1. 用 Safari 開啟 https://moon-rhythm-tracker.vercel.app
+1. 用 Safari 開啟 https://moonyou.vercel.app
 2. 點底部的「分享」按鈕（方框加向上箭頭 ⬆️）
 3. 往下滑，點「加入主畫面」
 4. 點「新增」——完成！圖示會出現在桌面上，打開就像 app 一樣
 
 **Android (Chrome)：**
-1. 用 Chrome 開啟 https://moon-rhythm-tracker.vercel.app
+1. 用 Chrome 開啟 https://moonyou.vercel.app
 2. 點右上角三個點 ⋮
 3. 點「加到主畫面」或「安裝應用程式」
 4. 確認——完成！
@@ -71,7 +71,7 @@ It's not just a period tracker. It dynamically adjusts fasting recommendations b
 
 ### 🔗 立即使用 / Try It Now
 
-**https://moon-rhythm-tracker.vercel.app**
+**https://moonyou.vercel.app**
 
 免費 · 免註冊 · 免下載 · 你的資料只在你的手機上
 Free · No sign-up · No download · Your data stays on your device

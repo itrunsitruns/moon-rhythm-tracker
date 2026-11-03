@@ -805,6 +805,85 @@ function GuideView() {
 }
 
 // ══════════════════════════════════
+// ── Inline date picker (replaces <input type="date">, which fails to open
+//    the native picker in some Android/Samsung home-screen PWA setups) ──
+// ══════════════════════════════════
+function DatePickerField({ value, onChange, accent }) {
+  const { t } = useLang();
+  const [open, setOpen] = useState(false);
+  const selected = parseLocal(value);
+  const [year, setYear] = useState(selected.getFullYear());
+  const [month, setMonth] = useState(selected.getMonth());
+  const today = new Date();
+  const todayKey = isoDate(today);
+
+  const openPicker = () => {
+    setYear(selected.getFullYear());
+    setMonth(selected.getMonth());
+    setOpen(o => !o);
+  };
+  const shiftMonth = (n) => {
+    const d = new Date(year, month + n, 1);
+    setYear(d.getFullYear());
+    setMonth(d.getMonth());
+  };
+  const pick = (key) => { onChange(key); setOpen(false); };
+
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const startDow = new Date(year, month, 1).getDay();
+  const cells = [];
+  for (let i = 0; i < startDow; i++) cells.push(<div key={`e${i}`} />);
+  for (let d = 1; d <= daysInMonth; d++) {
+    const key = isoDate(new Date(year, month, d));
+    const isSel = key === value;
+    const isToday = key === todayKey;
+    const isFuture = key > todayKey;
+    cells.push(
+      <button key={d} type="button" onClick={() => pick(key)} disabled={isFuture} style={{
+        padding: "8px 0", minHeight: 36, borderRadius: 6, fontFamily: "monospace", fontSize: 13,
+        background: isSel ? accent + "33" : "transparent",
+        color: isFuture ? "#444" : isSel ? accent : isToday ? "#FFD24A" : "#ccc",
+        border: `1px solid ${isSel ? accent : isToday ? "#FFD24A66" : "#2a2a3e"}`,
+        cursor: isFuture ? "default" : "pointer",
+      }}>{d}</button>
+    );
+  }
+
+  const navBtn = { background: "transparent", color: "#aaa", border: "1px solid #2a2a3e", borderRadius: 6, padding: "6px 14px", fontSize: 14, cursor: "pointer" };
+
+  return (
+    <div>
+      <button type="button" onClick={openPicker} style={{
+        width: "100%", padding: 10, background: "#111118", color: "#ddd", textAlign: "left",
+        border: `1px solid ${open ? accent : "#2a2a3e"}`, borderRadius: 8, fontFamily: "monospace", fontSize: 14,
+        boxSizing: "border-box", cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center",
+      }}>
+        <span>{selected.getFullYear()} {t(`month.${selected.getMonth()}`)} {selected.getDate()}</span>
+        <span style={{ fontSize: 12, color: "#888" }}>{open ? "▲" : "📅 " + t("tapToChange")}</span>
+      </button>
+      {open && (
+        <div style={{ marginTop: 8, padding: 10, background: "#0d0d14", border: "1px solid #2a2a3e", borderRadius: 8 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+            <button type="button" onClick={() => shiftMonth(-1)} style={navBtn}>‹</button>
+            <div style={{ color: "#ccc", fontFamily: "serif", fontSize: 15 }}>{year} {t(`month.${month}`)}</div>
+            <button type="button" onClick={() => shiftMonth(1)} style={navBtn}>›</button>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 3, fontSize: 9, color: "#666", textAlign: "center", marginBottom: 4, fontFamily: "monospace" }}>
+            {[0,1,2,3,4,5,6].map(i => <div key={i}>{t(`dow.${i}`)}</div>)}
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 3 }}>{cells}</div>
+          <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+            <button type="button" onClick={() => pick(todayKey)} style={{ ...navBtn, flex: 1, color: "#FFD24A" }}>{t("today")}</button>
+            <button type="button" onClick={() => pick(isoDate(addDays(today, -1)))} style={{ ...navBtn, flex: 1 }}>{t("yesterday")}</button>
+            <button type="button" onClick={() => setOpen(false)} style={{ ...navBtn, flex: 1 }}>{t("close")}</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ══════════════════════════════════
 // ── Main App ──
 // ══════════════════════════════════
 export default function MoonRhythm() {
@@ -1035,8 +1114,7 @@ export default function MoonRhythm() {
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             <div>
               <label style={{ fontSize: 12, color: "#888", fontFamily: "monospace", display: "block", marginBottom: 4 }}>{t("periodStartLabel")}</label>
-              <input type="date" value={periodStart} onChange={e => setPeriodStart(e.target.value)}
-                style={{ width: "100%", padding: 10, background: "#111118", color: "#ddd", border: "1px solid #2a2a3e", borderRadius: 8, fontFamily: "monospace", fontSize: 14, boxSizing: "border-box" }} />
+              <DatePickerField value={periodStart} onChange={setPeriodStart} accent={todayCfg.color} />
             </div>
             <div>
               <label style={{ fontSize: 12, color: "#888", fontFamily: "monospace", display: "block", marginBottom: 4 }}>{t("cycleLenLabel", { n: cycleLen })}</label>

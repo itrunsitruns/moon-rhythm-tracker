@@ -52,6 +52,9 @@ const translations = {
 
   // ── Dashboard ──
   today: { zh: "今日", en: "Today" },
+  yesterday: { zh: "昨天", en: "Yesterday" },
+  close: { zh: "關閉", en: "Close" },
+  tapToChange: { zh: "點選修改", en: "Tap to change" },
   moonPhase: { zh: "月相", en: "Moon phase" },
   fastingAdvice: { zh: "斷食建議", en: "Fasting advice" },
   pregnancyRisk: { zh: "懷孕風險", en: "Pregnancy risk" },
