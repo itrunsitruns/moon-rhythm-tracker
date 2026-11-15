@@ -22,7 +22,8 @@
 - **行事曆匯出**：一鍵匯出 .ics 檔案，將危險期提醒、斷食窗口、經期預告加入 Google Calendar 或 Apple 行事曆
 - **中/英文切換**：完整雙語介面，右上角一鍵切換
 - **離線可用**：所有資料存在你的裝置上，不需要帳號，不上傳任何個人資訊
-- **月亮圓盤視覺化**：儀表板上的圓盤一眼看完整個週期的階段分佈
+- **月亮圓盤視覺化**：儀表板上的圓盤一眼看完整個週期的階段分佈；點任何一格可看那天的階段、身體在發生什麼、跟前一階段的差別；排卵日、危險期、下次月經固定顯示在圓盤下方
+- **內建日期選擇器**：月經第一天用 app 自己的日曆點選，不依賴手機系統的日期選單（修正 Android／Samsung 桌面 app 打不開的問題）
 
 **隱私承諾：** 所有資料 100% 儲存在你的裝置上（localStorage），不需要註冊，不收集任何個人數據。你的身體數據只屬於你。
 
@@ -45,7 +46,8 @@ It's not just a period tracker. It dynamically adjusts fasting recommendations b
 - **Calendar Export**: One-tap .ics export — add fertile window alerts, fasting reminders, and period predictions to Google Calendar or Apple Calendar
 - **Bilingual (中/EN)**: Full Chinese and English interface, switchable with one tap
 - **Works Offline**: All data stays on your device. No account needed. No personal information uploaded. Ever.
-- **Moon Disc Visualization**: The dashboard's circular disc shows your entire cycle at a glance
+- **Moon Disc Visualization**: The dashboard's circular disc shows your entire cycle at a glance; tap any wedge to see that day's phase, what the body is doing, and how it differs from the phase before. Ovulation, fertile window and next period are always shown below the disc
+- **Built-in Date Picker**: Pick your period start date on the app's own calendar, independent of the phone's system date picker (fixes the Android/Samsung home-screen bug)
 
 **Privacy Promise:** 100% of your data is stored locally on your device (localStorage). No registration, no data collection. Your body data belongs to you and only you.
 
