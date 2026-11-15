@@ -82,6 +82,66 @@ const translations = {
   // ── Calendar ──
   clickToView: { zh: "點擊日期查看詳情", en: "Tap a date for details" },
   day: { zh: "第 {n} 天", en: "Day {n}" },
+  inDays: { zh: "{n} 天後", en: "in {n} days" },
+  daysAgo: { zh: "{n} 天前", en: "{n} days ago" },
+  tapDiscHint: { zh: "點圓盤上的任何一格，看那天是什麼階段", en: "Tap any wedge on the disc to inspect that day" },
+  ovulationDay: { zh: "排卵日", en: "Ovulation" },
+  fertileWindow: { zh: "危險期", en: "Fertile window" },
+  nextPeriod: { zh: "下次月經", en: "Next period" },
+  backToToday: { zh: "回到今天", en: "Back to today" },
+  autoReturnHint: { zh: "放著不動 20 秒會自己回到今天", en: "Returns to today after 20s idle" },
+  learnTitle: { zh: "這個階段在發生什麼", en: "What is happening in this phase" },
+  diffTitle: { zh: "跟前一階段（{prev}）的差別", en: "How it differs from the previous phase ({prev})" },
+
+  // ── Phase explainers (shown on the dashboard when a disc day is tapped) ──
+  "learn.menstrual": {
+    zh: "子宮內膜剝落排出，雌激素和黃體素都在整個週期的最低點。身體在重置：能量偏低、體溫回到低溫期、會流失鐵質。",
+    en: "The uterine lining sheds. Estrogen and progesterone are both at their lowest point of the cycle. The body is resetting: energy is low, temperature drops back to the low phase, and iron is lost with the bleeding.",
+  },
+  "diff.menstrual": {
+    zh: "黃體期末尾黃體素驟降，才觸發出血。所以跟前面比，水腫、胸脹、情緒起伏通常在開始出血後一兩天內緩解，基礎體溫也從高溫掉回低溫。",
+    en: "Bleeding starts because progesterone crashes at the end of the luteal phase. Compared with the days before, bloating, breast tenderness and mood swings usually ease within a day or two of bleeding, and basal temperature falls from the high plateau back to the low one.",
+  },
+  "learn.follicular_gold": {
+    zh: "卵巢裡幾顆濾泡開始競爭長大，雌激素從谷底慢慢爬升。這幾天胰島素敏感度是整個週期最好的，身體對斷食的耐受度最高，所以叫黃金窗口。",
+    en: "Several follicles in the ovary start competing to grow, and estrogen climbs from its low. Insulin sensitivity is the best of the whole cycle in these days, so the body tolerates fasting better than at any other time. That is why it is called the golden window.",
+  },
+  "diff.follicular_gold": {
+    zh: "跟月經期比，出血停了、鐵質不再流失，雌激素回升帶回體力和專注力。月經期只建議輕斷食，這裡可以放心拉長。",
+    en: "Compared with menstruation, bleeding has stopped, iron is no longer being lost, and rising estrogen brings back energy and focus. Menstruation only suits light fasting; here you can comfortably extend it.",
+  },
+  "learn.follicular_late": {
+    zh: "一顆主導濾泡勝出，其他的退場。雌激素持續上升接近高峰，子宮內膜重新增厚，身體在為排卵做準備。",
+    en: "One dominant follicle wins and the others fade. Estrogen keeps rising toward its peak, the uterine lining thickens again, and the body prepares for ovulation.",
+  },
+  "diff.follicular_late": {
+    zh: "跟黃金窗口比，雌激素更高、距離排卵更近。仍然適合中長斷食，但越靠近排卵，身體越需要能量，所以建議從 72h 降到 36h 左右。",
+    en: "Compared with the golden window, estrogen is higher and ovulation is closer. Medium-long fasts still work, but the nearer ovulation gets, the more energy the body wants, so the suggestion drops from 72h to about 36h.",
+  },
+  "learn.ovulation": {
+    zh: "雌激素衝到頂點，觸發 LH（黃體生成素）高峰，大約 24–36 小時後卵子釋出。卵子只活 12–24 小時，但精子在體內最多可活 5 天，所以危險期要從排卵前 5 天算起、算到排卵後 1 天。",
+    en: "Estrogen peaks and triggers the LH surge; the egg is released about 24–36 hours later. The egg lives only 12–24 hours, but sperm can survive up to 5 days inside the body, so the fertile window runs from 5 days before ovulation to 1 day after.",
+  },
+  "diff.ovulation": {
+    zh: "跟濾泡期比，身體從「累積」切換到「釋放」：分泌物變成透明蛋清狀，排卵後基礎體溫會升高約 0.3–0.5°C。這幾天長斷食會給身體壓力訊號，可能干擾排卵，所以建議停掉，只做 12–14h。",
+    en: "Compared with the follicular phase, the body switches from building up to releasing: cervical mucus turns clear and egg-white-like, and basal temperature rises about 0.3–0.5°C after ovulation. Long fasts in these days send a stress signal that can interfere with ovulation, so stick to 12–14h.",
+  },
+  "learn.luteal": {
+    zh: "排出卵子後的濾泡變成黃體，開始分泌黃體素，體溫維持在高溫期，子宮內膜變厚準備著床。沒有受孕的話，黃體在大約 14 天後萎縮，週期重來。",
+    en: "After releasing the egg, the follicle becomes the corpus luteum and secretes progesterone. Temperature stays on the high plateau and the lining thickens for implantation. If there is no pregnancy, the corpus luteum fades after about 14 days and the cycle restarts.",
+  },
+  "diff.luteal": {
+    zh: "跟排卵期比，主角從雌激素換成黃體素：食慾上升、體溫偏高、容易水腫或情緒波動，後半段可能出現經前症狀。黃體期長度幾乎固定 14 天，所以週期長短的差異主要來自前面的濾泡期。",
+    en: "Compared with ovulation, progesterone takes over from estrogen: appetite rises, temperature stays higher, and bloating or mood swings are more likely, with PMS possible in the second half. The luteal phase is almost always about 14 days, so differences in cycle length come mostly from the follicular phase before it.",
+  },
+  "learn.safe": {
+    zh: "這一天在妳登記的月經第一天之前，app 還沒有這個週期的資料，所以只能用預設的低風險顯示。",
+    en: "This day is before the period start you entered, so the app has no cycle data for it and shows the default low-risk state.",
+  },
+  "diff.safe": {
+    zh: "更新「月經第一天」之後，這裡就會換成真正的階段。",
+    en: "Once you update the period start date, this will show the real phase.",
+  },
 
   // ── Month names ──
   "month.0": { zh: "一月", en: "January" },

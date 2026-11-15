@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import useLocalStorage from "./useLocalStorage";
 import { useLang } from "./i18n";
 import { syncToGoogleCalendar, downloadICS } from "./googleCalendar";
@@ -70,6 +70,23 @@ function getCycleDay(date, periodStart, cycleLen) {
   return (diff % cycleLen) + 1;
 }
 
+// Start date of the cycle that contains `date` (falls back to periodStart before tracking began)
+function getCycleStart(date, periodStart, cycleLen) {
+  const start = new Date(periodStart);
+  const diff = daysBetween(start, date);
+  if (diff < 0) return start;
+  return addDays(start, Math.floor(diff / cycleLen) * cycleLen);
+}
+// Walk backwards from cycle day `day` to find the phase that came before this one
+function getPrevPhase(day, periodStart, cycleLen) {
+  const cur = getPhase(addDays(periodStart, day - 1), periodStart, cycleLen);
+  for (let k = 1; k < cycleLen; k++) {
+    const d = ((day - 1 - k) % cycleLen + cycleLen) % cycleLen;
+    const ph = getPhase(addDays(periodStart, d), periodStart, cycleLen);
+    if (ph !== cur) return ph;
+  }
+  return null;
+}
 function getFertility(date, periodStart, cycleLen) {
   const start = new Date(periodStart);
   const diff = daysBetween(start, date);
@@ -172,35 +189,51 @@ function computeStats(logs, periodStart, cycleLen, t) {
 // ══════════════════════════════════
 // ── Moon disc component ──
 // ══════════════════════════════════
-function MoonDisc({ periodStart, cycleLen, today, flags }) {
+function MoonDisc({ cycleStart, cycleLen, today, flags, selectedDay, onSelectDay }) {
   const { t } = useLang();
   const segments = [];
   const cx = 150, cy = 150, r = 120;
+  const todayKey = isoDate(today);
+  const todayDay = getCycleDay(today, cycleStart, cycleLen);
+  const focusDay = selectedDay || todayDay;
+  let selectedSeg = null;
   for (let i = 0; i < cycleLen; i++) {
-    const date = addDays(periodStart, i);
-    const phase = getPhase(date, periodStart, cycleLen);
+    const date = addDays(cycleStart, i);
+    const phase = getPhase(date, cycleStart, cycleLen);
     const cfg = PHASE_CONFIG[phase];
     const a1 = (i / cycleLen) * 360 - 90, a2 = ((i + 1) / cycleLen) * 360 - 90;
     const r1 = (a1 * Math.PI) / 180, r2 = (a2 * Math.PI) / 180;
-    const isToday = isoDate(date) === isoDate(today);
-    segments.push(
+    const isToday = isoDate(date) === todayKey;
+    const isSel = selectedDay === i + 1 && !isToday;
+    const mid = ((a1 + a2) / 2) * Math.PI / 180;
+    const pop = isSel ? 10 : 0;
+    const seg = (
       <path key={i}
         d={`M${cx},${cy} L${cx + r * Math.cos(r1)},${cy + r * Math.sin(r1)} A${r},${r} 0 ${a2 - a1 > 180 ? 1 : 0} 1 ${cx + r * Math.cos(r2)},${cy + r * Math.sin(r2)} Z`}
-        fill={cfg.color} opacity={isToday ? 1 : 0.55}
-        stroke={isToday ? "#fff" : "#000"} strokeWidth={isToday ? 2.5 : 0.5} />
+        transform={pop ? `translate(${pop * Math.cos(mid)},${pop * Math.sin(mid)})` : undefined}
+        fill={cfg.color} opacity={isToday || isSel ? 1 : 0.55}
+        stroke={isToday ? "#fff" : isSel ? "#FFD24A" : "#000"} strokeWidth={isToday ? 2.5 : isSel ? 2 : 0.5}
+        style={{ cursor: "pointer", transition: "transform .15s, opacity .15s" }}
+        onClick={() => onSelectDay && onSelectDay(i + 1)} />
     );
+    if (isSel) selectedSeg = seg; else segments.push(seg);
   }
-  const todayPhase = getPhase(today, periodStart, cycleLen);
-  const todayMoon = getMoonPhase(today, t);
-  const cDay = getCycleDay(today, periodStart, cycleLen);
-  const fa = cDay ? getFastingAdvice(cDay, cycleLen, t) : { fast: "—" };
+  if (selectedSeg) segments.push(selectedSeg); // draw the popped wedge on top
+  const focusDate = addDays(cycleStart, (focusDay || 1) - 1);
+  const focusPhase = getPhase(focusDate, cycleStart, cycleLen);
+  const focusMoon = getMoonPhase(focusDate, t);
+  const fa = focusDay ? getFastingAdvice(focusDay, cycleLen, t) : { fast: "—" };
+  const isExploring = selectedDay && selectedDay !== todayDay;
   return (
-    <svg viewBox="0 0 300 300" style={{ width: "100%", maxWidth: 300 }}>
+    <svg viewBox="0 0 300 300" style={{ width: "100%", maxWidth: 300, overflow: "visible" }}>
       {segments}
-      <circle cx={cx} cy={cy} r={48} fill="#0A0A0F" />
-      <text x={cx} y={cy - 12} textAnchor="middle" fill="#ddd" fontSize="24">{todayMoon.emoji}</text>
-      <text x={cx} y={cy + 8} textAnchor="middle" fill="#ccc" fontSize="10" fontFamily="monospace">{resolvePhaseLabel(todayPhase, flags, t)}</text>
-      {flags.showFasting && <text x={cx} y={cy + 22} textAnchor="middle" fill="#888" fontSize="8" fontFamily="monospace">{fa.fast}</text>}
+      <circle cx={cx} cy={cy} r={48} fill="#0A0A0F" stroke={isExploring ? "#FFD24A55" : "none"} strokeWidth={1} />
+      <text x={cx} y={cy - 14} textAnchor="middle" fill="#ddd" fontSize="22">{focusMoon.emoji}</text>
+      <text x={cx} y={cy + 4} textAnchor="middle" fill={isExploring ? "#FFD24A" : "#ccc"} fontSize="10" fontFamily="monospace">{resolvePhaseLabel(focusPhase, flags, t)}</text>
+      <text x={cx} y={cy + 17} textAnchor="middle" fill="#888" fontSize="8" fontFamily="monospace">
+        {isExploring ? `${t("day", { n: focusDay })} · ${fmt(focusDate)}` : (flags.showFasting ? fa.fast : t("today"))}
+      </text>
+      {isExploring && flags.showFasting && <text x={cx} y={cy + 29} textAnchor="middle" fill="#777" fontSize="7" fontFamily="monospace">{fa.fast}</text>}
     </svg>
   );
 }
@@ -884,6 +917,74 @@ function DatePickerField({ value, onChange, accent }) {
 }
 
 // ══════════════════════════════════
+// ── Explore card: what a tapped disc day means ──
+// ══════════════════════════════════
+function ExploreCard({ day, cycleStart, cycleLen, today, flags, logs, onClose, onShift }) {
+  const { t } = useLang();
+  const date = addDays(cycleStart, day - 1);
+  const phase = getPhase(date, cycleStart, cycleLen);
+  const cfg = PHASE_CONFIG[phase];
+  const moon = getMoonPhase(date, t);
+  const rel = daysBetween(new Date(isoDate(today)), new Date(isoDate(date)));
+  const relText = rel === 0 ? t("today") : rel > 0 ? t("inDays", { n: rel }) : t("daysAgo", { n: -rel });
+  const prev = getPrevPhase(day, cycleStart, cycleLen);
+  const fa = getFastingAdvice(day, cycleLen, t);
+  const fert = getFertility(date, cycleStart, cycleLen);
+  const log = logs[isoDate(date)];
+  const ovDay = cycleLen - 14;
+  const navBtn = { background: "transparent", color: "#aaa", border: "1px solid #2a2a3e", borderRadius: 6, padding: "6px 12px", fontSize: 13, cursor: "pointer", fontFamily: "monospace" };
+  return (
+    <div style={{ background: cfg.bg, border: `1px solid #FFD24A66`, borderRadius: 12, padding: 16, marginBottom: 12 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+        <div style={{ fontSize: 17, color: cfg.color }}>
+          {moon.emoji} {t("day", { n: day })} · {fmt(date)} · {resolvePhaseLabel(phase, flags, t)}
+        </div>
+        <div style={{ fontSize: 11, color: "#FFD24A", fontFamily: "monospace", whiteSpace: "nowrap", marginLeft: 8 }}>{relText}</div>
+      </div>
+      <div style={{ fontSize: 12, color: "#888", marginBottom: 6 }}>
+        {t("moonPhase")}：{moon.emoji} {moon.name}
+        {day === ovDay && <span style={{ color: "#FF6B6B", marginLeft: 8 }}>● {t("ovulationDay")}</span>}
+      </div>
+      <div style={{ fontSize: 13, color: "#aaa", marginBottom: 10 }}>{resolvePhaseDesc(phase, flags, t)}</div>
+
+      <div style={{ fontSize: 11, color: "#FFD24A", fontFamily: "monospace", marginBottom: 2 }}>{t("learnTitle")}</div>
+      <div style={{ fontSize: 13, color: "#ccc", lineHeight: 1.6, marginBottom: 10 }}>{t(`learn.${phase}`)}</div>
+
+      {prev && (
+        <>
+          <div style={{ fontSize: 11, color: "#FFD24A", fontFamily: "monospace", marginBottom: 2 }}>
+            {t("diffTitle", { prev: t(`phase.${prev}`) })}
+          </div>
+          <div style={{ fontSize: 13, color: "#ccc", lineHeight: 1.6, marginBottom: 10 }}>{t(`diff.${phase}`)}</div>
+        </>
+      )}
+
+      {flags.showFasting && (
+        <div style={{ fontSize: 13, color: "#ccc", marginBottom: 4 }}>
+          {t("fastingAdvice")}：<span style={{ color: cfg.color, fontWeight: "bold" }}>{fa.fast}</span>
+          <span style={{ fontSize: 11, color: "#888", marginLeft: 6 }}>{fa.tip}</span>
+        </div>
+      )}
+      {flags.showFertility && (
+        <div style={{ fontSize: 12, color: "#aaa", marginBottom: 4 }}>
+          {t("pregnancyRisk")}：<span style={{ color: fert > 60 ? "#FF6B6B" : "#4A9E8E" }}>{fert}%</span>
+        </div>
+      )}
+      {log && log.hours > 0 && (
+        <div style={{ fontSize: 12, color: "#4A9E8E", fontFamily: "monospace", marginTop: 4 }}>✓ {log.hours}h {t("logged").replace("✓ ", "")}</div>
+      )}
+
+      <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+        <button type="button" onClick={() => onShift(-1)} disabled={day <= 1} style={{ ...navBtn, opacity: day <= 1 ? 0.3 : 1 }}>‹</button>
+        <button type="button" onClick={() => onShift(1)} disabled={day >= cycleLen} style={{ ...navBtn, opacity: day >= cycleLen ? 0.3 : 1 }}>›</button>
+        <button type="button" onClick={onClose} style={{ ...navBtn, flex: 1, color: "#FFD24A" }}>{t("backToToday")}</button>
+      </div>
+      <div style={{ fontSize: 10, color: "#666", fontFamily: "monospace", marginTop: 8, textAlign: "center" }}>{t("autoReturnHint")}</div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════
 // ── Main App ──
 // ══════════════════════════════════
 export default function MoonRhythm() {
@@ -915,15 +1016,26 @@ export default function MoonRhythm() {
   const [calYear, setCalYear] = useState(new Date().getFullYear());
   const [selectedDate, setSelectedDate] = useState(null);
   const [syncStatus, setSyncStatus] = useState(null);
+  const [exploreDay, setExploreDay] = useState(null); // disc day being inspected (1-based), null = today
+
+  // Auto-return to today after a pause, so the disc never stays stuck on another day
+  useEffect(() => {
+    if (exploreDay == null) return;
+    const id = setTimeout(() => setExploreDay(null), 20000);
+    return () => clearTimeout(id);
+  }, [exploreDay]);
 
   const today = new Date();
   const pStart = parseLocal(periodStart);
+  const cycleStart = getCycleStart(today, pStart, cycleLen);
+  const nextPeriod = addDays(cycleStart, cycleLen);
+  const todayCycleDay = getCycleDay(today, cycleStart, cycleLen);
   const todayPhase = getPhase(today, pStart, cycleLen);
   const todayCfg = PHASE_CONFIG[todayPhase];
   const todayMoon = getMoonPhase(today, t);
   const fertility = getFertility(today, pStart, cycleLen);
   const ovDay = cycleLen - 14;
-  const ovDate = addDays(pStart, ovDay - 1);
+  const ovDate = addDays(cycleStart, ovDay - 1); // ovulation of the current cycle
   const dangerStart = addDays(ovDate, -5);
   const dangerEnd = addDays(ovDate, 1);
   const diff = daysBetween(pStart, today);
@@ -994,9 +1106,25 @@ export default function MoonRhythm() {
         {/* ─── DASHBOARD ─── */}
         {view === "dashboard" && (
           <div>
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
-              <MoonDisc periodStart={pStart} cycleLen={cycleLen} today={today} flags={flags} />
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: 6 }}>
+              <MoonDisc cycleStart={cycleStart} cycleLen={cycleLen} today={today} flags={flags}
+                selectedDay={exploreDay}
+                onSelectDay={d => setExploreDay(d === todayCycleDay ? null : d)} />
             </div>
+            <div style={{ textAlign: "center", fontSize: 10, color: "#555", fontFamily: "monospace", marginBottom: 10 }}>{t("tapDiscHint")}</div>
+
+            {/* Key dates of this cycle */}
+            <div style={{ display: "flex", justifyContent: "center", gap: 14, flexWrap: "wrap", fontSize: 11, fontFamily: "monospace", color: "#888", marginBottom: 14 }}>
+              <span>● <span style={{ color: "#FF6B6B" }}>{t("ovulationDay")}</span> {fmt(ovDate)}</span>
+              {flags.showFertility && <span>● <span style={{ color: "#FF6B6B" }}>{t("fertileWindow")}</span> {fmt(dangerStart)}–{fmt(dangerEnd)}</span>}
+              <span>● <span style={{ color: "#8B1A1A" }}>{t("nextPeriod")}</span> {fmt(nextPeriod)}</span>
+            </div>
+
+            {exploreDay != null && exploreDay !== todayCycleDay && (
+              <ExploreCard day={exploreDay} cycleStart={cycleStart} cycleLen={cycleLen} today={today} flags={flags} logs={logs}
+                onClose={() => setExploreDay(null)}
+                onShift={n => setExploreDay(d => Math.min(cycleLen, Math.max(1, d + n)))} />
+            )}
 
             {flags.showAvoidWarn && todayPhase === "ovulation" && (
               <div style={{ background: "#FF6B6B22", border: "2px solid #FF6B6B", borderRadius: 12, padding: "12px 16px", marginBottom: 12, fontSize: 14, color: "#FF6B6B", fontWeight: "bold", textAlign: "center" }}>
