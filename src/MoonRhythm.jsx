@@ -1184,6 +1184,20 @@ export default function MoonRhythm() {
               </div>
               <div style={{ fontSize: 12, color: "#888", marginBottom: 4 }}>{t("moonPhase")}：{todayMoon.emoji} {todayMoon.name}</div>
               <div style={{ fontSize: 13, color: "#aaa", marginBottom: 8 }}>{resolvePhaseDesc(todayPhase, flags, t)}</div>
+              {todayCycleDay && (
+                <>
+                  <div style={{ fontSize: 11, color: "#FFD24A", fontFamily: "monospace", marginBottom: 2 }}>{t("learnTitle")}</div>
+                  <div style={{ fontSize: 13, color: "#ccc", lineHeight: 1.6, marginBottom: 8 }}>{t(`learn.${todayPhase}`)}</div>
+                  {getPrevPhase(todayCycleDay, cycleStart, cycleLen) && (
+                    <>
+                      <div style={{ fontSize: 11, color: "#FFD24A", fontFamily: "monospace", marginBottom: 2 }}>
+                        {t("diffTitle", { prev: t(`phase.${getPrevPhase(todayCycleDay, cycleStart, cycleLen)}`) })}
+                      </div>
+                      <div style={{ fontSize: 13, color: "#ccc", lineHeight: 1.6, marginBottom: 8 }}>{t(`diff.${todayPhase}`)}</div>
+                    </>
+                  )}
+                </>
+              )}
               {flags.showConceive && (
                 <div style={{ fontSize: 12, color: todayPhase === "ovulation" ? "#FF6B6B" : "#888", marginBottom: 4 }}>
                   {todayPhase === "ovulation" ? t("conceiveTip") : t("conceiveNonOvTip")}
