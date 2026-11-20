@@ -58,6 +58,7 @@ const translations = {
   moonPhase: { zh: "月相", en: "Moon phase" },
   fastingAdvice: { zh: "斷食建議", en: "Fasting advice" },
   pregnancyRisk: { zh: "懷孕風險", en: "Pregnancy risk" },
+  riskNote: { zh: "（僅供參考，以個人狀況為主）", en: "(for reference only; your own body comes first)" },
   ovulationEstimate: { zh: "排卵日預估", en: "Est. ovulation" },
   dangerPeriod: { zh: "危險期", en: "Fertile window" },
   logFastingDone: { zh: "✓ 今日斷食已記錄", en: "✓ Today's fast logged" },
@@ -378,6 +379,7 @@ const translations = {
   "deep.label.move": { zh: "運動", en: "Movement" },
   "deep.label.support": { zh: "補充品", en: "Supplements" },
   "deep.label.hormone": { zh: "身體訊號", en: "What's happening" },
+  "deep.label.body": { zh: "今天身體可能出現的狀況", en: "What your body may show today" },
 
   // —— Menstrual ——
   "deep.menstrual.protocol": {
@@ -403,6 +405,10 @@ const translations = {
   "deep.menstrual.hormone": {
     zh: "雌激素與黃體素都在最低點,子宮內膜正在排出,能量自然偏低——順著它休息。",
     en: "Estrogen and progesterone are at their lowest as the lining sheds; low energy is normal — lean into rest.",
+  },
+  "deep.menstrual.body": {
+    zh: "出血量通常第 1–2 天最多，之後變少、顏色變深。可能有下腹悶痛、腰痠、頭痛、拉肚子、胸口悶。分泌物以經血為主，幾乎看不到黏液。每個人的經期長短、血量、痛的程度都不同，僅供參考，以妳自己的狀況為主。",
+    en: "Flow is usually heaviest on days 1–2, then lighter and darker. Cramps, low-back ache, headache, loose stools and chest tightness are common. Discharge is mostly blood, with little mucus. Period length, flow and pain differ from person to person — for reference only; your own body comes first.",
   },
 
   // —— Follicular ——
@@ -430,6 +436,10 @@ const translations = {
     zh: "雌激素穩定上升,精力、專注、心情、代謝全在高點——這是你一個月裡的「巔峰週」。",
     en: "Rising estrogen lifts energy, focus, mood and metabolism — this is your peak week of the month.",
   },
+  "deep.follicular.body": {
+    zh: "經血結束後幾天通常比較乾，分泌物少、偏白或黏稠。越接近排卵，分泌物會慢慢變多、變滑。體力和心情多半是整個週期最穩的。如果這幾天就看到透明拉絲的蛋清狀黏液，表示排卵可能比 app 預測的早：到日曆那天登記「蛋清狀」，app 會標上 ⚡ 可能排卵。僅供參考，以妳自己的狀況為主。",
+    en: "The days right after bleeding are usually drier, with little, whitish or sticky mucus. Closer to ovulation it gets more plentiful and slippery. Energy and mood are often the steadiest of the cycle. If you already see clear, stretchy egg-white mucus in these days, ovulation may be earlier than the app predicts: log “Egg white” on that day in the calendar and the app marks ⚡ possible ovulation. For reference only; your own body comes first.",
+  },
 
   // —— Ovulation ——
   "deep.ovulation.protocol": {
@@ -456,6 +466,10 @@ const translations = {
     zh: "雌激素達頂峰後排卵,睪固酮短暫上升,精力與性慾高——但身體正全力排卵,別逼它斷食。",
     en: "Estrogen peaks then ovulation fires; a testosterone bump lifts drive — but your body is working hard, so ease off fasting.",
   },
+  "deep.ovulation.body": {
+    zh: "最明顯的訊號是分泌物：量變多、透明、像生蛋白一樣可以拉長幾公分，有時偏水狀。這種黏液會幫精子存活，所以看到它就代表受孕機率高，不管日曆上寫的是哪一天。有些人會有一側下腹輕微刺痛（排卵痛）、少量點狀出血、胸脹、性慾上升。排卵之後基礎體溫會升高約 0.3–0.5°C 並維持到下次月經。僅供參考，以妳自己的狀況為主。",
+    en: "The clearest sign is mucus: more of it, clear, stretchy like raw egg white (it can stretch several centimetres), sometimes watery. This mucus helps sperm survive, so whenever you see it your chance of conceiving is high — whatever day the calendar says. Some people feel a mild one-sided twinge (ovulation pain), light spotting, breast fullness or a rise in libido. After ovulation, basal temperature rises about 0.3–0.5°C and stays up until the next period. For reference only; your own body comes first.",
+  },
 
   // —— Luteal ——
   "deep.luteal.protocol": {
@@ -481,6 +495,10 @@ const translations = {
   "deep.luteal.hormone": {
     zh: "黃體素上升主導,基礎體溫升高,胰島素敏感度下降——疲倦、嘴饞、情緒波動都正常,溫柔對待自己。",
     en: "Progesterone takes over, BBT rises, insulin sensitivity dips — fatigue, cravings and mood swings are normal; be gentle with yourself.",
+  },
+  "deep.luteal.body": {
+    zh: "排卵後分泌物通常變少、變稠、偏白或乳霜狀，不再拉絲。體溫維持高溫。後半段可能出現經前症狀：胸脹、水腫、長痘、嗜甜、情緒起伏、睡不好。快來月經前一兩天可能有少量褐色分泌物。如果這段時間又出現蛋清狀黏液，記錄下來就好，不一定代表再次排卵。僅供參考，以妳自己的狀況為主。",
+    en: "After ovulation, mucus usually becomes scanty, thicker, whitish or creamy, and no longer stretches. Temperature stays on the high plateau. In the second half, PMS may appear: breast tenderness, bloating, breakouts, sugar cravings, mood swings, poor sleep. A day or two before the period there may be light brown discharge. If egg-white mucus shows up again in this phase, just log it — it does not necessarily mean a second ovulation. For reference only; your own body comes first.",
   },
 };
 

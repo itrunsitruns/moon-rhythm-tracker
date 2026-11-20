@@ -432,6 +432,7 @@ function DeepGuidance({ phase, preview, onUnlock }) {
     ["🏃", t("deep.label.move"), t(`deep.${dk}.move`)],
     ["💊", t("deep.label.support"), t(`deep.${dk}.support`)],
     ["🩸", t("deep.label.hormone"), t(`deep.${dk}.hormone`)],
+    ["💧", t("deep.label.body"), t(`deep.${dk}.body`)],
   ];
 
   return (
@@ -631,6 +632,7 @@ function DateDetail({ dateKey, periodStart, cycleLen, logs, onSaveLog, onDeleteL
       {flags.showFertility && (
         <div style={{ fontSize: 12, color: "#aaa", marginBottom: 4 }}>
           {t("pregnancyRisk")}：<span style={{ color: fertility > 60 ? "#FF6B6B" : "#4A9E8E" }}>{fertility}%</span>
+          <span style={{ fontSize: 10, color: "#666", marginLeft: 6 }}>{t("riskNote")}</span>
         </div>
       )}
       {flags.showConceive && (
@@ -968,6 +970,7 @@ function ExploreCard({ day, cycleStart, cycleLen, today, flags, logs, onClose, o
       {flags.showFertility && (
         <div style={{ fontSize: 12, color: "#aaa", marginBottom: 4 }}>
           {t("pregnancyRisk")}：<span style={{ color: fert > 60 ? "#FF6B6B" : "#4A9E8E" }}>{fert}%</span>
+          <span style={{ fontSize: 10, color: "#666", marginLeft: 6 }}>{t("riskNote")}</span>
         </div>
       )}
       {log && log.hours > 0 && (
@@ -1188,6 +1191,7 @@ export default function MoonRhythm() {
                 <div style={{ fontSize: 11, color: "#666", marginTop: 6, fontFamily: "monospace" }}>
                   {t("ovulationEstimate")}：{fmt(ovDate)} · {t("dangerPeriod")}：{fmt(dangerStart)}–{fmt(dangerEnd)}
                 </div>
+                <div style={{ fontSize: 10, color: "#555", marginTop: 4, fontFamily: "monospace" }}>{t("riskNote")}</div>
               </div>
             )}
 
