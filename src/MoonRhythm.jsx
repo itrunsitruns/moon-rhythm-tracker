@@ -421,7 +421,29 @@ function deepKey(phase) {
   return "luteal"; // luteal + safe
 }
 
-function DeepGuidance({ phase, preview, onUnlock }) {
+// Which "what the body may show" bucket a cycle day falls in. Anchored to
+// ovulation (cycleLen - 14) so it stays sensible for cycles other than 28 days.
+function bodyKeyFor(day, cycleLen) {
+  if (!day) return null;
+  const ov = cycleLen - 14;
+  if (day === 1) return "d1";
+  if (day === 2) return "d2";
+  if (day <= 5 && day < ov - 5) return "d3_5";
+  const post = day - ov;
+  if (post >= 0) {
+    if (day >= cycleLen - 2) return "pre_period";
+    if (post === 0) return "ov";
+    if (post <= 2) return "post_ov";
+    if (post <= 7) return "lut_mid";
+    return "lut_late";
+  }
+  const pre = ov - day;
+  if (pre <= 2) return "preov_2";
+  if (pre <= 5) return "preov_5";
+  return "post_period";
+}
+
+function DeepGuidance({ phase, cycleDay, cycleLen, preview, onUnlock }) {
   const { t } = useLang();
   const [open, setOpen] = useState(true);
   const dk = deepKey(phase);
@@ -432,8 +454,9 @@ function DeepGuidance({ phase, preview, onUnlock }) {
     ["🏃", t("deep.label.move"), t(`deep.${dk}.move`)],
     ["💊", t("deep.label.support"), t(`deep.${dk}.support`)],
     ["🩸", t("deep.label.hormone"), t(`deep.${dk}.hormone`)],
-    ["💧", t("deep.label.body"), t(`deep.${dk}.body`)],
   ];
+  const bk = bodyKeyFor(cycleDay, cycleLen);
+  if (bk) rows.push(["💧", t("deep.label.body") + (cycleDay ? ` · ${t("day", { n: cycleDay })}` : ""), t(`body.${bk}`) + " " + t("bodyNote")]);
 
   return (
     <div style={{
@@ -468,6 +491,7 @@ function DeepGuidance({ phase, preview, onUnlock }) {
               </div>
             </div>
           ))}
+          <div style={{ fontSize: 10, color: "#6a6a7a", fontFamily: "monospace", lineHeight: 1.5 }}>{t("bodySources")}</div>
 
           {preview && (
             <div style={{ marginTop: 6, borderTop: "1px dashed #D4A01733", paddingTop: 12 }}>
@@ -638,6 +662,12 @@ function DateDetail({ dateKey, periodStart, cycleLen, logs, onSaveLog, onDeleteL
       {flags.showConceive && (
         <div style={{ fontSize: 12, color: isDanger ? "#FF6B6B" : "#888", marginBottom: 4 }}>
           {isDanger ? t("conceiveTip") : t("conceiveNonOvTip")}
+        </div>
+      )}
+      {bodyKeyFor(cDay, cycleLen) && (
+        <div style={{ fontSize: 12, color: "#bbb", lineHeight: 1.6, marginBottom: 8, padding: "8px 10px", background: "#0d0d14", borderRadius: 8, border: "1px solid #2a2a3e" }}>
+          <span style={{ color: "#FFD24A", fontFamily: "monospace", fontSize: 10 }}>💧 {t("deep.label.body")}</span><br />
+          {t(`body.${bodyKeyFor(cDay, cycleLen)}`)} <span style={{ color: "#777", fontSize: 11 }}>{t("bodyNote")}</span>
         </div>
       )}
       {flags.showFasting && (
@@ -961,6 +991,13 @@ function ExploreCard({ day, cycleStart, cycleLen, today, flags, logs, onClose, o
         </>
       )}
 
+      {bodyKeyFor(day, cycleLen) && (
+        <>
+          <div style={{ fontSize: 11, color: "#FFD24A", fontFamily: "monospace", marginBottom: 2 }}>💧 {t("deep.label.body")}</div>
+          <div style={{ fontSize: 13, color: "#ccc", lineHeight: 1.6, marginBottom: 10 }}>{t(`body.${bodyKeyFor(day, cycleLen)}`)} <span style={{ color: "#777", fontSize: 11 }}>{t("bodyNote")}</span></div>
+        </>
+      )}
+
       {flags.showFasting && (
         <div style={{ fontSize: 13, color: "#ccc", marginBottom: 4 }}>
           {t("fastingAdvice")}：<span style={{ color: cfg.color, fontWeight: "bold" }}>{fa.fast}</span>
@@ -1175,7 +1212,7 @@ export default function MoonRhythm() {
 
             {/* Moonyou＋ deep guidance (unlocked — included with the paid app) */}
             {flags.showFasting && (
-              <DeepGuidance phase={todayPhase} preview={false} />
+              <DeepGuidance phase={todayPhase} cycleDay={cycleDay} cycleLen={cycleLen} preview={false} />
             )}
 
             {/* Fertility bar */}

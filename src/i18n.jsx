@@ -381,6 +381,54 @@ const translations = {
   "deep.label.hormone": { zh: "身體訊號", en: "What's happening" },
   "deep.label.body": { zh: "今天身體可能出現的狀況", en: "What your body may show today" },
 
+  // ── Day-by-day body signs for a typical cycle (anchored to ovulation; see bodyKeyFor) ──
+  "body.d1": {
+    zh: "出血第一天。子宮內膜開始剝落，前 24–48 小時通常是整個經期血量最多的時候。子宮收縮（前列腺素）讓下腹悶痛最明顯，有些人會腰痠、頭痛、拉肚子。雌激素和黃體素都在最低點。分泌物以經血為主，看不到黏液。",
+    en: "First day of bleeding. The uterine lining starts to shed; the first 24–48 hours are usually the heaviest of the whole period. Uterine contractions (prostaglandins) make cramps strongest now; some people also get low-back ache, headache or loose stools. Estrogen and progesterone are both at their lowest. Discharge is menstrual blood, with no visible mucus.",
+  },
+  "body.d2": {
+    zh: "多數人第 2 天血量仍然偏多，可能有小血塊。悶痛通常在第 1–2 天最強，之後減輕。體溫還在低溫期。",
+    en: "For most people day 2 is still heavy, sometimes with small clots. Cramps are usually strongest on days 1–2 and ease afterwards. Temperature is still on the low plateau.",
+  },
+  "body.d3_5": {
+    zh: "血量逐漸變少、顏色變深偏褐，多數人的經期在 3–5 天內結束（2–7 天都算正常）。雌激素開始從谷底回升，體力慢慢回來。",
+    en: "Flow tapers and turns darker or brownish; most periods end within 3–5 days (2–7 days is normal). Estrogen starts climbing from its low and energy gradually returns.",
+  },
+  "body.post_period": {
+    zh: "經血結束後的幾天通常比較乾：分泌物很少、偏黏、白色或淡黃，摸起來不滑。這時精子不容易存活，受孕機率低。卵巢裡的濾泡正在長大，雌激素持續上升，精神和專注力多半不錯。",
+    en: "The days right after bleeding are usually dry: little mucus, sticky, white or pale yellow, not slippery. Sperm survive poorly in it, so the chance of conceiving is low. Follicles are growing in the ovary, estrogen keeps rising, and focus and energy are often good.",
+  },
+  "body.preov_5": {
+    zh: "分泌物開始變多、變成乳霜或優格狀、偏白偏濁、摸起來濕潤。這表示雌激素已經升到一定程度，受孕窗口開始打開：精子大約從這幾天起可以在黏液裡存活，最長約 5 天，所以這幾天同房也可能懷孕。",
+    en: "Mucus starts to increase and turns creamy or yogurt-like, cloudy and moist. This means estrogen has risen enough for the fertile window to open: from around now sperm can survive in the mucus for up to about 5 days, so intercourse in these days can lead to pregnancy.",
+  },
+  "body.preov_2": {
+    zh: "排卵前 1–2 天。分泌物變成透明、滑、可以拉成好幾公分的「蛋清狀」，有時偏水狀，量是整個週期最多的。這是最容易受孕的日子之一。雌激素達到頂峰，觸發 LH 高峰（排卵試紙會變陽性），大約 24–36 小時後排卵。有些人這時性慾上升、精神特別好。",
+    en: "The 1–2 days before ovulation. Mucus becomes clear, slippery and stretchy like raw egg white, sometimes watery, and is at its most abundant. These are among the most fertile days. Estrogen peaks and triggers the LH surge (ovulation test strips turn positive); ovulation follows about 24–36 hours later. Some people notice higher libido and energy.",
+  },
+  "body.ov": {
+    zh: "排卵日（預估）。卵子釋出後大約只能存活一天，所以這天是受孕機率最高的一天。分泌物可能還是蛋清狀或水狀，也可能開始變少。有些人會有單側下腹短暫刺痛（排卵痛，通常幾分鐘到幾小時）、少量點狀出血。基礎體溫通常在排卵後 1–3 天內上升 0.2–0.5°C。",
+    en: "Estimated ovulation day. The egg survives only about a day after release, so this is the day with the highest chance of conceiving. Mucus may still be egg-white or watery, or may start to decrease. Some people feel a brief one-sided twinge (ovulation pain, usually minutes to hours) or light spotting. Basal temperature usually rises 0.2–0.5°C within 1–3 days after ovulation.",
+  },
+  "body.post_ov": {
+    zh: "排卵後 1–2 天。黃體素開始上升，分泌物很快變少、變稠、偏白，不再拉絲。基礎體溫升到高溫期並維持。卵子壽命已過，受孕機率快速下降；app 的危險期多保留排卵後一天當作安全邊際。",
+    en: "1–2 days after ovulation. Progesterone starts rising; mucus quickly becomes scanty, thicker and whitish, and no longer stretches. Basal temperature moves up to the high plateau and stays there. The egg's lifespan has passed, so the chance of conceiving drops fast; the app keeps one extra day in the fertile window as a safety margin.",
+  },
+  "body.lut_mid": {
+    zh: "黃體期中段。黃體素在排卵後約 6–8 天達到最高，子宮內膜增厚準備著床。分泌物少、乾或黏。體溫維持高溫。有些人開始覺得胸脹、容易水腫、食慾（尤其想吃甜食和碳水）上升、比較嗜睡。",
+    en: "Mid luteal phase. Progesterone peaks about 6–8 days after ovulation and the lining thickens for implantation. Mucus is scanty, dry or sticky. Temperature stays high. Some people start to notice breast fullness, bloating, more appetite (especially for sweets and carbs) and sleepiness.",
+  },
+  "body.lut_late": {
+    zh: "黃體期後段。如果沒有受孕，黃體開始萎縮，黃體素和雌激素往下掉。這是經前症狀最常出現的時段（約月經前 5 天開始）：情緒起伏、易怒、胸脹、水腫、長痘、頭痛、睡不好。分泌物仍少，偶爾偏稠。",
+    en: "Late luteal phase. If there is no pregnancy, the corpus luteum starts to break down and progesterone and estrogen fall. This is when premenstrual symptoms most often appear (from about 5 days before the period): mood swings, irritability, breast tenderness, bloating, breakouts, headache, poor sleep. Mucus stays scanty, occasionally thick.",
+  },
+  "body.pre_period": {
+    zh: "月經前 1–3 天。荷爾蒙降到低點，經前症狀可能最明顯，有些人會先看到少量褐色或粉色分泌物，下腹開始有輕微悶痛。基礎體溫可能開始往下掉。接著出血，週期重新開始。",
+    en: "The last 1–3 days before the period. Hormones reach their low; premenstrual symptoms may be at their strongest, some people see a little brown or pink discharge first, and mild cramping begins. Basal temperature may start to fall. Then bleeding starts and the cycle begins again.",
+  },
+  bodyNote: { zh: "每個人的週期都不同，以上是一般 28 天週期的典型描述，僅供參考，以妳自己的狀況為主。", en: "Every cycle is different; this describes a typical 28-day cycle, for reference only — your own body comes first." },
+  bodySources: { zh: "資料來源：Cleveland Clinic（分泌物逐日變化）、Wilcox 等 1995 NEJM（受孕窗口為排卵日前 5 天至當天）、StatPearls（基礎體溫）、美國婦女健康辦公室 womenshealth.gov（經前症候群）。", en: "Sources: Cleveland Clinic (cervical mucus by day), Wilcox et al. 1995 NEJM (fertile window = 5 days before ovulation through ovulation day), StatPearls (basal body temperature), US Office on Women's Health (PMS)." },
+
   // —— Menstrual ——
   "deep.menstrual.protocol": {
     zh: "溫和 12–14h,進食窗口放在白天(如 10:00–18:00),晚上讓身體休息。這幾天不要嘗試長斷食。",
@@ -405,10 +453,6 @@ const translations = {
   "deep.menstrual.hormone": {
     zh: "雌激素與黃體素都在最低點,子宮內膜正在排出,能量自然偏低——順著它休息。",
     en: "Estrogen and progesterone are at their lowest as the lining sheds; low energy is normal — lean into rest.",
-  },
-  "deep.menstrual.body": {
-    zh: "出血量通常第 1–2 天最多，之後變少、顏色變深。可能有下腹悶痛、腰痠、頭痛、拉肚子、胸口悶。分泌物以經血為主，幾乎看不到黏液。每個人的經期長短、血量、痛的程度都不同，僅供參考，以妳自己的狀況為主。",
-    en: "Flow is usually heaviest on days 1–2, then lighter and darker. Cramps, low-back ache, headache, loose stools and chest tightness are common. Discharge is mostly blood, with little mucus. Period length, flow and pain differ from person to person — for reference only; your own body comes first.",
   },
 
   // —— Follicular ——
@@ -436,10 +480,6 @@ const translations = {
     zh: "雌激素穩定上升,精力、專注、心情、代謝全在高點——這是你一個月裡的「巔峰週」。",
     en: "Rising estrogen lifts energy, focus, mood and metabolism — this is your peak week of the month.",
   },
-  "deep.follicular.body": {
-    zh: "經血結束後幾天通常比較乾，分泌物少、偏白或黏稠。越接近排卵，分泌物會慢慢變多、變滑。體力和心情多半是整個週期最穩的。如果這幾天就看到透明拉絲的蛋清狀黏液，表示排卵可能比 app 預測的早：到日曆那天登記「蛋清狀」，app 會標上 ⚡ 可能排卵。僅供參考，以妳自己的狀況為主。",
-    en: "The days right after bleeding are usually drier, with little, whitish or sticky mucus. Closer to ovulation it gets more plentiful and slippery. Energy and mood are often the steadiest of the cycle. If you already see clear, stretchy egg-white mucus in these days, ovulation may be earlier than the app predicts: log “Egg white” on that day in the calendar and the app marks ⚡ possible ovulation. For reference only; your own body comes first.",
-  },
 
   // —— Ovulation ——
   "deep.ovulation.protocol": {
@@ -466,10 +506,6 @@ const translations = {
     zh: "雌激素達頂峰後排卵,睪固酮短暫上升,精力與性慾高——但身體正全力排卵,別逼它斷食。",
     en: "Estrogen peaks then ovulation fires; a testosterone bump lifts drive — but your body is working hard, so ease off fasting.",
   },
-  "deep.ovulation.body": {
-    zh: "最明顯的訊號是分泌物：量變多、透明、像生蛋白一樣可以拉長幾公分，有時偏水狀。這種黏液會幫精子存活，所以看到它就代表受孕機率高，不管日曆上寫的是哪一天。有些人會有一側下腹輕微刺痛（排卵痛）、少量點狀出血、胸脹、性慾上升。排卵之後基礎體溫會升高約 0.3–0.5°C 並維持到下次月經。僅供參考，以妳自己的狀況為主。",
-    en: "The clearest sign is mucus: more of it, clear, stretchy like raw egg white (it can stretch several centimetres), sometimes watery. This mucus helps sperm survive, so whenever you see it your chance of conceiving is high — whatever day the calendar says. Some people feel a mild one-sided twinge (ovulation pain), light spotting, breast fullness or a rise in libido. After ovulation, basal temperature rises about 0.3–0.5°C and stays up until the next period. For reference only; your own body comes first.",
-  },
 
   // —— Luteal ——
   "deep.luteal.protocol": {
@@ -495,10 +531,6 @@ const translations = {
   "deep.luteal.hormone": {
     zh: "黃體素上升主導,基礎體溫升高,胰島素敏感度下降——疲倦、嘴饞、情緒波動都正常,溫柔對待自己。",
     en: "Progesterone takes over, BBT rises, insulin sensitivity dips — fatigue, cravings and mood swings are normal; be gentle with yourself.",
-  },
-  "deep.luteal.body": {
-    zh: "排卵後分泌物通常變少、變稠、偏白或乳霜狀，不再拉絲。體溫維持高溫。後半段可能出現經前症狀：胸脹、水腫、長痘、嗜甜、情緒起伏、睡不好。快來月經前一兩天可能有少量褐色分泌物。如果這段時間又出現蛋清狀黏液，記錄下來就好，不一定代表再次排卵。僅供參考，以妳自己的狀況為主。",
-    en: "After ovulation, mucus usually becomes scanty, thicker, whitish or creamy, and no longer stretches. Temperature stays on the high plateau. In the second half, PMS may appear: breast tenderness, bloating, breakouts, sugar cravings, mood swings, poor sleep. A day or two before the period there may be light brown discharge. If egg-white mucus shows up again in this phase, just log it — it does not necessarily mean a second ovulation. For reference only; your own body comes first.",
   },
 };
 
