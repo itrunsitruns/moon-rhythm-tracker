@@ -27,6 +27,26 @@ function getMoonPhase(date, t) {
   return { emoji: MOON_EMOJIS[idx], name: t(`moon.${idx}`) };
 }
 
+// ── Chinese lunar calendar date (農曆), via the runtime's built-in chinese calendar ──
+const LUNAR_MONTHS = ["正月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"];
+const LUNAR_DAYS = ["初一","初二","初三","初四","初五","初六","初七","初八","初九","初十",
+  "十一","十二","十三","十四","十五","十六","十七","十八","十九","二十",
+  "廿一","廿二","廿三","廿四","廿五","廿六","廿七","廿八","廿九","三十"];
+let _lunarFmt = null;
+function lunarLabel(date, lang) {
+  try {
+    if (!_lunarFmt) _lunarFmt = new Intl.DateTimeFormat("zh-TW-u-ca-chinese", { month: "numeric", day: "numeric" });
+    const parts = _lunarFmt.formatToParts(date);
+    const mRaw = parts.find(p => p.type === "month")?.value ?? "";
+    const dRaw = parts.find(p => p.type === "day")?.value ?? "";
+    const leap = /閏|bis/.test(mRaw);
+    const m = parseInt(mRaw.replace(/\D/g, ""), 10), d = parseInt(dRaw, 10);
+    if (!m || !d) return "";
+    if (lang === "en") return `Lunar ${leap ? "leap " : ""}${m}/${d}`;
+    return `農曆${leap ? "閏" : ""}${LUNAR_MONTHS[m - 1] ?? m + "月"}${LUNAR_DAYS[d - 1] ?? d}`;
+  } catch { return ""; }
+}
+
 // ── Default fasting hours by phase ──
 const PHASE_DEFAULT_HOURS = {
   menstrual: 12, follicular_gold: 72, follicular_late: 36,
@@ -583,7 +603,7 @@ function CalendarGrid({ periodStart, cycleLen, year, month, logs, onSelectDate, 
 const MUCUS_OPTIONS = ["none", "sticky", "eggwhite", "watery"];
 
 function DateDetail({ dateKey, periodStart, cycleLen, logs, onSaveLog, onDeleteLog, flags, ovDetected }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const date = parseLocal(dateKey);
   const phase = getPhase(date, periodStart, cycleLen);
   const cfg = PHASE_CONFIG[phase];
@@ -647,7 +667,7 @@ function DateDetail({ dateKey, periodStart, cycleLen, logs, onSaveLog, onDeleteL
       </div>
 
       {/* Moon + ovulation detection */}
-      <div style={{ fontSize: 12, color: "#aaa", marginBottom: 4 }}>{t("moonPhase")}：{moon.emoji} {moon.name}</div>
+      <div style={{ fontSize: 12, color: "#aaa", marginBottom: 4 }}>{t("moonPhase")}：{moon.emoji} {moon.name}{lunarLabel(date, lang) && <span style={{ color: "#777" }}> · {lunarLabel(date, lang)}</span>}</div>
       {isOvDetected && (
         <div style={{ fontSize: 12, color: "#FF6B6B", marginBottom: 4 }}>
           {t("possibleOvulation")} — {t("bbtDetected")}
@@ -952,7 +972,7 @@ function DatePickerField({ value, onChange, accent }) {
 // ── Explore card: what a tapped disc day means ──
 // ══════════════════════════════════
 function ExploreCard({ day, cycleStart, cycleLen, today, flags, logs, onClose, onShift }) {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const date = addDays(cycleStart, day - 1);
   const phase = getPhase(date, cycleStart, cycleLen);
   const cfg = PHASE_CONFIG[phase];
@@ -974,7 +994,7 @@ function ExploreCard({ day, cycleStart, cycleLen, today, flags, logs, onClose, o
         <div style={{ fontSize: 11, color: "#FFD24A", fontFamily: "monospace", whiteSpace: "nowrap", marginLeft: 8 }}>{relText}</div>
       </div>
       <div style={{ fontSize: 12, color: "#888", marginBottom: 6 }}>
-        {t("moonPhase")}：{moon.emoji} {moon.name}
+        {t("moonPhase")}：{moon.emoji} {moon.name}{lunarLabel(date, lang) && <span style={{ color: "#777" }}> · {lunarLabel(date, lang)}</span>}
         {day === ovDay && <span style={{ color: "#FF6B6B", marginLeft: 8 }}>● {t("ovulationDay")}</span>}
       </div>
       <div style={{ fontSize: 13, color: "#aaa", marginBottom: 10 }}>{resolvePhaseDesc(phase, flags, t)}</div>
@@ -1134,7 +1154,7 @@ export default function MoonRhythm() {
             🌙 <span style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", fontWeight: 600 }}>Moonyou</span> 你的月亮
           </h1>
           <div style={{ fontSize: 11, color: "#666", fontFamily: "monospace", marginTop: 2 }}>
-            {cycleDay ? t("cycleDay", { n: cycleDay }) : "—"} · {todayPhaseLabel} · {todayMoon.emoji} {todayMoon.name}
+            {cycleDay ? t("cycleDay", { n: cycleDay }) : "—"} · {todayPhaseLabel} · {todayMoon.emoji} {todayMoon.name}{lunarLabel(today, lang) && ` · ${lunarLabel(today, lang)}`}
           </div>
         </div>
         <button onClick={toggleLang} style={{ background: "#1a1a2e", color: "#aaa", border: "1px solid #2a2a3e", borderRadius: 6, padding: "4px 10px", fontFamily: "monospace", fontSize: 11, cursor: "pointer", flexShrink: 0, marginTop: 2 }}>
@@ -1182,7 +1202,7 @@ export default function MoonRhythm() {
               <div style={{ fontSize: 18, color: todayCfg.color, marginBottom: 6 }}>
                 {todayMoon.emoji} {t("today")}：{todayPhaseLabel}
               </div>
-              <div style={{ fontSize: 12, color: "#888", marginBottom: 4 }}>{t("moonPhase")}：{todayMoon.emoji} {todayMoon.name}</div>
+              <div style={{ fontSize: 12, color: "#888", marginBottom: 4 }}>{t("moonPhase")}：{todayMoon.emoji} {todayMoon.name}{lunarLabel(today, lang) && <span style={{ color: "#666" }}> · {lunarLabel(today, lang)}</span>}</div>
               <div style={{ fontSize: 13, color: "#aaa", marginBottom: 8 }}>{resolvePhaseDesc(todayPhase, flags, t)}</div>
               {todayCycleDay && (
                 <>
