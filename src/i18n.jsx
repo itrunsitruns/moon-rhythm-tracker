@@ -610,8 +610,8 @@ const translations = {
   longFastBlockedIntake: { zh: "健康問卷勾選了禁忌事項，長時間斷食建議不會顯示。", en: "Your health intake lists a contraindication, so long-fast suggestions are hidden." },
   refsTitle: { zh: "參考文獻", en: "References" },
   refsNote: {
-    zh: "文獻支持的是週期生理、受孕窗口與體溫的描述；飲食、運動與補充品屬一般性生活建議。",
-    en: "The references support the statements on cycle physiology, the fertile window and temperature; food, movement and supplement suggestions are general lifestyle advice.",
+    zh: "文獻支持的是研究發現；飲食、運動與補充品屬一般性生活建議，不是醫療效能宣稱。",
+    en: "The references support research findings; food, movement and supplement suggestions are general lifestyle advice, not claims of medical effect.",
   },
   guideAboutTitle: { zh: "重要說明", en: "Important" },
   "about.calendar": {
@@ -747,6 +747,31 @@ const translations = {
   "booking.notReady": { zh: "線上預約還沒開放，預約連結設定好之後這裡就能用。", en: "Online booking isn't open yet; this will work once the booking link is set up." },
   "booking.copiedOpen": { zh: "摘要已複製。預約頁面在新分頁開啟，貼到備註欄即可。", en: "Summary copied. The booking page opened in a new tab — paste it into the notes field." },
   "booking.opened": { zh: "預約頁面已在新分頁開啟。", en: "The booking page opened in a new tab." },
+
+  // ── Literature references & the Scientific basis page ──
+  "refTopic.ovulation": { zh: "排卵時間與易孕窗", en: "Ovulation timing & the fertile window" },
+  "refTopic.fam_efficacy": { zh: "日曆法與生育意識法效力", en: "Effectiveness of calendar & fertility-awareness methods" },
+  "refTopic.bbt_mucus": { zh: "基礎體溫與子宮頸黏液訊號", en: "Basal body temperature & cervical mucus" },
+  "refTopic.app_accuracy": { zh: "週期與生育 App 的準確度與宣稱", en: "Accuracy & claims of cycle and fertility apps" },
+  "refTopic.fasting": { zh: "斷食、時間限制飲食與生殖荷爾蒙", en: "Fasting, time-restricted eating & reproductive hormones" },
+  "refTopic.iron": { zh: "鐵需求、月經與缺鐵", en: "Iron needs, menstruation & iron deficiency" },
+  "refTopic.personal_nutrition": { zh: "個人化營養反應", en: "Personalised nutrition responses" },
+  "refTopic.gut": { zh: "腸道菌相、飲食與雌激素軸", en: "Gut microbiome, diet & the estrogen axis" },
+  "refTopic.sleep_mood": { zh: "週期與睡眠、情緒、PMS／PMDD、運動", en: "Cycle, sleep, mood, PMS/PMDD & exercise" },
+  "refTopic.taiwan_regulation": { zh: "臺灣健康 App 與廣告宣稱指引", en: "Taiwan guidance on health apps & advertising claims" },
+  "science.title": { zh: "科學依據", en: "Scientific basis" },
+  "science.intro": {
+    zh: "這裡列出 Moonyou 文案所依據的 {n} 筆文獻，依主題分組。每一筆都經 PubMed、DOI 或官方頁面核實；摘要用我們自己的話寫，細節請以原文為準。",
+    en: "These are the {n} sources Moonyou's text draws on, grouped by topic. Each was checked against PubMed, its DOI or the official page; for details, rely on the original.",
+  },
+  "science.notAdvice": {
+    zh: "文獻支持的是研究發現，不代表 Moonyou 能診斷、治療或避孕。",
+    en: "These sources support research findings; they do not mean Moonyou can diagnose, treat or prevent pregnancy.",
+  },
+  "science.summaryZhOnly": { zh: "（一句話摘要目前只有中文版）", en: "One-line summaries are only available in Chinese for now." },
+  "science.open": { zh: "科學依據 →", en: "Scientific basis →" },
+  "science.viewAll": { zh: "查看全部科學依據 →", en: "See all sources →" },
+  "science.back": { zh: "← 返回", en: "← Back" },
 };
 
 const LangContext = createContext();

@@ -4,7 +4,7 @@ import { useLang } from "./i18n";
 import { syncToGoogleCalendar, downloadICS } from "./googleCalendar";
 import { getVedicPositions } from "./astrology";
 import { getDailyDraw, getPersonalSeed } from "./tarot";
-import { REFERENCES, PHASE_REFS, formatReference } from "./references";
+import { ReferenceBlock, ScienceEntry, SciencePage, ScienceNavContext, REF_GROUPS } from "./Reference";
 import FertilityNotice from "./FertilityNotice";
 import { IntakeCard, SummaryCard, BookingCard, buildSummary, intakeHasContra, DEFAULT_SUMMARY_FIELDS } from "./Intake";
 
@@ -571,21 +571,9 @@ function DeepGuidance({ phase, cycleDay, cycleLen, preview, onUnlock }) {
             </div>
           ))}
 
-          {/* References (structured: title, authors, journal, year, url) */}
-          <div style={{ borderTop: "1px dashed #D4A01733", paddingTop: 10 }}>
-            <div style={{ fontSize: 11, color: "#D4A017", fontFamily: "monospace", marginBottom: 6 }}>📚 {t("refsTitle")}</div>
-            <ol style={{ margin: 0, paddingLeft: 18, display: "flex", flexDirection: "column", gap: 5 }}>
-              {(PHASE_REFS[dk] || []).map(id => {
-                const r = REFERENCES[id];
-                return (
-                  <li key={id} style={{ fontSize: 10.5, color: "#8a8a9a", lineHeight: 1.5 }}>
-                    <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ color: "#b0a070", textDecoration: "none" }}>{formatReference(r)}</a>
-                  </li>
-                );
-              })}
-            </ol>
-            <div style={{ fontSize: 10, color: "#6a6a7a", fontFamily: "monospace", lineHeight: 1.5, marginTop: 6 }}>{t("refsNote")}</div>
-          </div>
+          {/* References: iron, personalised nutrition, gut, sleep/mood/PMS */}
+          <ReferenceBlock topics={REF_GROUPS.wellness} style={{ marginTop: 4 }} />
+          <div style={{ fontSize: 10, color: "#6a6a7a", fontFamily: "monospace", lineHeight: 1.5 }}>{t("refsNote")}</div>
 
           {preview && (
             <div style={{ marginTop: 6, borderTop: "1px dashed #D4A01733", paddingTop: 12 }}>
@@ -817,6 +805,7 @@ function DateDetail({ dateKey, periodStart, cycleLen, logs, onSaveLog, onDeleteL
           </div>
         </div>
       )}
+      <ReferenceBlock topics={REF_GROUPS.signals} />
     </div>
   );
 }
@@ -895,6 +884,7 @@ function ConsultantView({ phase, cycleDay, cycleLen, logs, periodStart, goals, o
       <IntakeCard intake={intake} setIntake={setIntake} appGoals={goals} />
       <SummaryCard fields={fields} setFields={setFields} makeSummary={makeSummary} />
       <BookingCard fields={fields} makeSummary={makeSummary} />
+      <ScienceEntry />
 
       {/* Disclaimer */}
       <div style={{ fontSize: 10, color: "#8a8a8a", fontFamily: "monospace", lineHeight: 1.6, textAlign: "center", padding: "0 8px" }}>
@@ -951,6 +941,7 @@ function GuideView() {
           <div key={k} style={paraStyle}>{t(k)}</div>
         ))}
         <a href="/privacy.html" target="_blank" rel="noopener" style={{ fontSize: 12, color: "#D4A017", fontFamily: "monospace", textDecoration: "none" }}>{t("privacyLink")}</a>
+        <div style={{ marginTop: 12 }}><ScienceEntry /></div>
       </div>
 
       {/* Medical disclaimer */}
@@ -1109,6 +1100,7 @@ function ExploreCard({ day, cycleStart, cycleLen, today, flags, logs, onClose, o
         <button type="button" onClick={onClose} style={{ ...navBtn, flex: 1, color: "#FFD24A" }}>{t("backToToday")}</button>
       </div>
       <div style={{ fontSize: 10, color: "#666", fontFamily: "monospace", marginTop: 8, textAlign: "center" }}>{t("autoReturnHint")}</div>
+      <ReferenceBlock topics={REF_GROUPS.wellness} />
     </div>
   );
 }
@@ -1165,6 +1157,12 @@ export default function MoonRhythm() {
   const prefs = useMemo(() => ({ allowLong }), [allowLong]);
 
   const [view, setView] = useState("dashboard");
+  const [prevView, setPrevView] = useState("dashboard");
+  const openScience = useCallback(() => {
+    setView(v => { if (v !== "science") setPrevView(v); return "science"; });
+    setNoticeDismissed(true); // opened from the notice card → close it
+    window.scrollTo?.(0, 0);
+  }, []);
   const [calMonth, setCalMonth] = useState(new Date().getMonth());
   const [calYear, setCalYear] = useState(new Date().getFullYear());
   const [selectedDate, setSelectedDate] = useState(null);
@@ -1244,6 +1242,7 @@ export default function MoonRhythm() {
 
   return (
     <PrefsContext.Provider value={prefs}>
+    <ScienceNavContext.Provider value={openScience}>
     <div style={{ background: "#0A0A0F", color: "#ddd", minHeight: "100vh", fontFamily: "'Crimson Text', Georgia, serif", maxWidth: 420, margin: "0 auto" }}>
       {/* Header */}
       <div style={{ padding: "20px 16px 8px", borderBottom: "1px solid #1a1a2e", display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
@@ -1278,6 +1277,7 @@ export default function MoonRhythm() {
               <span>● <span style={{ color: "#8B1A1A" }}>{t("nextPeriod")}</span> {fmt(nextPeriod)}</span>
             </div>
             <div style={{ textAlign: "center", fontSize: 10, color: "#555", fontFamily: "monospace", marginTop: -8, marginBottom: 14 }}>{t("ovulationVaries")}</div>
+            {!flags.showFertility && <ReferenceBlock topics={REF_GROUPS.fertility} style={{ marginTop: -8, marginBottom: 12, borderTop: "none" }} />}
 
             {exploreDay != null && exploreDay !== todayCycleDay && (
               <ExploreCard day={exploreDay} cycleStart={cycleStart} cycleLen={cycleLen} today={today} flags={flags} logs={logs}
@@ -1336,6 +1336,7 @@ export default function MoonRhythm() {
                   ✓ {todayLog.hours}h {t("logged").replace("✓ ", "")}
                 </div>
               )}
+              <ReferenceBlock topics={flags.showFasting ? [...REF_GROUPS.fasting, ...REF_GROUPS.wellness] : REF_GROUPS.wellness} />
             </div>
 
             {/* Vedic sidereal astrology — Sun / Moon / Mercury */}
@@ -1373,6 +1374,7 @@ export default function MoonRhythm() {
                 </div>
                 {fertLevel === "low" && <div style={{ fontSize: 11, color: "#888", marginTop: 6, lineHeight: 1.6 }}>{t("fert.lowNote")}</div>}
                 <div style={{ fontSize: 10, color: "#555", marginTop: 4, fontFamily: "monospace", lineHeight: 1.6 }}>{t("ovulationVaries")}{t("riskNote")}</div>
+                <ReferenceBlock topics={REF_GROUPS.fertility} />
               </div>
             )}
 
@@ -1421,6 +1423,9 @@ export default function MoonRhythm() {
 
         {/* ─── GUIDE ─── */}
         {view === "guide" && <GuideView />}
+
+        {/* ─── SCIENTIFIC BASIS (from Settings / Consult / Guide / any reference block) ─── */}
+        {view === "science" && <SciencePage onBack={() => setView(prevView)} />}
 
         {/* ─── SETTINGS ─── */}
         {view === "settings" && (
@@ -1485,6 +1490,7 @@ export default function MoonRhythm() {
                     {t(longBlockedBy === "conceive" ? "longFastBlockedConceive" : "longFastBlockedIntake")}
                   </div>
                 )}
+                <ReferenceBlock topics={REF_GROUPS.fasting} />
               </div>
             )}
 
@@ -1506,6 +1512,8 @@ export default function MoonRhythm() {
               {t("settingsNote")}
             </div>
 
+            <ScienceEntry />
+
             <div style={{ fontSize: 10, color: "#8a8a8a", fontFamily: "monospace", lineHeight: 1.6, textAlign: "center", padding: "0 8px" }}>
               {t("disclaimer")}
             </div>
@@ -1524,6 +1532,7 @@ export default function MoonRhythm() {
 
       {showNotice && <FertilityNotice mode={noticeMode} onClose={closeNotice} />}
     </div>
+    </ScienceNavContext.Provider>
     </PrefsContext.Provider>
   );
 }

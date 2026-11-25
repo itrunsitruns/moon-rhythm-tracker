@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLang } from "./i18n";
+import { ReferenceBlock, REF_GROUPS } from "./Reference";
 
 // Explanation card shown when contraception or conception mode is active.
 // "Don't show again this week" snoozes it for 7 days (stored by the parent).
@@ -13,7 +14,7 @@ export default function FertilityNotice({ mode, onClose }) {
       display: "flex", alignItems: "center", justifyContent: "center", padding: 16,
     }}>
       <div style={{
-        maxWidth: 380, width: "100%", background: "#111118", border: "1px solid #D4A01766",
+        maxWidth: 380, width: "100%", maxHeight: "88vh", overflowY: "auto", background: "#111118", border: "1px solid #D4A01766",
         borderRadius: 14, padding: 20, boxShadow: "0 10px 40px #00000080",
       }}>
         <div id="fertility-notice-title" style={{ fontSize: 16, color: "#D4A017", fontFamily: "serif", marginBottom: 10 }}>
@@ -29,6 +30,7 @@ export default function FertilityNotice({ mode, onClose }) {
           width: "100%", padding: 11, background: "#D4A017", color: "#0A0A0F", border: "none",
           borderRadius: 8, fontFamily: "serif", fontSize: 14, fontWeight: "bold", cursor: "pointer",
         }}>{t("notice.ok")}</button>
+        <ReferenceBlock topics={REF_GROUPS.fertility} />
       </div>
     </div>
   );
