@@ -21,7 +21,8 @@ export default function FertilityNotice({ mode, onClose }) {
           {mode === "avoid" ? "🛡️ " : "🪺 "}{t(mode === "avoid" ? "notice.title.avoid" : "notice.title.conceive")}
         </div>
         <div style={{ fontSize: 14, color: "#e0e0e0", lineHeight: 1.75, marginBottom: 10 }}>{t("notice.body")}</div>
-        <div style={{ fontSize: 12, color: "#aaa", lineHeight: 1.7, marginBottom: 14 }}>{t("notice.extra")}</div>
+        <div style={{ fontSize: 12, color: "#aaa", lineHeight: 1.7, marginBottom: 10 }}>{t("notice.extra")}</div>
+        <div style={{ fontSize: 12, color: "#FFB347", lineHeight: 1.7, marginBottom: 14 }}>{t("notice.stats")}</div>
         <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12, color: "#aaa", fontFamily: "monospace", marginBottom: 14, cursor: "pointer" }}>
           <input type="checkbox" checked={snooze} onChange={e => setSnooze(e.target.checked)} />
           {t("notice.snooze")}
