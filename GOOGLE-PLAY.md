@@ -131,7 +131,7 @@ Moonyou — Moon Rhythm
 ### 簡短說明 / Short description（≤ 80 字元）
 中文:
 ```
-整合月經週期、間歇斷食與受孕／安全期的個人追蹤,對齊真實月相。
+整合月經週期、間歇斷食與受孕期推估的個人追蹤,對齊真實月相。
 ```
 English:
 ```
@@ -142,11 +142,11 @@ Cycle, fasting & fertility tracker that syncs with the real lunar phases.
 ```
 🌙 Moonyou — 你的身體,有自己的月亮。
 
-Moonyou 是一款整合月經週期、間歇性斷食、與受孕／安全期追蹤的個人化健康工具。不只是記錄經期——它會根據你的週期階段,動態調整斷食建議、標示安全與危險期,並顯示真實月相,讓你一眼掌握身體的節奏。
+Moonyou 是一款整合月經週期、間歇性斷食、與受孕期推估的個人化健康工具。不只是記錄經期——它會根據你的週期階段,動態調整斷食建議、標示日曆推估的易受孕期,並顯示真實月相,讓你一眼掌握身體的節奏。
 
 核心功能：
-• 週期追蹤 — 輸入月經第一天,自動計算排卵日、危險期、安全期
-• 智慧斷食建議 — 經期輕斷食(12–14h)、濾泡期黃金窗口(可達 72h)、排卵期停長斷食、黃體期溫和斷食
+• 週期追蹤 — 輸入月經第一天,以日曆法推估排卵日與易受孕期(不是避孕方法)
+• 智慧斷食建議 — 經期輕斷食(12–14h)、濾泡期規律斷食(14–16h,長斷食預設關閉)、排卵期停長斷食、黃體期溫和斷食
 • 真實月相 — 日曆上的月亮對應天空中真正的月相,觀察身體週期與自然的同步
 • 目標自訂 — 斷食優化、避孕、備孕三種目標,可複選組合,介面自動調整
 • 斷食記錄與統計 — 每日記錄斷食時數,查看週／月統計、完成率、趨勢圖
@@ -163,11 +163,11 @@ Moonyou 是一款整合月經週期、間歇性斷食、與受孕／安全期追
 
 🌙 Moonyou — Your body has its own moon.
 
-Moonyou is a personalized health tool that brings together menstrual cycle tracking, intermittent fasting guidance, and fertility/safe-period awareness in one beautiful interface. It's not just a period tracker: it dynamically adjusts fasting recommendations to your cycle phase, marks fertile and safe windows, and shows real lunar phases so you can see your body's rhythm alongside nature's.
+Moonyou is a personalized health tool that brings together menstrual cycle tracking, intermittent fasting guidance, and calendar-based fertile-window estimates in one beautiful interface. It's not just a period tracker: it dynamically adjusts fasting recommendations to your cycle phase, marks the calendar-estimated fertile window, and shows real lunar phases so you can see your body's rhythm alongside nature's.
 
 Key features:
-• Cycle tracking — enter your period start; ovulation, fertile window & safe days are calculated automatically
-• Smart fasting advice — light fasting during menstruation (12–14h), golden window in the follicular phase (up to 72h), pause long fasts at ovulation, gentle fasting in the luteal phase
+• Cycle tracking — enter your period start; ovulation and the fertile window are estimated with the calendar method (not a contraceptive)
+• Smart fasting advice — light fasting during menstruation (12–14h), steady fasting in the follicular phase (14–16h; long fasts off by default), pause long fasts at ovulation, gentle fasting in the luteal phase
 • Real moon phases — calendar emojis reflect the actual moon in the sky
 • Flexible goals — Fasting, Contraception, or Conception, combinable; the interface adapts
 • Fasting log & stats — daily hours, weekly/monthly stats, completion rate, trends
