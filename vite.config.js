@@ -6,9 +6,25 @@ import { VitePWA } from "vite-plugin-pwa";
 // dev, Vercel, Netlify, the eventual TWA/Play build) it's served from root.
 const base = process.env.GITHUB_PAGES ? "/moon-rhythm-tracker/" : "/";
 
+// src/data/references.json keeps a developer-only field (how_to_use_in_app_zh:
+// how each source may be used in copy). It is never shown, so it is also kept
+// out of the shipped bundle. The source file itself stays untouched.
+function stripDevOnlyReferenceNotes() {
+  return {
+    name: "strip-dev-only-reference-notes",
+    enforce: "pre",
+    transform(code, id) {
+      if (!id.replace(/\\/g, "/").endsWith("/src/data/references.json")) return null;
+      const refs = JSON.parse(code).map(({ how_to_use_in_app_zh, ...rest }) => rest);
+      return { code: JSON.stringify(refs), map: null };
+    },
+  };
+}
+
 export default defineConfig({
   base,
   plugins: [
+    stripDevOnlyReferenceNotes(),
     react(),
     VitePWA({
       registerType: "autoUpdate",

@@ -454,8 +454,8 @@ const translations = {
     en: "Gentle 12–14h with a daytime eating window (e.g. 10:00–18:00); rest at night. Avoid extended fasts these days.",
   },
   "deep.menstrual.eat": {
-    zh: "富鐵食物(紅肉、肝、菠菜、紅豆)、搭配維生素 C 幫助吸收、溫熱湯品、Omega-3 抗發炎。",
-    en: "Iron-rich foods (red meat, liver, spinach, beans) with vitamin C to aid absorption, warm soups, Omega-3.",
+    zh: "富鐵食物(紅肉、肝、菠菜、紅豆)、搭配維生素 C 幫助吸收、溫熱湯品、含 Omega-3 的魚類。",
+    en: "Iron-rich foods (red meat, liver, spinach, beans) with vitamin C to aid absorption, warm soups, fish with Omega-3.",
   },
   "deep.menstrual.avoid": {
     zh: "生冷食物、過量咖啡因、酒精、過鹹(容易水腫與經痛加劇)。",
@@ -466,8 +466,8 @@ const translations = {
     en: "Walking, gentle yoga, stretching. Skip high-intensity — your body needs to recover.",
   },
   "deep.menstrual.support": {
-    zh: "鐵、鎂(緩解經痛)、維生素 C。",
-    en: "Iron, magnesium (eases cramps), vitamin C.",
+    zh: "有月經的女性是缺鐵的高風險群。要不要補鐵，請先和醫療專業人員討論、必要時驗血，不建議自己開始補充。",
+    en: "People who menstruate are at higher risk of iron deficiency. Talk to a healthcare professional — and get a blood test if needed — before starting iron yourself.",
   },
   "deep.menstrual.hormone": {
     zh: "雌激素與黃體素都在最低點,子宮內膜正在排出,能量自然偏低——順著它休息。",
@@ -480,8 +480,8 @@ const translations = {
     en: "A lighter-load stretch. Ease from 14:10 toward a steady 16:8. Fasts of 24h+ are off by default; if you want them, talk to a professional first, then turn them on in Settings.",
   },
   "deep.follicular.eat": {
-    zh: "復食以優質蛋白、發酵食物(幫助雌激素代謝)、十字花科蔬菜、亞麻籽/南瓜籽。",
-    en: "Break fasts with quality protein, fermented foods (support estrogen metabolism), cruciferous veg, flax/pumpkin seeds.",
+    zh: "復食以優質蛋白、發酵食物、十字花科蔬菜、亞麻籽/南瓜籽。",
+    en: "Break fasts with quality protein, fermented foods, cruciferous veg, flax/pumpkin seeds.",
   },
   "deep.follicular.avoid": {
     zh: "精緻糖與過度加工碳水——別浪費這段高代謝期。",
@@ -492,8 +492,8 @@ const translations = {
     en: "Go hard: HIIT and strength training. Fastest recovery and best muscle-building of the month.",
   },
   "deep.follicular.support": {
-    zh: "益生菌、維生素 B 群、亞麻籽(平衡雌激素)。",
-    en: "Probiotics, B-complex, flaxseed (estrogen balance).",
+    zh: "益生菌、維生素 B 群、亞麻籽常被提到，但沒有證據顯示能平衡荷爾蒙；需不需要補充，請先問醫療專業人員。",
+    en: "Probiotics, B vitamins and flaxseed are often mentioned, but there is no evidence they balance hormones; ask a healthcare professional before supplementing.",
   },
   "deep.follicular.hormone": {
     zh: "雌激素穩定上升,精力、專注、心情、代謝全在高點——這是你一個月裡的「巔峰週」。",
@@ -506,8 +506,8 @@ const translations = {
     en: "Stop extended fasts; return to gentle 12–14h. This is the fertile window — your body needs energy, not extra stress.",
   },
   "deep.ovulation.eat": {
-    zh: "抗氧化蔬果(莓果、深色蔬菜)、足夠纖維幫助代謝多餘雌激素、充足蛋白。",
-    en: "Antioxidant produce (berries, dark veg), plenty of fiber to clear excess estrogen, adequate protein.",
+    zh: "抗氧化蔬果(莓果、深色蔬菜)、足夠纖維、充足蛋白。",
+    en: "Antioxidant produce (berries, dark veg), plenty of fiber, adequate protein.",
   },
   "deep.ovulation.avoid": {
     zh: "極端熱量限制與長斷食——這幾天對壓力最敏感。",
@@ -544,8 +544,8 @@ const translations = {
     en: "Keep it low-intensity: yoga, Pilates, walking; scale back heavy lifting.",
   },
   "deep.luteal.support": {
-    zh: "鈣（有研究支持可減輕經前症狀）、鎂；維生素 B6 常被提到，但證據有限。",
-    en: "Calcium (some evidence it eases PMS), magnesium; vitamin B6 is often mentioned, but the evidence is limited.",
+    zh: "經前症狀明顯影響生活時，請就醫討論，可能是經前症候群（PMS）或經前不悅症（PMDD）；補充品是否適合你，請先問醫療專業人員。",
+    en: "If premenstrual symptoms clearly affect daily life, see a doctor — it may be PMS or PMDD; ask a healthcare professional whether any supplement suits you.",
   },
   "deep.luteal.hormone": {
     zh: "黃體素上升主導,基礎體溫升高,胰島素敏感度下降——疲倦、嘴饞、情緒波動都正常,溫柔對待自己。",
@@ -591,6 +591,10 @@ const translations = {
     zh: "易受孕期是用你登記的月經第一天和平均週期長度推算的。實際排卵每月可能提早或延後，週期不規律時誤差更大。",
     en: "The fertile window is calculated from your logged period start and average cycle length. Actual ovulation can shift earlier or later each month, and more so when cycles are irregular.",
   },
+  "notice.stats": {
+    zh: "研究數字：用生育意識法避孕，一般使用（包含偶爾算錯或沒照做）第一年約每 100 人有 24 人意外懷孕；就算完全正確且持續使用，依方法不同仍約有 0.4–5 人（Trussell 2011）。",
+    en: "The numbers: with fertility-awareness methods, typical use (including mistakes and lapses) leads to about 24 unintended pregnancies per 100 people in the first year; even with perfect, consistent use it is still about 0.4–5, depending on the method (Trussell 2011).",
+  },
   "notice.snooze": { zh: "本週不再顯示", en: "Don't show again this week" },
   "notice.ok": { zh: "我了解了", en: "I understand" },
   longFastLabel: { zh: "長時間斷食建議（24h 以上）", en: "Long-fast suggestions (24h+)" },
@@ -610,8 +614,8 @@ const translations = {
   longFastBlockedIntake: { zh: "健康問卷勾選了禁忌事項，長時間斷食建議不會顯示。", en: "Your health intake lists a contraindication, so long-fast suggestions are hidden." },
   refsTitle: { zh: "參考文獻", en: "References" },
   refsNote: {
-    zh: "文獻支持的是週期生理、受孕窗口與體溫的描述；飲食、運動與補充品屬一般性生活建議。",
-    en: "The references support the statements on cycle physiology, the fertile window and temperature; food, movement and supplement suggestions are general lifestyle advice.",
+    zh: "文獻支持的是研究發現；飲食、運動與補充品屬一般性生活建議，不是醫療效能宣稱。",
+    en: "The references support research findings; food, movement and supplement suggestions are general lifestyle advice, not claims of medical effect.",
   },
   guideAboutTitle: { zh: "重要說明", en: "Important" },
   "about.calendar": {
@@ -747,6 +751,31 @@ const translations = {
   "booking.notReady": { zh: "線上預約還沒開放，預約連結設定好之後這裡就能用。", en: "Online booking isn't open yet; this will work once the booking link is set up." },
   "booking.copiedOpen": { zh: "摘要已複製。預約頁面在新分頁開啟，貼到備註欄即可。", en: "Summary copied. The booking page opened in a new tab — paste it into the notes field." },
   "booking.opened": { zh: "預約頁面已在新分頁開啟。", en: "The booking page opened in a new tab." },
+
+  // ── Literature references & the Scientific basis page ──
+  "refTopic.ovulation": { zh: "排卵時間與易孕窗", en: "Ovulation timing & the fertile window" },
+  "refTopic.fam_efficacy": { zh: "日曆法與生育意識法效力", en: "Effectiveness of calendar & fertility-awareness methods" },
+  "refTopic.bbt_mucus": { zh: "基礎體溫與子宮頸黏液訊號", en: "Basal body temperature & cervical mucus" },
+  "refTopic.app_accuracy": { zh: "週期與生育 App 的準確度與宣稱", en: "Accuracy & claims of cycle and fertility apps" },
+  "refTopic.fasting": { zh: "斷食、時間限制飲食與生殖荷爾蒙", en: "Fasting, time-restricted eating & reproductive hormones" },
+  "refTopic.iron": { zh: "鐵需求、月經與缺鐵", en: "Iron needs, menstruation & iron deficiency" },
+  "refTopic.personal_nutrition": { zh: "個人化營養反應", en: "Personalised nutrition responses" },
+  "refTopic.gut": { zh: "腸道菌相、飲食與雌激素軸", en: "Gut microbiome, diet & the estrogen axis" },
+  "refTopic.sleep_mood": { zh: "週期與睡眠、情緒、PMS／PMDD、運動", en: "Cycle, sleep, mood, PMS/PMDD & exercise" },
+  "refTopic.taiwan_regulation": { zh: "臺灣健康 App 與廣告宣稱指引", en: "Taiwan guidance on health apps & advertising claims" },
+  "science.title": { zh: "科學依據", en: "Scientific basis" },
+  "science.intro": {
+    zh: "這裡列出 Moonyou 文案所依據的 {n} 筆文獻，依主題分組。每一筆都經 PubMed、DOI 或官方頁面核實；摘要用我們自己的話寫，細節請以原文為準。",
+    en: "These are the {n} sources Moonyou's text draws on, grouped by topic. Each was checked against PubMed, its DOI or the official page; for details, rely on the original.",
+  },
+  "science.notAdvice": {
+    zh: "文獻支持的是研究發現，不代表 Moonyou 能診斷、治療或避孕。",
+    en: "These sources support research findings; they do not mean Moonyou can diagnose, treat or prevent pregnancy.",
+  },
+  "science.summaryZhOnly": { zh: "（一句話摘要目前只有中文版）", en: "One-line summaries are only available in Chinese for now." },
+  "science.open": { zh: "科學依據 →", en: "Scientific basis →" },
+  "science.viewAll": { zh: "查看全部科學依據 →", en: "See all sources →" },
+  "science.back": { zh: "← 返回", en: "← Back" },
 };
 
 const LangContext = createContext();
