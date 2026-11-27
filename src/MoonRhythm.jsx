@@ -251,6 +251,12 @@ function MoonDisc({ cycleStart, cycleLen, today, flags, selectedDay, onSelectDay
     if (isSel) selectedSeg = seg; else segments.push(seg);
   }
   if (selectedSeg) segments.push(selectedSeg); // draw the popped wedge on top
+  // Small dot on the estimated ovulation day, so the 7-day window isn't read as "7 days of ovulation".
+  const ovIdx = cycleLen - 14 - 1;
+  if (ovIdx >= 0) {
+    const ovMid = (((ovIdx + 0.5) / cycleLen) * 360 - 90) * Math.PI / 180;
+    segments.push(<circle key="ov-dot" cx={cx + (r + 9) * Math.cos(ovMid)} cy={cy + (r + 9) * Math.sin(ovMid)} r={3.2} fill="#FF6B6B" stroke="#0A0A0F" strokeWidth={1} pointerEvents="none" />);
+  }
   const focusDate = addDays(cycleStart, (focusDay || 1) - 1);
   const focusPhase = getPhase(focusDate, cycleStart, cycleLen);
   const focusMoon = getMoonPhase(focusDate, t);
@@ -969,6 +975,7 @@ function GuideView() {
       <div style={sectionStyle}>
         <div style={headStyle}>🌙 {t("guideMoonTitle")}</div>
         <div style={paraStyle}>{t("guide.moonInfo")}</div>
+        <div style={{ fontSize: 10, color: "#9a91b8", fontFamily: "monospace", lineHeight: 1.6 }}>{t("guide.moonNote")}</div>
       </div>
 
       {/* Important: estimates, not a device, fasting limits, privacy */}
@@ -1163,7 +1170,7 @@ export default function MoonRhythm() {
   const [noticeDismissed, setNoticeDismissed] = useState(false);
   const [noticeForced, setNoticeForced] = useState(false);
   // Paid-download model: everyone who has the app paid US$1.99, so the full
-  // Moonyou＋ base (deep guidance + AI coach) is always unlocked. Extended
+  // Moonyou＋ base (deep guidance + rule-based daily note) is always unlocked. Extended
   // services (real nutritionist consult) are separate paid add-ons.
 
   const flags = useGoalFlags(goals);

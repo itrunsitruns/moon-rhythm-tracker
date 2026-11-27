@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLang } from "./i18n";
-import { BOOKING_URL } from "./config";
+import { BOOKING_URL, CONSULTANT_CREDENTIAL } from "./config";
 
 // ══════════════════════════════════
 // ── Health intake (local only), consult summary, booking ──
@@ -304,10 +304,11 @@ export function BookingCard({ fields, makeSummary }) {
   return (
     <div style={{ ...card, border: "1px solid #4A9E8E33" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
-        <div style={{ fontSize: 14, color: "#4A9E8E", fontFamily: "serif" }}>👩‍⚕️ {t("consult.humanTitle")}</div>
+        <div style={{ fontSize: 14, color: "#4A9E8E", fontFamily: "serif" }}>🌿 {t("consult.humanTitle")}</div>
         <div style={{ fontSize: 9, color: "#4A9E8E", border: "1px solid #4A9E8E55", borderRadius: 4, padding: "1px 6px", fontFamily: "monospace", flexShrink: 0 }}>{t("addonTag")}</div>
       </div>
       <div style={{ fontSize: 11, color: "#4A9E8E", fontFamily: "monospace", marginBottom: 8 }}>{t("consult.humanPrice")}</div>
+      {CONSULTANT_CREDENTIAL && <div style={{ fontSize: 11, color: "#9fc9bf", marginBottom: 8 }}>{t("consult.credentialLabel")}：{CONSULTANT_CREDENTIAL}</div>}
       <div style={{ fontSize: 12, color: "#aaa", lineHeight: 1.7, marginBottom: 12 }}>{t("consult.humanDesc")}</div>
 
       {!open ? (

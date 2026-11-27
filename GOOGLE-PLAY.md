@@ -92,7 +92,7 @@
 
 ## 💰 定價(已決定)
 
-> **已決定:付費 app,US$1.99,沒有免費版。** 延伸服務(真人營養師諮詢、塔羅等)之後用 Google Play 內購當加購。
+> **已決定:付費 app,US$1.99,沒有免費版。** 延伸服務(一對一真人諮詢、塔羅等)之後用 Google Play 內購當加購。
 
 > **Google Play 規則:免費 app 上架後不能改成付費。** 付費必須在建立 app 時就選「付費」,所以建立應用程式那一步要選「付費」並填 US$1.99。
 
@@ -150,7 +150,7 @@ Moonyou 是一款整合月經週期、間歇性斷食、與受孕期推估的個
 • 真實月相 — 日曆上的月亮對應天空中真正的月相,觀察身體週期與自然的同步
 • 目標自訂 — 斷食優化、避孕、備孕三種目標,可複選組合,介面自動調整
 • 斷食記錄與統計 — 每日記錄斷食時數,查看週／月統計、記錄天數、趨勢圖
-• BBT 與分泌物追蹤 — 輸入基礎體溫與分泌物狀態,動態修正排卵日預測
+• BBT 與分泌物追蹤 — 記錄基礎體溫與分泌物,標示為排卵參考訊號
 • 行事曆匯出 — 一鍵匯出 .ics,加入 Google 或 Apple 行事曆
 • 中／英雙語 — 右上角一鍵切換
 • 離線可用 — 所有資料存在你的裝置上,不需要帳號
@@ -170,8 +170,8 @@ Key features:
 • Reference fasting rhythm — general, phase-based guidance of at most 16h, with references; longer fasts can only be set as your own personal goal
 • Real moon phases — calendar emojis reflect the actual moon in the sky
 • Flexible goals — Fasting, Contraception, or Conception, combinable; the interface adapts
-• Fasting log & stats — daily hours, weekly/monthly stats, completion rate, trends
-• BBT & cervical mucus tracking — refine ovulation predictions
+• Fasting log & stats — daily hours, weekly/monthly stats, days logged, trends
+• BBT & cervical mucus tracking — logged as ovulation reference signals
 • Calendar export — one-tap .ics to Google or Apple Calendar
 • Bilingual (中/EN) — switch with one tap
 • Works offline — all data stays on your device, no account needed

@@ -18,7 +18,7 @@
 - **真實月相顯示**：日曆上的月亮 emoji 對應天空中真正的月相（🌑🌒🌓🌔🌕🌖🌗🌘），觀察身體週期與自然月亮的同步
 - **目標自訂**：支援斷食優化、避孕、備孕三種目標，可複選（如斷食＋避孕），介面自動調整顯示內容
 - **斷食記錄**：每日記錄實際斷食時數，查看本週/本月統計、記錄天數、趨勢圖；24 小時以上的記錄會附安全提醒
-- **BBT 與分泌物追蹤**：輸入基礎體溫和分泌物狀態，動態修正排卵日預測
+- **BBT 與分泌物追蹤**：記錄基礎體溫和分泌物，標示為「排卵參考訊號」（體溫通常在排卵後才上升）；目前不會改變日曆法的推估日期
 - **行事曆匯出**：一鍵匯出 .ics 檔案，將易受孕期提醒、斷食窗口、經期預告加入 Google Calendar 或 Apple 行事曆
 - **中/英文切換**：完整雙語介面，右上角一鍵切換
 - **離線可用**：所有資料存在你的裝置上，不需要帳號，不上傳任何個人資訊
@@ -39,10 +39,10 @@ It's not just a period tracker. It offers a phase-based reference fasting rhythm
 
 - **Cycle Tracking**: Enter your period start date; ovulation and the fertile window are estimated with the calendar method (actual ovulation can shift each month)
 - **Reference Fasting Rhythm**: General, phase-based guidance of at most 16h (12–14h menstrual and luteal, 14–16h follicular) with references; longer fasts can be set per phase as your own personal goal in Settings after confirming each contraindication
-- **Real Moon Phases**: Calendar emojis reflect the actual moon in the sky (🌑🌒🌓🌔🌕🌖🌗🌘) — observe how your cycle syncs with the lunar cycle
+- **Real Moon Phases**: Calendar emojis reflect the actual moon in the sky (🌑🌒🌓🌔🌕🌖🌗🌘) — a rhythm for reflection alongside your own cycle
 - **Flexible Goals**: Choose from Fasting Optimization, Contraception, or Conception — or combine them (e.g., Fasting + Contraception). The interface adapts automatically
 - **Fasting Log**: Record actual fasting hours daily, view weekly/monthly stats, completion rate, and trend charts
-- **BBT & Cervical Mucus Tracking**: Input basal body temperature and mucus observations to dynamically refine ovulation predictions
+- **BBT & Cervical Mucus Tracking**: Log basal temperature and mucus; they're shown as ovulation reference signals (temperature usually rises only after ovulation) and do not currently change the calendar estimate
 - **Calendar Export**: One-tap .ics export — add fertile window alerts, fasting reminders, and period predictions to Google Calendar or Apple Calendar
 - **Bilingual (中/EN)**: Full Chinese and English interface, switchable with one tap
 - **Works Offline**: All data stays on your device. No account needed. No personal information uploaded. Ever.
