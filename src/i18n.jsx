@@ -15,16 +15,16 @@ const translations = {
   "phase.menstrual": { zh: "月經期", en: "Menstrual" },
   "phase.follicular_gold": { zh: "濾泡期 🔥", en: "Follicular 🔥" },
   "phase.follicular_late": { zh: "濾泡期", en: "Follicular" },
-  "phase.ovulation": { zh: "排卵期", en: "Ovulation" },
+  "phase.ovulation": { zh: "推估易受孕期", en: "Est. fertile window" },
   "phase.luteal": { zh: "黃體期", en: "Luteal" },
   "phase.safe": { zh: "尚無週期資料", en: "No cycle data" },
 
   // ── Phase descriptions ──
-  "desc.menstrual": { zh: "輕斷食，補鐵補血", en: "Light fasting, replenish iron" },
-  "desc.follicular_gold": { zh: "黃金斷食窗口", en: "Prime fasting window" },
+  "desc.menstrual": { zh: "溫和節奏，多留意含鐵食物", en: "Gentle rhythm; include iron-rich foods" },
+  "desc.follicular_gold": { zh: "許多人這幾天體力較好", en: "Many feel more energetic these days" },
   "desc.follicular_late": { zh: "可維持規律斷食", en: "Steady fasting suits these days" },
   "desc.ovulation": { zh: "⚠️ 推估易受孕期", en: "⚠️ Est. fertile window" },
-  "desc.luteal": { zh: "補碳水，穩情緒", en: "Add carbs, stabilize mood" },
+  "desc.luteal": { zh: "多加入複合碳水", en: "Add complex carbs" },
   "desc.safe": { zh: "登記月經第一天後才能推估", en: "Log your period start to get estimates" },
 
   // ── Moon phase names ──
@@ -39,16 +39,16 @@ const translations = {
 
   // ── Fasting advice ──
   "fast.menstrual": { zh: "12–14h", en: "12–14h" },
-  "fast.follicular_gold": { zh: "可延長至 14–16h", en: "Up to 14–16h" },
+  "fast.follicular_gold": { zh: "14–16h", en: "14–16h" },
   "fast.follicular_late": { zh: "14–16h", en: "14–16h" },
   "fast.ovulation": { zh: "最多 12–14h", en: "Max 12–14h" },
   "fast.luteal": { zh: "12–14h", en: "12–14h" },
 
-  "tip.menstrual": { zh: "經期輕斷食，注意補鐵補血", en: "Light fasting during period — focus on iron intake" },
-  "tip.follicular_gold": { zh: "🔥 濾泡期黃金窗口，身體負擔較輕", en: "🔥 Follicular window — a lighter load on the body" },
+  "tip.menstrual": { zh: "經期溫和就好，可以多留意含鐵食物", en: "Keep it gentle during your period; include iron-rich foods" },
+  "tip.follicular_gold": { zh: "許多人這幾天體力較好，照妳自己的節奏就好", en: "Many feel more energetic now; follow your own rhythm" },
   "tip.follicular_late": { zh: "濾泡期後段，越接近排卵越該縮短斷食", en: "Late follicular — shorten fasts as ovulation nears" },
-  "tip.ovulation": { zh: "排卵期停長斷食，身體需要能量", en: "Stop extended fasts — body needs energy for ovulation" },
-  "tip.luteal": { zh: "黃體期穩定斷食，補碳水穩情緒", en: "Steady fasting, add carbs to stabilize mood" },
+  "tip.ovulation": { zh: "這幾天維持溫和的節奏就好", en: "Keep a gentle rhythm these days" },
+  "tip.luteal": { zh: "黃體期維持溫和節奏，可以多加入複合碳水", en: "Keep a gentle rhythm in the luteal phase; add complex carbs" },
 
   // ── Dashboard ──
   today: { zh: "今日", en: "Today" },
@@ -56,7 +56,7 @@ const translations = {
   close: { zh: "關閉", en: "Close" },
   tapToChange: { zh: "點選修改", en: "Tap to change" },
   moonPhase: { zh: "月相", en: "Moon phase" },
-  fastingAdvice: { zh: "斷食建議", en: "Fasting advice" },
+  fastingAdvice: { zh: "參考節奏", en: "Reference rhythm" },
   riskNote: { zh: "（僅供參考，以個人狀況為主）", en: "(for reference only; your own body comes first)" },
   ovulationEstimate: { zh: "推估排卵日", en: "Est. ovulation" },
   dangerPeriod: { zh: "推估易受孕期", en: "Est. fertile window" },
@@ -84,8 +84,8 @@ const translations = {
   },
 
   // ── Goal combo: fasting + conceive during ovulation ──
-  "phase.ovulation.fastConceive": { zh: "停長斷食 + 推估受孕窗口 🪺", en: "Pause long fasts + Est. conception window 🪺" },
-  "desc.ovulation.fastConceive": { zh: "暫停長時間斷食，同時留意推估的易受孕期", en: "Pause extended fasts and keep an eye on the estimated fertile window" },
+  "phase.ovulation.fastConceive": { zh: "溫和節奏 + 推估受孕窗口 🪺", en: "Gentle rhythm + Est. conception window 🪺" },
+  "desc.ovulation.fastConceive": { zh: "維持溫和節奏，同時留意推估的易受孕期", en: "Keep a gentle rhythm and watch the estimated fertile window" },
   goalExclusive: { zh: "避孕與備孕不能同時選", en: "Avoid & Conceive are mutually exclusive" },
 
   // ── Calendar ──
@@ -112,35 +112,35 @@ const translations = {
     en: "Bleeding starts because progesterone crashes at the end of the luteal phase. Compared with the days before, bloating, breast tenderness and mood swings usually ease within a day or two of bleeding, and basal temperature falls from the high plateau back to the low one.",
   },
   "learn.follicular_gold": {
-    zh: "卵巢裡幾顆濾泡開始競爭長大，雌激素從谷底慢慢爬升。研究觀察到濾泡期的胰島素阻抗比黃體期略低（差異不大），身體負擔相對較輕，所以這段常被視為比較適合規律斷食的時期。",
-    en: "Several follicles in the ovary start competing to grow, and estrogen climbs from its low. Studies have seen slightly lower insulin resistance in the follicular phase than the luteal phase (a small difference), so the load on the body is lighter and this stretch is often seen as better suited to steady fasting.",
+    zh: "卵巢裡幾顆濾泡開始競爭長大，雌激素從谷底慢慢爬升。有些研究觀察到濾泡期的血糖反應比黃體期穩定，但結果不一致；目前沒有研究證實依週期調整斷食時數比較好。",
+    en: "Several follicles in the ovary start competing to grow, and estrogen climbs from its low. Some studies see steadier blood-sugar responses in the follicular phase than the luteal phase, but results are mixed; no study has shown that adjusting fasting hours by phase works better.",
   },
   "diff.follicular_gold": {
-    zh: "跟月經期比，出血停了、鐵質不再流失，雌激素回升帶回體力和專注力。月經期只建議輕斷食，這裡可以適度拉長。",
-    en: "Compared with menstruation, bleeding has stopped, iron is no longer being lost, and rising estrogen brings back energy and focus. Menstruation only suits light fasting; here you can extend it moderately.",
+    zh: "跟月經期比，出血停了、鐵質不再流失，雌激素回升，很多人這幾天比較有精神。",
+    en: "Compared with menstruation, bleeding has stopped, iron is no longer being lost, and estrogen rises; many people feel more energetic these days.",
   },
   "learn.follicular_late": {
     zh: "一顆主導濾泡勝出，其他的退場。雌激素持續上升接近高峰，子宮內膜重新增厚，身體在為排卵做準備。",
     en: "One dominant follicle wins and the others fade. Estrogen keeps rising toward its peak, the uterine lining thickens again, and the body prepares for ovulation.",
   },
   "diff.follicular_late": {
-    zh: "跟濾泡期前段比，雌激素更高、距離排卵更近。越靠近排卵，身體越需要能量，所以斷食時間建議逐步縮短。",
-    en: "Compared with the early follicular days, estrogen is higher and ovulation is closer. The nearer ovulation gets, the more energy the body wants, so fasts are best shortened step by step.",
+    zh: "跟濾泡期前段比，雌激素更高、距離排卵更近。越靠近排卵，節奏可以放溫和一點。",
+    en: "Compared with the early follicular days, estrogen is higher and ovulation is closer. As ovulation nears, a gentler rhythm is fine.",
   },
   "learn.ovulation": {
     zh: "雌激素衝到頂點，觸發 LH（黃體生成素）高峰，大約 24–36 小時後卵子釋出。卵子大約只能存活一天，但精子在體內最多可活約 5 天，所以推估易受孕期從排卵前 5 天算到排卵當天，app 再多留排卵後 1 天當緩衝。實際排卵每月可能提早或延後。",
     en: "Estrogen peaks and triggers the LH surge; the egg is released about 24–36 hours later. The egg survives only about a day, but sperm can survive up to about 5 days in the body, so the estimated fertile window runs from 5 days before ovulation to ovulation day, and the app adds 1 day after as a buffer. Actual ovulation can shift earlier or later each month.",
   },
   "diff.ovulation": {
-    zh: "跟濾泡期比，身體從「累積」切換到「釋放」：分泌物變成透明蛋清狀，排卵後基礎體溫會升高約 0.3–0.5°C。這幾天長斷食會給身體壓力訊號，可能干擾排卵，所以建議停掉，只做 12–14h。",
-    en: "Compared with the follicular phase, the body switches from building up to releasing: cervical mucus turns clear and egg-white-like, and basal temperature rises about 0.3–0.5°C after ovulation. Long fasts in these days send a stress signal that can interfere with ovulation, so stick to 12–14h.",
+    zh: "跟濾泡期比，身體從「累積」切換到「釋放」：分泌物變成透明蛋清狀，排卵後基礎體溫會升高約 0.3–0.5°C。目前沒有研究直接證實這幾天斷食會干擾排卵；維持溫和的節奏就好。",
+    en: "Compared with the follicular phase, the body switches from building up to releasing: mucus turns clear and egg-white-like, and basal temperature rises about 0.3–0.5°C after ovulation. No study has directly shown that fasting in these days disrupts ovulation; a gentle rhythm is enough.",
   },
   "learn.luteal": {
     zh: "排出卵子後的濾泡變成黃體，開始分泌黃體素，體溫維持在高溫期，子宮內膜變厚準備著床。沒有受孕的話，黃體在大約 12–14 天後萎縮，週期重來。",
     en: "After releasing the egg, the follicle becomes the corpus luteum and secretes progesterone. Temperature stays on the high plateau and the lining thickens for implantation. If there is no pregnancy, the corpus luteum fades after about 12–14 days and the cycle restarts.",
   },
   "diff.luteal": {
-    zh: "跟排卵期比，主角從雌激素換成黃體素：食慾上升、體溫偏高、容易水腫或情緒波動，後半段可能出現經前症狀。黃體期長度通常比濾泡期穩定（大型研究平均約 12 天，多在 7–17 天之間），所以週期長短的差異主要來自前面的濾泡期。",
+    zh: "跟排卵前後比，主角從雌激素換成黃體素：食慾上升、體溫偏高、容易水腫或情緒波動，後半段可能出現經前症狀。黃體期長度通常比濾泡期穩定（大型研究平均約 12 天，多在 7–17 天之間），所以週期長短的差異主要來自前面的濾泡期。",
     en: "Compared with ovulation, progesterone takes over from estrogen: appetite rises, temperature stays higher, and bloating or mood swings are more likely, with PMS possible in the second half. The luteal phase is usually steadier than the follicular phase (about 12 days on average in a large study, mostly 7–17 days), so differences in cycle length come mostly from the follicular phase.",
   },
   "learn.safe": {
@@ -183,8 +183,8 @@ const translations = {
   goalAvoid: { zh: "避孕", en: "Avoid" },
   goalConceive: { zh: "備孕", en: "Conceive" },
   settingsNote: {
-    zh: "推估排卵日 = 月經第1天 + (週期 − 14)\n推估易受孕期 = 排卵前5天 → 排卵後1天\n日曆法推估：實際排卵每月可能提早或延後\n斷食建議依週期階段自動調整",
-    en: "Est. ovulation = Period day 1 + (cycle − 14)\nEst. fertile window = 5 days before → 1 day after ovulation\nCalendar-method estimates: actual ovulation can shift each month\nFasting advice adjusts automatically by phase",
+    zh: "推估排卵日 = 月經第1天 + (週期 − 14)\n推估易受孕期 = 排卵前5天 → 排卵後1天\n日曆法推估：實際排卵每月可能提早或延後\n參考節奏依週期階段提供；目前沒有研究證實依週期調整斷食時數比較好",
+    en: "Est. ovulation = Period day 1 + (cycle − 14)\nEst. fertile window = 5 days before → 1 day after ovulation\nCalendar-method estimates: actual ovulation can shift each month\nThe reference rhythm follows the cycle phase; no study has shown that adjusting fasting hours by phase works better",
   },
 
   // ── Google Calendar ──
@@ -216,8 +216,7 @@ const translations = {
   thisWeek: { zh: "本週", en: "This week" },
   thisMonth: { zh: "本月", en: "This month" },
   totalHours: { zh: "累計", en: "Total" },
-  avgPerDay: { zh: "日均", en: "Avg/day" },
-  completionRate: { zh: "完成率", en: "Completion" },
+  avgPerDay: { zh: "記錄日平均", en: "Avg per logged day" },
   weeklyChart: { zh: "週斷食趨勢", en: "Weekly trend" },
   weekLabel: { zh: "第{n}週", en: "Wk {n}" },
   noData: { zh: "尚無資料", en: "No data" },
@@ -228,7 +227,7 @@ const translations = {
 
   // ── GCal event titles ──
   "event.fertile": { zh: "⚠️ 明天進入推估易受孕期", en: "⚠️ Estimated fertile window starts tomorrow" },
-  "event.fasting": { zh: "🔥 濾泡期斷食窗口", en: "🔥 Follicular fasting window opens" },
+  "event.fasting": { zh: "🌱 濾泡期開始", en: "🌱 Follicular phase begins" },
   "event.period": { zh: "🌑 月經快來了", en: "🌑 Period expected in 2 days" },
 
   // ── Guide tab ──
@@ -237,24 +236,24 @@ const translations = {
   guideFastingTitle: { zh: "斷食建議", en: "Fasting Advice" },
   guideMoonTitle: { zh: "月相與週期", en: "Moon & Cycle" },
   "guide.menstrual": {
-    zh: "月經期（第1–5天）：身體正在排出子宮內膜，適合輕斷食12–14h，注意補鐵補血。",
-    en: "Menstrual (Day 1–5): Body sheds uterine lining. Light fasting 12–14h recommended. Focus on iron intake.",
+    zh: "月經期（第1–5天）：身體正在排出子宮內膜。參考節奏 12–14h；經期是缺鐵的高風險時期，可以多留意含鐵食物。",
+    en: "Menstrual (Day 1–5): the body sheds the uterine lining. Reference rhythm 12–14h; periods raise the risk of low iron, so include iron-rich foods.",
   },
   "guide.follicular": {
-    zh: "濾泡期（第6–10天）：雌激素上升，身體負擔較輕，適合規律斷食 14–16h。長時間斷食（24h 以上）預設不推薦。",
-    en: "Follicular (Day 6–10): Estrogen rises and the load on the body is lighter — steady 14–16h fasting suits it. Long fasts (24h+) are off by default.",
+    zh: "濾泡期（第6–10天）：雌激素上升，許多人這幾天體力較好。參考節奏 14–16h；目前沒有研究證實依週期調整斷食時數比較好。",
+    en: "Follicular (Day 6–10): estrogen rises and many feel more energetic. Reference rhythm 14–16h; no study has shown that adjusting fasting hours by phase works better.",
   },
   "guide.ovulation": {
-    zh: "排卵期（推估排卵前5天～後1天）：日曆推估的易受孕期，實際排卵每月可能不同。暫停長斷食，最多12–14h。",
-    en: "Ovulation (est. 5 days before → 1 day after): the calendar-estimated fertile window; actual ovulation varies month to month. Pause long fasts, max 12–14h.",
+    zh: "推估易受孕期（推估排卵前5天～後1天，含排卵日）：日曆推估，實際排卵每月可能不同。參考節奏 12–14h。",
+    en: "Est. fertile window (est. 5 days before → 1 day after ovulation, including ovulation day): a calendar estimate; actual ovulation varies month to month. Reference rhythm 12–14h.",
   },
   "guide.luteal": {
-    zh: "黃體期（排卵後～下次月經前）：黃體素上升，容易情緒波動。適合穩定斷食12–14h，補碳水穩情緒。",
-    en: "Luteal (After ovulation → next period): Progesterone rises, mood swings common. Steady 12–14h fasting, add carbs.",
+    zh: "黃體期（排卵後～下次月經前）：黃體素上升，情緒起伏很常見。參考節奏 12–14h，可以多加入複合碳水。",
+    en: "Luteal (after ovulation → next period): progesterone rises and mood swings are common. Reference rhythm 12–14h; add complex carbs.",
   },
   "guide.moonInfo": {
-    zh: "App 顯示真實天文月相。有研究指出月經週期與月亮週期（29.5天）可能存在微妙同步。新月適合內省休息，滿月能量最旺。",
-    en: "The app shows real astronomical moon phases. Some research suggests menstrual cycles may subtly sync with the lunar cycle (29.5 days). New moon suits rest & reflection; full moon brings peak energy.",
+    zh: "App 顯示真實天文月相。月經週期和月亮週期（約 29.5 天）長度相近；2021 年一項研究分析 22 位女性長達數十年的記錄，發現週期較長的人有時會和月亮「暫時」同步，但樣本很小、仍有爭議，夜間燈光和年齡會讓這種同步消失。「新月內省、滿月能量」不是研究結論；在 Moonyou 裡，月相是陪伴與覺察的節奏，不是健康建議。",
+    en: "The app shows real astronomical moon phases. Menstrual and lunar cycles (about 29.5 days) are similar in length; a 2021 study of 22 women's decades-long records found that longer cycles sometimes synchronised with the Moon temporarily, but the sample was small and it remains debated, and night-time light and age removed the effect. \"New moon for reflection, full moon for energy\" is not a research finding; in Moonyou the moon is a rhythm for reflection and company, not health advice.",
   },
   "guide.howToUse": { zh: "如何使用", en: "How to Use" },
   "guide.step1": {
@@ -274,8 +273,8 @@ const translations = {
     en: "4. Use Calendar to log fasting hours, BBT & cervical mucus",
   },
   disclaimer: {
-    zh: "本工具僅供個人健康參考，不構成醫療建議，也不是避孕醫療器材。如有健康疑慮，請諮詢專業醫療人員。",
-    en: "This tool is for personal reference only. It is not medical advice and not a contraceptive device. Please consult a healthcare professional for any health concerns.",
+    zh: "Moonyou 提供一般性的生活與自我覺察資訊，不是醫療建議、診斷或治療，也不是避孕醫療器材。參考節奏最多 16 小時；更長的斷食是個人設定，請在醫療專業人員指導下進行。真人諮詢不能取代醫師、營養師或心理專業人員。身體有異狀請直接就醫；情緒困擾可撥衛福部安心專線 1925。",
+    en: "Moonyou offers general lifestyle and self-awareness information. It is not medical advice, diagnosis or treatment, and not a contraceptive device. The reference rhythm is at most 16h; longer fasts are a personal setting and should be done under professional guidance. Human consults do not replace a doctor, dietitian or mental-health professional. If something feels wrong, see a doctor; in Taiwan, the 1925 line offers emotional support.",
   },
 
   // ══════════════════════════════════
@@ -349,18 +348,16 @@ const translations = {
   "consult.dataLabel": { zh: "非 AI・非診斷", en: "Not AI · not a diagnosis" },
   "consult.lockedTitle": { zh: "Moonyou＋ 健康顧問", en: "Moonyou＋ Health Coach" },
   "consult.lockedDesc": {
-    zh: "一次 US$1.99 解鎖：每天依你記錄的週期、斷食與體溫，組合一段今日小建議。解鎖後還能另外加購真人營養師諮詢。",
-    en: "Unlock for a one-time US$1.99: each day the app assembles a little note from your cycle, fasting and temperature logs. Real nutritionist consults are available as an add-on once unlocked.",
+    zh: "一次 US$1.99 解鎖：每天依你記錄的週期、斷食與體溫，組合一段今日小建議。解鎖後還能另外加購一對一真人諮詢。",
+    en: "Unlock for a one-time US$1.99: each day the app assembles a little note from your cycle, fasting and temperature logs. One-on-one human consults are available as an add-on once unlocked.",
   },
 
   "consult.greeting": { zh: "嗨,根據你的記錄——你現在在{phase}、週期第 {day} 天。", en: "Hi — based on your logs, you're in your {phase}, cycle day {day}." },
   "consult.fastNone": {
-    zh: "這週還沒有斷食記錄。這個階段適合 {suggested} 小時左右；有了記錄之後，這裡的提醒會跟著你的數字變化。",
-    en: "No fasting logged this week. This phase suits around {suggested}h; once you log, this note follows your numbers.",
+    zh: "這週還沒有斷食記錄。這個階段的參考節奏是 {rhythm}；有記錄之後，這裡會跟著妳的數字。",
+    en: "No fasting logged this week. This phase's reference rhythm is {rhythm}; once you log, this note follows your numbers.",
   },
-  "consult.fastRoom": { zh: "你這週平均斷食 {avg} 小時。這個階段你的身體其實扛得住更長——可以慢慢往 {suggested} 小時靠近,但別勉強。", en: "You've averaged {avg}h of fasting this week. Your body can handle more in this phase — ease toward {suggested}h, but don't force it." },
-  "consult.fastGood": { zh: "你這週平均斷食 {avg} 小時,節奏穩穩的,很好,保持。", en: "You've averaged {avg}h of fasting this week — a steady rhythm. Nicely done, keep it up." },
-  "consult.nutrition": { zh: "飲食上,這幾天我建議:{eat}", en: "On food, for these days I'd suggest: {eat}" },
+  "consult.nutrition": { zh: "這個階段給大家的一般飲食參考：{eat}", en: "General food ideas for this phase (the same for everyone): {eat}" },
   "consult.conceiveOv": {
     zh: "你正在備孕，現在是推估的易受孕期——可以多留意分泌物變化，同時別讓身體餓著。",
     en: "You're trying to conceive and this is the estimated fertile window — watch for mucus changes, and don't let your body run on empty.",
@@ -381,21 +378,24 @@ const translations = {
     zh: "你最近記錄到排卵參考訊號（蛋清狀分泌物或體溫偏高）。這只是參考，不代表確定排卵。",
     en: "You recently logged an ovulation reference signal (egg-white mucus or a raised temperature). It's a reference only, not confirmation of ovulation.",
   },
-  "consult.closing": { zh: "有任何不舒服或想更深入,隨時可以預約真人營養師。照顧好自己 🌙", en: "If anything feels off or you want to go deeper, you can book a real nutritionist any time. Take care of yourself 🌙" },
+  "consult.closing": {
+    zh: "有任何不舒服或想更深入，可以預約一對一的真人諮詢。照顧好自己 🌙",
+    en: "If anything feels off or you want to go deeper, you can book a one-on-one human consult. Take care of yourself 🌙",
+  },
 
-  "consult.humanTitle": { zh: "真人營養師・深度諮詢", en: "Real Nutritionist · Deep Consult" },
+  "consult.humanTitle": { zh: "真人諮詢・一對一", en: "One-on-one human consult" },
   "consult.humanDesc": {
-    zh: "想要更貼近你的飲食與作息規劃？可以預約一對一諮詢，並自己決定要不要附上諮詢摘要。",
-    en: "Want a plan closer to your own eating and routine? Book one-on-one, and decide for yourself whether to attach your consult summary.",
+    zh: "想有人陪妳釐清目標、建立習慣？可以預約一對一諮詢，並自己決定要不要附上諮詢摘要。",
+    en: "Want someone to help you clarify goals and build habits? Book one-on-one, and decide for yourself whether to attach your consult summary.",
   },
   "consult.humanPrice": { zh: "一次 NT$880 起", en: "From NT$880 / session" },
   "consult.humanCta": { zh: "預約諮詢", en: "Book a consult" },
   deepFreeTag: { zh: "免費版", en: "FREE" },
   deepPlusTag: { zh: "Moonyou＋", en: "Moonyou＋" },
 
-  "deep.label.protocol": { zh: "斷食協議", en: "Fasting protocol" },
+  "deep.label.protocol": { zh: "參考節奏", en: "Reference rhythm" },
   "deep.label.eat": { zh: "建議吃", en: "Eat" },
-  "deep.label.avoid": { zh: "避免", en: "Avoid" },
+  "deep.label.avoid": { zh: "可以少一點", en: "Could have less of" },
   "deep.label.move": { zh: "運動", en: "Movement" },
   "deep.label.support": { zh: "補充品", en: "Supplements" },
   "deep.label.hormone": { zh: "身體訊號", en: "What's happening" },
@@ -450,16 +450,16 @@ const translations = {
 
   // —— Menstrual ——
   "deep.menstrual.protocol": {
-    zh: "溫和 12–14h,進食窗口放在白天(如 10:00–18:00),晚上讓身體休息。這幾天不要嘗試長斷食。",
-    en: "Gentle 12–14h with a daytime eating window (e.g. 10:00–18:00); rest at night. Avoid extended fasts these days.",
+    zh: "參考節奏 12–14 小時，進食時間可以放在白天（例如 10:00–18:00）。",
+    en: "Reference rhythm 12–14h; eating can sit in the daytime (e.g. 10:00–18:00).",
   },
   "deep.menstrual.eat": {
     zh: "富鐵食物(紅肉、肝、菠菜、紅豆)、搭配維生素 C 幫助吸收、溫熱湯品、含 Omega-3 的魚類。",
     en: "Iron-rich foods (red meat, liver, spinach, beans) with vitamin C to aid absorption, warm soups, fish with Omega-3.",
   },
   "deep.menstrual.avoid": {
-    zh: "生冷食物、過量咖啡因、酒精、過鹹(容易水腫與經痛加劇)。",
-    en: "Cold/raw foods, excess caffeine, alcohol, high salt (worsens bloating & cramps).",
+    zh: "多喝溫熱的湯和水，自然會少一點生冷、咖啡因、酒精和重鹹。",
+    en: "More warm soups and water naturally leave less room for cold food, caffeine, alcohol and salt.",
   },
   "deep.menstrual.move": {
     zh: "散步、輕瑜伽、伸展。避免高強度訓練,身體正需要修復。",
@@ -476,68 +476,56 @@ const translations = {
 
   // —— Follicular ——
   "deep.follicular.protocol": {
-    zh: "身體負擔較輕的時期。可以從 14:10 慢慢延長到 16:8 的規律斷食。24 小時以上的長斷食預設不推薦；需要的話請先諮詢專業人員，再到設定裡自行開啟。",
-    en: "A lighter-load stretch. Ease from 14:10 toward a steady 16:8. Fasts of 24h+ are off by default; if you want them, talk to a professional first, then turn them on in Settings.",
+    zh: "參考節奏 14–16 小時，可以從 14:10 慢慢延長到 16:8。更長的斷食是個人選擇，可以在設定裡設成妳自己的目標。",
+    en: "Reference rhythm 14–16h; you can ease from 14:10 toward 16:8. Longer fasts are a personal choice you can set as your own goal in Settings.",
   },
   "deep.follicular.eat": {
     zh: "復食以優質蛋白、發酵食物、十字花科蔬菜、亞麻籽/南瓜籽。",
     en: "Break fasts with quality protein, fermented foods, cruciferous veg, flax/pumpkin seeds.",
   },
-  "deep.follicular.avoid": {
-    zh: "精緻糖與過度加工碳水——別浪費這段高代謝期。",
-    en: "Refined sugar & processed carbs — don't waste this high-metabolism window.",
-  },
-  "deep.follicular.move": {
-    zh: "最適合衝刺:高強度間歇(HIIT)、重訓。身體恢復最快、增肌效率最高。",
-    en: "Go hard: HIIT and strength training. Fastest recovery and best muscle-building of the month.",
-  },
+  "deep.follicular.avoid": { zh: "多加入原型食物，自然會少一點精緻糖和加工碳水。", en: "More whole foods naturally leave less room for refined sugar and processed carbs." },
+  "deep.follicular.move": { zh: "精神好的話，可以安排較有強度的運動，依自己的感覺調整。", en: "If you feel energetic, you can plan more intense workouts; adjust to how you feel." },
   "deep.follicular.support": {
     zh: "益生菌、維生素 B 群、亞麻籽常被提到，但沒有證據顯示能平衡荷爾蒙；需不需要補充，請先問醫療專業人員。",
     en: "Probiotics, B vitamins and flaxseed are often mentioned, but there is no evidence they balance hormones; ask a healthcare professional before supplementing.",
   },
   "deep.follicular.hormone": {
-    zh: "雌激素穩定上升,精力、專注、心情、代謝全在高點——這是你一個月裡的「巔峰週」。",
-    en: "Rising estrogen lifts energy, focus, mood and metabolism — this is your peak week of the month.",
+    zh: "雌激素上升，很多人這幾天精神比較好，但每個人不同。",
+    en: "Estrogen rises; many people feel more energetic these days, but everyone is different.",
   },
 
   // —— Ovulation ——
   "deep.ovulation.protocol": {
-    zh: "停止長斷食,回到溫和 12–14h。這是受孕窗口,身體需要能量,不該處於極端壓力。",
-    en: "Stop extended fasts; return to gentle 12–14h. This is the fertile window — your body needs energy, not extra stress.",
+    zh: "參考節奏 12–14 小時。目前沒有研究直接證實這幾天斷食會干擾排卵，溫和就好。",
+    en: "Reference rhythm 12–14h. No study has directly shown fasting now disrupts ovulation; gentle is enough.",
   },
   "deep.ovulation.eat": {
     zh: "抗氧化蔬果(莓果、深色蔬菜)、足夠纖維、充足蛋白。",
     en: "Antioxidant produce (berries, dark veg), plenty of fiber, adequate protein.",
   },
-  "deep.ovulation.avoid": {
-    zh: "極端熱量限制與長斷食——這幾天對壓力最敏感。",
-    en: "Extreme calorie restriction and long fasts — your body is most stress-sensitive now.",
-  },
+  "deep.ovulation.avoid": { zh: "多加入新鮮蔬果和優質蛋白，吃得夠，就比較不會吃得太少。", en: "More fresh produce and good protein help you eat enough rather than too little." },
   "deep.ovulation.move": {
     zh: "可做中高強度,但開始往下調。外向期適合團體或社交型運動。",
     en: "Moderate-to-high intensity is fine but start tapering. Great time for group or social workouts.",
   },
-  "deep.ovulation.support": {
-    zh: "抗氧化劑、鋅、纖維。",
-    en: "Antioxidants, zinc, fiber.",
-  },
+  "deep.ovulation.support": { zh: "以食物為主就好；需要補充品，請先問醫療專業人員。", en: "Food first; ask a healthcare professional before taking supplements." },
   "deep.ovulation.hormone": {
-    zh: "雌激素達頂峰後排卵,睪固酮短暫上升,精力與性慾高——但身體正全力排卵,別逼它斷食。",
-    en: "Estrogen peaks then ovulation fires; a testosterone bump lifts drive — but your body is working hard, so ease off fasting.",
+    zh: "雌激素達到頂峰後排卵，有些人這幾天精力與性慾較高。",
+    en: "Estrogen peaks and ovulation follows; some people notice more energy and libido these days.",
   },
 
   // —— Luteal ——
   "deep.luteal.protocol": {
-    zh: "穩定 12–14h,不要長斷食(會放大壓力與嘴饞)。經前一週尤其溫和,以穩定血糖為主。",
-    en: "Steady 12–14h, no long fasts (they amplify stress & cravings). Especially gentle the week before your period — prioritize stable blood sugar.",
+    zh: "參考節奏 12–14 小時。經前一週可以更溫和，以吃得穩定為主。",
+    en: "Reference rhythm 12–14h. The week before your period can be even gentler; focus on eating steadily.",
   },
   "deep.luteal.eat": {
-    zh: "複合碳水(地瓜、糙米、南瓜)穩血糖與情緒、鎂(黑巧克力、堅果)、色胺酸(火雞、香蕉)助眠。",
-    en: "Complex carbs (sweet potato, brown rice, squash) for mood & blood sugar, magnesium (dark chocolate, nuts), tryptophan (turkey, banana) for sleep.",
+    zh: "複合碳水（地瓜、糙米、南瓜）、含鎂的食物（黑巧克力、堅果）、含色胺酸的食物（火雞、香蕉）。",
+    en: "Complex carbs (sweet potato, brown rice, squash), magnesium-rich foods (dark chocolate, nuts), tryptophan-rich foods (turkey, banana).",
   },
   "deep.luteal.avoid": {
-    zh: "重鹹、咖啡因、酒精、精緻糖——都會放大 PMS 與水腫。",
-    en: "High salt, caffeine, alcohol, refined sugar — all magnify PMS & bloating.",
+    zh: "多加入複合碳水和堅果，自然會少一點重鹹、咖啡因、酒精和精緻糖。",
+    en: "More complex carbs and nuts naturally leave less room for salt, caffeine, alcohol and refined sugar.",
   },
   "deep.luteal.move": {
     zh: "低強度為主:瑜伽、皮拉提斯、散步,重訓減量。",
@@ -548,24 +536,18 @@ const translations = {
     en: "If premenstrual symptoms clearly affect daily life, see a doctor — it may be PMS or PMDD; ask a healthcare professional whether any supplement suits you.",
   },
   "deep.luteal.hormone": {
-    zh: "黃體素上升主導,基礎體溫升高,胰島素敏感度下降——疲倦、嘴饞、情緒波動都正常,溫柔對待自己。",
-    en: "Progesterone takes over, BBT rises, insulin sensitivity dips — fatigue, cravings and mood swings are normal; be gentle with yourself.",
+    zh: "黃體素上升主導，基礎體溫升高；有些研究觀察到這段血糖反應較不穩，但結果不一致。疲倦、嘴饞、情緒波動都很常見，溫柔對待自己。",
+    en: "Progesterone takes over and basal temperature rises; some studies see less steady blood sugar now, but results are mixed. Fatigue, cravings and mood swings are common; be gentle with yourself.",
   },
 
   // ══════════════════════════════════
   // ── Estimates, notices, long fasts, intake, summary, booking ──
   // ══════════════════════════════════
-  "deep.follicular.protocol.long": {
-    zh: "你已在設定中開啟長時間斷食建議：這段可嘗試 24h，有經驗者可延長到 72h。出現頭暈、心悸、極度疲倦就立刻復食。",
-    en: "You turned on long-fast suggestions in Settings: try 24h here; experienced fasters may extend to 72h. Break the fast at once if you feel dizzy, have palpitations or extreme fatigue.",
-  },
   "consult.badge": { zh: "依你的記錄自動組合", en: "Assembled from your logs" },
   "consult.ruleNote": {
     zh: "這段文字由 app 依你的記錄套用固定規則組合，不是 AI，也不是個人化診療。",
     en: "This note is assembled by the app from your logs using fixed rules. It is not AI and not personalised medical care.",
   },
-  "fast.follicular_gold.long": { zh: "可嘗試 24–72h", en: "Try 24–72h" },
-  "fast.follicular_late.long": { zh: "可做 24–36h", en: "Up to 24–36h" },
   fertilityLabel: { zh: "受孕機會（日曆推估）", en: "Chance of conception (calendar estimate)" },
   "fert.high": { zh: "可能較易受孕的幾天", en: "Days you may be more likely to conceive" },
   "fert.low": { zh: "受孕機會較低的推估日", en: "Estimated lower-chance day" },
@@ -597,21 +579,10 @@ const translations = {
   },
   "notice.snooze": { zh: "本週不再顯示", en: "Don't show again this week" },
   "notice.ok": { zh: "我了解了", en: "I understand" },
-  longFastLabel: { zh: "長時間斷食建議（24h 以上）", en: "Long-fast suggestions (24h+)" },
-  longFastDesc: {
-    zh: "預設關閉。開啟後，濾泡期會顯示 24–72 小時的斷食建議；關閉時最多建議 14–16 小時。",
-    en: "Off by default. When on, the follicular phase shows 24–72h fasting suggestions; when off, suggestions stay at 14–16h max.",
-  },
   longFastWarn: {
-    zh: "長時間斷食不適用於：懷孕或備孕中、哺乳中、有進食障礙史、體重過輕、糖尿病或正在服藥、未滿 18 歲。開始前請先諮詢醫師或營養師。",
-    en: "Long fasts are not for people who are pregnant or trying to conceive, breastfeeding, with a history of eating disorders, underweight, with diabetes or on medication, or under 18. Talk to a doctor or dietitian first.",
+    zh: "超過 16 小時的斷食不適用於：懷孕或正在備孕、哺乳中、有進食障礙史、體重過輕、糖尿病或正在服藥、未滿 18 歲、肝腎疾病或正在接受癌症治療。長時間斷食的研究多在醫療監督下進行，開始前請先諮詢醫師或營養師。",
+    en: "Fasts longer than 16h are not for people who are pregnant or trying to conceive, breastfeeding, with a history of eating disorders, underweight, with diabetes or on medication, under 18, or with liver or kidney disease or in cancer treatment. Research on long fasts was mostly done under medical supervision; talk to a doctor or dietitian first.",
   },
-  longFastConfirm: { zh: "我已閱讀，且不屬於以上任何情況", en: "I've read this and none of these apply to me" },
-  longFastOn: { zh: "開啟", en: "Turn on" },
-  longFastOff: { zh: "關閉長時間斷食建議", en: "Turn off long-fast suggestions" },
-  longFastIsOn: { zh: "✓ 已開啟", en: "✓ On" },
-  longFastBlockedConceive: { zh: "備孕模式開啟中，長時間斷食建議不會顯示。", en: "Conception mode is on, so long-fast suggestions are hidden." },
-  longFastBlockedIntake: { zh: "健康問卷勾選了禁忌事項，長時間斷食建議不會顯示。", en: "Your health intake lists a contraindication, so long-fast suggestions are hidden." },
   refsTitle: { zh: "參考文獻", en: "References" },
   refsNote: {
     zh: "文獻支持的是研究發現；飲食、運動與補充品屬一般性生活建議，不是醫療效能宣稱。",
@@ -631,8 +602,8 @@ const translations = {
     en: "Mucus and basal temperature are reference signals: egg-white mucus usually appears before ovulation, and temperature usually rises only after it.",
   },
   "about.fasting": {
-    zh: "斷食建議是一般性的生活建議。長時間斷食（24h 以上）預設不推薦，而且不適用於：懷孕或備孕中、哺乳中、有進食障礙史、體重過輕、糖尿病或正在服藥、未滿 18 歲。",
-    en: "Fasting suggestions are general lifestyle advice. Long fasts (24h+) are off by default and are not for people who are pregnant or trying to conceive, breastfeeding, with a history of eating disorders, underweight, with diabetes or on medication, or under 18.",
+    zh: "參考節奏是一般性的參考，最多 16 小時，不是處方。更長的斷食只能在設定裡設成個人目標，而且不適用於：懷孕或正在備孕、哺乳中、有進食障礙史、體重過輕、糖尿病或正在服藥、未滿 18 歲、肝腎疾病或正在接受癌症治療。",
+    en: "The reference rhythm is general guidance of at most 16h, not a prescription. Longer fasts exist only as a personal goal you set in Settings, and are not for people who are pregnant or trying to conceive, breastfeeding, with a history of eating disorders, underweight, with diabetes or on medication, under 18, or with liver or kidney disease or in cancer treatment.",
   },
   "about.dailyNote": {
     zh: "「今日小建議」是 app 依你的記錄套用固定規則組合的文字，不是 AI，也不是個人化診療。",
@@ -688,8 +659,8 @@ const translations = {
   "intake.start": { zh: "開始填寫", en: "Start" },
   "intake.updated": { zh: "最後更新：{d}", en: "Last updated: {d}" },
   "intake.contraActive": {
-    zh: "你勾選了禁忌事項，app 不會顯示長時間斷食（24h 以上）建議。",
-    en: "You ticked a contraindication, so the app won't show long-fast (24h+) suggestions.",
+    zh: "你勾選了禁忌事項，超過 16 小時的個人斷食目標不會顯示。",
+    en: "You ticked a contraindication, so personal fasting goals above 16h won't be shown.",
   },
   "summary.title": { zh: "產生諮詢摘要", en: "Create a consult summary" },
   "summary.desc": {
@@ -729,12 +700,12 @@ const translations = {
   },
   "booking.scopeTitle": { zh: "顧問的服務範圍", en: "What the consultant does" },
   "booking.scopeDo": {
-    zh: "可以協助：依週期安排飲食、斷食節奏、作息與運動的一般性規劃。",
-    en: "Can help with: general planning for cycle-aware eating, fasting rhythm, sleep and movement.",
+    zh: "可以協助：釐清妳想改變的事、一起設定小目標、建立習慣、回顧進度；也可以幫妳整理資訊，帶去跟醫師討論。",
+    en: "Can help with: clarifying what you want to change, setting small goals together, building habits, reviewing progress, and organising information to discuss with your doctor.",
   },
   "booking.scopeDont": {
-    zh: "不提供：醫療診斷、開藥或停藥建議、懷孕與急症處理。身體有異狀請直接就醫。",
-    en: "Does not provide: medical diagnosis, prescribing or stopping medication, pregnancy or emergency care. If something feels wrong, see a doctor.",
+    zh: "不提供：醫療診斷、開藥或停藥建議、餐單或飲食處方、補充品或劑量建議、懷孕與急症處理、進食障礙治療。有慢性病或正在服藥的人，請同時維持醫師的照護。",
+    en: "Does not provide: medical diagnosis, prescribing or stopping medication, meal plans or diet prescriptions, supplement or dose advice, pregnancy or emergency care, eating-disorder treatment. If you have a chronic condition or take medication, stay under your doctor's care too.",
   },
   "booking.notDiagnosis": { zh: "這不是醫療診斷。", en: "This is not a medical diagnosis." },
   "booking.attach": {
@@ -776,6 +747,54 @@ const translations = {
   "science.open": { zh: "科學依據 →", en: "Scientific basis →" },
   "science.viewAll": { zh: "查看全部科學依據 →", en: "See all sources →" },
   "science.back": { zh: "← 返回", en: "← Back" },
+
+  // ── Reference rhythm, personal goals, long-log safety, first-run setup ──
+  myGoal: { zh: "我的目標", en: "My goal" },
+  myGoalNote: { zh: "（妳自己設定的，不是 app 的建議）", en: "(your own setting, not the app's advice)" },
+  goalsTitle: { zh: "我的個人斷食目標（選填）", en: "My personal fasting goals (optional)" },
+  goalsDesc: {
+    zh: "參考節奏是給大家的一般參考，最多 16 小時。如果妳有自己的節奏，可以依階段設定目標；這是妳自己的設定，不是 app 的建議。留空就不顯示。",
+    en: "The reference rhythm is general guidance for everyone, at most 16h. If you have your own rhythm, set a goal per phase; it's your own setting, not the app's advice. Leave blank to hide.",
+  },
+  "goalPhase.menstrual": { zh: "月經期", en: "Menstrual" },
+  "goalPhase.follicular": { zh: "濾泡期", en: "Follicular" },
+  "goalPhase.ovulation": { zh: "推估易受孕期", en: "Est. fertile window" },
+  "goalPhase.luteal": { zh: "黃體期", en: "Luteal" },
+  goalsCheckIntro: { zh: "有目標超過 16 小時，請逐項確認：", en: "A goal is above 16h. Please confirm each item:" },
+  goalsCheckNone: { zh: "我沒有：{x}", en: "This doesn't apply to me: {x}" },
+  "goalCheck.pregnant": { zh: "懷孕或正在備孕", en: "pregnant or trying to conceive" },
+  "goalCheck.breastfeeding": { zh: "哺乳中", en: "breastfeeding" },
+  "goalCheck.ed": { zh: "進食障礙史", en: "history of an eating disorder" },
+  "goalCheck.underweight": { zh: "體重過輕", en: "underweight" },
+  "goalCheck.diabetes": { zh: "糖尿病或正在服藥", en: "diabetes or taking medication" },
+  "goalCheck.minor": { zh: "未滿 18 歲", en: "under 18" },
+  "goalCheck.organ": { zh: "肝腎疾病或正在接受癌症治療", en: "liver or kidney disease, or in cancer treatment" },
+  goalsLongActive: { zh: "✓ 超過 16 小時的目標會顯示，標示為妳自己的設定。", en: "✓ Goals above 16h will show, labelled as your own setting." },
+  goalsLongPending: { zh: "全部確認後，超過 16 小時的目標才會顯示。", en: "Goals above 16h show only after every item is confirmed." },
+  goalsBlockedConceive: { zh: "備孕模式開啟中，超過 16 小時的目標不會顯示。", en: "Conception mode is on, so goals above 16h are hidden." },
+  goalsBlockedIntake: { zh: "健康問卷勾選了禁忌事項，超過 16 小時的目標不會顯示。", en: "Your health intake lists a contraindication, so goals above 16h are hidden." },
+  "longLog.title": { zh: "長時間斷食的安全提醒", en: "Safety note for long fasts" },
+  "longLog.body24": {
+    zh: "記得補充水分與電解質（鈉、鉀、鎂）。結束時慢慢復食，先從少量、好消化的食物開始。出現頭暈、心悸、極度疲倦或意識混亂，就停止並就醫。",
+    en: "Keep up fluids and electrolytes (sodium, potassium, magnesium). Break the fast gradually, starting with small, easy-to-digest food. If you feel dizzy, have palpitations, extreme fatigue or confusion, stop and seek medical care.",
+  },
+  "longLog.body72": { zh: "72 小時以上的斷食研究，幾乎都在醫療監督下進行。", en: "Studies of fasts of 72h or more were almost all done under medical supervision." },
+  loggedDays: { zh: "記錄 {n} 天", en: "{n} days logged" },
+  "consult.fastLogged": { zh: "這週妳記錄了 {n} 天，平均 {avg} 小時。", en: "This week you logged {n} days, averaging {avg}h." },
+  "setup.title": { zh: "先告訴 Moonyou 妳的月經第一天", en: "First, tell Moonyou the first day of your period" },
+  "setup.body": {
+    zh: "輸入最近一次月經的第一天後，Moonyou 才會開始推估週期階段。在那之前，不會顯示任何推估。",
+    en: "Moonyou starts estimating cycle phases once you enter the first day of your most recent period. Until then, no estimates are shown.",
+  },
+  "setup.note": { zh: "週期長度預設 28 天，可以在「設定」調整。", en: "Cycle length defaults to 28 days; adjust it in Settings." },
+  "setup.pick": { zh: "點選設定日期", en: "Tap to set a date" },
+
+  // ── Consult credentials, moon note ──
+  "consult.credentialLabel": { zh: "諮詢者資格", en: "Consultant credentials" },
+  "guide.moonNote": {
+    zh: "月相、星象與塔羅都是陪伴與覺察的工具，不是健康建議。",
+    en: "Moon phases, astrology and tarot are tools for reflection and company, not health advice.",
+  },
 };
 
 const LangContext = createContext();
