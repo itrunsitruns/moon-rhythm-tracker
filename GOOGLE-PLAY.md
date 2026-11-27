@@ -142,14 +142,14 @@ Cycle, fasting & fertility tracker that syncs with the real lunar phases.
 ```
 🌙 Moonyou — 你的身體,有自己的月亮。
 
-Moonyou 是一款整合月經週期、間歇性斷食、與受孕期推估的個人化健康工具。不只是記錄經期——它會根據你的週期階段,動態調整斷食建議、標示日曆推估的易受孕期,並顯示真實月相,讓你一眼掌握身體的節奏。
+Moonyou 是一款整合月經週期、間歇性斷食、與受孕期推估的個人化健康工具。不只是記錄經期——它會根據你的週期階段,提供依階段的斷食參考節奏、標示日曆推估的易受孕期,並顯示真實月相,讓你一眼掌握身體的節奏。
 
 核心功能：
 • 週期追蹤 — 輸入月經第一天,以日曆法推估排卵日與易受孕期(不是避孕方法)
-• 智慧斷食建議 — 經期輕斷食(12–14h)、濾泡期規律斷食(14–16h,長斷食預設關閉)、排卵期停長斷食、黃體期溫和斷食
+• 斷食參考節奏 — 依週期階段的一般性參考,最多 16 小時並附文獻;更長的斷食只能設成自己的個人目標
 • 真實月相 — 日曆上的月亮對應天空中真正的月相,觀察身體週期與自然的同步
 • 目標自訂 — 斷食優化、避孕、備孕三種目標,可複選組合,介面自動調整
-• 斷食記錄與統計 — 每日記錄斷食時數,查看週／月統計、完成率、趨勢圖
+• 斷食記錄與統計 — 每日記錄斷食時數,查看週／月統計、記錄天數、趨勢圖
 • BBT 與分泌物追蹤 — 輸入基礎體溫與分泌物狀態,動態修正排卵日預測
 • 行事曆匯出 — 一鍵匯出 .ics,加入 Google 或 Apple 行事曆
 • 中／英雙語 — 右上角一鍵切換
@@ -167,7 +167,7 @@ Moonyou is a personalized health tool that brings together menstrual cycle track
 
 Key features:
 • Cycle tracking — enter your period start; ovulation and the fertile window are estimated with the calendar method (not a contraceptive)
-• Smart fasting advice — light fasting during menstruation (12–14h), steady fasting in the follicular phase (14–16h; long fasts off by default), pause long fasts at ovulation, gentle fasting in the luteal phase
+• Reference fasting rhythm — general, phase-based guidance of at most 16h, with references; longer fasts can only be set as your own personal goal
 • Real moon phases — calendar emojis reflect the actual moon in the sky
 • Flexible goals — Fasting, Contraception, or Conception, combinable; the interface adapts
 • Fasting log & stats — daily hours, weekly/monthly stats, completion rate, trends

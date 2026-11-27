@@ -39,7 +39,7 @@ const translations = {
 
   // ── Fasting advice ──
   "fast.menstrual": { zh: "12–14h", en: "12–14h" },
-  "fast.follicular_gold": { zh: "可延長至 14–16h", en: "Up to 14–16h" },
+  "fast.follicular_gold": { zh: "14–16h", en: "14–16h" },
   "fast.follicular_late": { zh: "14–16h", en: "14–16h" },
   "fast.ovulation": { zh: "最多 12–14h", en: "Max 12–14h" },
   "fast.luteal": { zh: "12–14h", en: "12–14h" },
@@ -56,7 +56,7 @@ const translations = {
   close: { zh: "關閉", en: "Close" },
   tapToChange: { zh: "點選修改", en: "Tap to change" },
   moonPhase: { zh: "月相", en: "Moon phase" },
-  fastingAdvice: { zh: "斷食建議", en: "Fasting advice" },
+  fastingAdvice: { zh: "參考節奏", en: "Reference rhythm" },
   riskNote: { zh: "（僅供參考，以個人狀況為主）", en: "(for reference only; your own body comes first)" },
   ovulationEstimate: { zh: "推估排卵日", en: "Est. ovulation" },
   dangerPeriod: { zh: "推估易受孕期", en: "Est. fertile window" },
@@ -183,8 +183,8 @@ const translations = {
   goalAvoid: { zh: "避孕", en: "Avoid" },
   goalConceive: { zh: "備孕", en: "Conceive" },
   settingsNote: {
-    zh: "推估排卵日 = 月經第1天 + (週期 − 14)\n推估易受孕期 = 排卵前5天 → 排卵後1天\n日曆法推估：實際排卵每月可能提早或延後\n斷食建議依週期階段自動調整",
-    en: "Est. ovulation = Period day 1 + (cycle − 14)\nEst. fertile window = 5 days before → 1 day after ovulation\nCalendar-method estimates: actual ovulation can shift each month\nFasting advice adjusts automatically by phase",
+    zh: "推估排卵日 = 月經第1天 + (週期 − 14)\n推估易受孕期 = 排卵前5天 → 排卵後1天\n日曆法推估：實際排卵每月可能提早或延後\n參考節奏依週期階段提供；目前沒有研究證實依週期調整斷食時數比較好",
+    en: "Est. ovulation = Period day 1 + (cycle − 14)\nEst. fertile window = 5 days before → 1 day after ovulation\nCalendar-method estimates: actual ovulation can shift each month\nThe reference rhythm follows the cycle phase; no study has shown that adjusting fasting hours by phase works better",
   },
 
   // ── Google Calendar ──
@@ -216,8 +216,7 @@ const translations = {
   thisWeek: { zh: "本週", en: "This week" },
   thisMonth: { zh: "本月", en: "This month" },
   totalHours: { zh: "累計", en: "Total" },
-  avgPerDay: { zh: "日均", en: "Avg/day" },
-  completionRate: { zh: "完成率", en: "Completion" },
+  avgPerDay: { zh: "記錄日平均", en: "Avg per logged day" },
   weeklyChart: { zh: "週斷食趨勢", en: "Weekly trend" },
   weekLabel: { zh: "第{n}週", en: "Wk {n}" },
   noData: { zh: "尚無資料", en: "No data" },
@@ -355,11 +354,9 @@ const translations = {
 
   "consult.greeting": { zh: "嗨,根據你的記錄——你現在在{phase}、週期第 {day} 天。", en: "Hi — based on your logs, you're in your {phase}, cycle day {day}." },
   "consult.fastNone": {
-    zh: "這週還沒有斷食記錄。這個階段適合 {suggested} 小時左右；有了記錄之後，這裡的提醒會跟著你的數字變化。",
-    en: "No fasting logged this week. This phase suits around {suggested}h; once you log, this note follows your numbers.",
+    zh: "這週還沒有斷食記錄。這個階段的參考節奏是 {rhythm}；有記錄之後，這裡會跟著妳的數字。",
+    en: "No fasting logged this week. This phase's reference rhythm is {rhythm}; once you log, this note follows your numbers.",
   },
-  "consult.fastRoom": { zh: "你這週平均斷食 {avg} 小時。這個階段你的身體其實扛得住更長——可以慢慢往 {suggested} 小時靠近,但別勉強。", en: "You've averaged {avg}h of fasting this week. Your body can handle more in this phase — ease toward {suggested}h, but don't force it." },
-  "consult.fastGood": { zh: "你這週平均斷食 {avg} 小時,節奏穩穩的,很好,保持。", en: "You've averaged {avg}h of fasting this week — a steady rhythm. Nicely done, keep it up." },
   "consult.nutrition": { zh: "飲食上,這幾天我建議:{eat}", en: "On food, for these days I'd suggest: {eat}" },
   "consult.conceiveOv": {
     zh: "你正在備孕，現在是推估的易受孕期——可以多留意分泌物變化，同時別讓身體餓著。",
@@ -393,7 +390,7 @@ const translations = {
   deepFreeTag: { zh: "免費版", en: "FREE" },
   deepPlusTag: { zh: "Moonyou＋", en: "Moonyou＋" },
 
-  "deep.label.protocol": { zh: "斷食協議", en: "Fasting protocol" },
+  "deep.label.protocol": { zh: "參考節奏", en: "Reference rhythm" },
   "deep.label.eat": { zh: "建議吃", en: "Eat" },
   "deep.label.avoid": { zh: "避免", en: "Avoid" },
   "deep.label.move": { zh: "運動", en: "Movement" },
@@ -476,8 +473,8 @@ const translations = {
 
   // —— Follicular ——
   "deep.follicular.protocol": {
-    zh: "身體負擔較輕的時期。可以從 14:10 慢慢延長到 16:8 的規律斷食。24 小時以上的長斷食預設不推薦；需要的話請先諮詢專業人員，再到設定裡自行開啟。",
-    en: "A lighter-load stretch. Ease from 14:10 toward a steady 16:8. Fasts of 24h+ are off by default; if you want them, talk to a professional first, then turn them on in Settings.",
+    zh: "參考節奏 14–16 小時，可以從 14:10 慢慢延長到 16:8。更長的斷食是個人選擇，可以在設定裡設成妳自己的目標。",
+    en: "Reference rhythm 14–16h; you can ease from 14:10 toward 16:8. Longer fasts are a personal choice you can set as your own goal in Settings.",
   },
   "deep.follicular.eat": {
     zh: "復食以優質蛋白、發酵食物、十字花科蔬菜、亞麻籽/南瓜籽。",
@@ -555,17 +552,11 @@ const translations = {
   // ══════════════════════════════════
   // ── Estimates, notices, long fasts, intake, summary, booking ──
   // ══════════════════════════════════
-  "deep.follicular.protocol.long": {
-    zh: "你已在設定中開啟長時間斷食建議：這段可嘗試 24h，有經驗者可延長到 72h。出現頭暈、心悸、極度疲倦就立刻復食。",
-    en: "You turned on long-fast suggestions in Settings: try 24h here; experienced fasters may extend to 72h. Break the fast at once if you feel dizzy, have palpitations or extreme fatigue.",
-  },
   "consult.badge": { zh: "依你的記錄自動組合", en: "Assembled from your logs" },
   "consult.ruleNote": {
     zh: "這段文字由 app 依你的記錄套用固定規則組合，不是 AI，也不是個人化診療。",
     en: "This note is assembled by the app from your logs using fixed rules. It is not AI and not personalised medical care.",
   },
-  "fast.follicular_gold.long": { zh: "可嘗試 24–72h", en: "Try 24–72h" },
-  "fast.follicular_late.long": { zh: "可做 24–36h", en: "Up to 24–36h" },
   fertilityLabel: { zh: "受孕機會（日曆推估）", en: "Chance of conception (calendar estimate)" },
   "fert.high": { zh: "可能較易受孕的幾天", en: "Days you may be more likely to conceive" },
   "fert.low": { zh: "受孕機會較低的推估日", en: "Estimated lower-chance day" },
@@ -597,21 +588,10 @@ const translations = {
   },
   "notice.snooze": { zh: "本週不再顯示", en: "Don't show again this week" },
   "notice.ok": { zh: "我了解了", en: "I understand" },
-  longFastLabel: { zh: "長時間斷食建議（24h 以上）", en: "Long-fast suggestions (24h+)" },
-  longFastDesc: {
-    zh: "預設關閉。開啟後，濾泡期會顯示 24–72 小時的斷食建議；關閉時最多建議 14–16 小時。",
-    en: "Off by default. When on, the follicular phase shows 24–72h fasting suggestions; when off, suggestions stay at 14–16h max.",
-  },
   longFastWarn: {
-    zh: "長時間斷食不適用於：懷孕或備孕中、哺乳中、有進食障礙史、體重過輕、糖尿病或正在服藥、未滿 18 歲。開始前請先諮詢醫師或營養師。",
-    en: "Long fasts are not for people who are pregnant or trying to conceive, breastfeeding, with a history of eating disorders, underweight, with diabetes or on medication, or under 18. Talk to a doctor or dietitian first.",
+    zh: "超過 16 小時的斷食不適用於：懷孕或正在備孕、哺乳中、有進食障礙史、體重過輕、糖尿病或正在服藥、未滿 18 歲、肝腎疾病或正在接受癌症治療。長時間斷食的研究多在醫療監督下進行，開始前請先諮詢醫師或營養師。",
+    en: "Fasts longer than 16h are not for people who are pregnant or trying to conceive, breastfeeding, with a history of eating disorders, underweight, with diabetes or on medication, under 18, or with liver or kidney disease or in cancer treatment. Research on long fasts was mostly done under medical supervision; talk to a doctor or dietitian first.",
   },
-  longFastConfirm: { zh: "我已閱讀，且不屬於以上任何情況", en: "I've read this and none of these apply to me" },
-  longFastOn: { zh: "開啟", en: "Turn on" },
-  longFastOff: { zh: "關閉長時間斷食建議", en: "Turn off long-fast suggestions" },
-  longFastIsOn: { zh: "✓ 已開啟", en: "✓ On" },
-  longFastBlockedConceive: { zh: "備孕模式開啟中，長時間斷食建議不會顯示。", en: "Conception mode is on, so long-fast suggestions are hidden." },
-  longFastBlockedIntake: { zh: "健康問卷勾選了禁忌事項，長時間斷食建議不會顯示。", en: "Your health intake lists a contraindication, so long-fast suggestions are hidden." },
   refsTitle: { zh: "參考文獻", en: "References" },
   refsNote: {
     zh: "文獻支持的是研究發現；飲食、運動與補充品屬一般性生活建議，不是醫療效能宣稱。",
@@ -631,8 +611,8 @@ const translations = {
     en: "Mucus and basal temperature are reference signals: egg-white mucus usually appears before ovulation, and temperature usually rises only after it.",
   },
   "about.fasting": {
-    zh: "斷食建議是一般性的生活建議。長時間斷食（24h 以上）預設不推薦，而且不適用於：懷孕或備孕中、哺乳中、有進食障礙史、體重過輕、糖尿病或正在服藥、未滿 18 歲。",
-    en: "Fasting suggestions are general lifestyle advice. Long fasts (24h+) are off by default and are not for people who are pregnant or trying to conceive, breastfeeding, with a history of eating disorders, underweight, with diabetes or on medication, or under 18.",
+    zh: "參考節奏是一般性的參考，最多 16 小時，不是處方。更長的斷食只能在設定裡設成個人目標，而且不適用於：懷孕或正在備孕、哺乳中、有進食障礙史、體重過輕、糖尿病或正在服藥、未滿 18 歲、肝腎疾病或正在接受癌症治療。",
+    en: "The reference rhythm is general guidance of at most 16h, not a prescription. Longer fasts exist only as a personal goal you set in Settings, and are not for people who are pregnant or trying to conceive, breastfeeding, with a history of eating disorders, underweight, with diabetes or on medication, under 18, or with liver or kidney disease or in cancer treatment.",
   },
   "about.dailyNote": {
     zh: "「今日小建議」是 app 依你的記錄套用固定規則組合的文字，不是 AI，也不是個人化診療。",
@@ -688,8 +668,8 @@ const translations = {
   "intake.start": { zh: "開始填寫", en: "Start" },
   "intake.updated": { zh: "最後更新：{d}", en: "Last updated: {d}" },
   "intake.contraActive": {
-    zh: "你勾選了禁忌事項，app 不會顯示長時間斷食（24h 以上）建議。",
-    en: "You ticked a contraindication, so the app won't show long-fast (24h+) suggestions.",
+    zh: "你勾選了禁忌事項，超過 16 小時的個人斷食目標不會顯示。",
+    en: "You ticked a contraindication, so personal fasting goals above 16h won't be shown.",
   },
   "summary.title": { zh: "產生諮詢摘要", en: "Create a consult summary" },
   "summary.desc": {
@@ -776,6 +756,47 @@ const translations = {
   "science.open": { zh: "科學依據 →", en: "Scientific basis →" },
   "science.viewAll": { zh: "查看全部科學依據 →", en: "See all sources →" },
   "science.back": { zh: "← 返回", en: "← Back" },
+
+  // ── Reference rhythm, personal goals, long-log safety, first-run setup ──
+  myGoal: { zh: "我的目標", en: "My goal" },
+  myGoalNote: { zh: "（妳自己設定的，不是 app 的建議）", en: "(your own setting, not the app's advice)" },
+  goalsTitle: { zh: "我的個人斷食目標（選填）", en: "My personal fasting goals (optional)" },
+  goalsDesc: {
+    zh: "參考節奏是給大家的一般參考，最多 16 小時。如果妳有自己的節奏，可以依階段設定目標；這是妳自己的設定，不是 app 的建議。留空就不顯示。",
+    en: "The reference rhythm is general guidance for everyone, at most 16h. If you have your own rhythm, set a goal per phase; it's your own setting, not the app's advice. Leave blank to hide.",
+  },
+  "goalPhase.menstrual": { zh: "月經期", en: "Menstrual" },
+  "goalPhase.follicular": { zh: "濾泡期", en: "Follicular" },
+  "goalPhase.ovulation": { zh: "推估易受孕期", en: "Est. fertile window" },
+  "goalPhase.luteal": { zh: "黃體期", en: "Luteal" },
+  goalsCheckIntro: { zh: "有目標超過 16 小時，請逐項確認：", en: "A goal is above 16h. Please confirm each item:" },
+  goalsCheckNone: { zh: "我沒有：{x}", en: "This doesn't apply to me: {x}" },
+  "goalCheck.pregnant": { zh: "懷孕或正在備孕", en: "pregnant or trying to conceive" },
+  "goalCheck.breastfeeding": { zh: "哺乳中", en: "breastfeeding" },
+  "goalCheck.ed": { zh: "進食障礙史", en: "history of an eating disorder" },
+  "goalCheck.underweight": { zh: "體重過輕", en: "underweight" },
+  "goalCheck.diabetes": { zh: "糖尿病或正在服藥", en: "diabetes or taking medication" },
+  "goalCheck.minor": { zh: "未滿 18 歲", en: "under 18" },
+  "goalCheck.organ": { zh: "肝腎疾病或正在接受癌症治療", en: "liver or kidney disease, or in cancer treatment" },
+  goalsLongActive: { zh: "✓ 超過 16 小時的目標會顯示，標示為妳自己的設定。", en: "✓ Goals above 16h will show, labelled as your own setting." },
+  goalsLongPending: { zh: "全部確認後，超過 16 小時的目標才會顯示。", en: "Goals above 16h show only after every item is confirmed." },
+  goalsBlockedConceive: { zh: "備孕模式開啟中，超過 16 小時的目標不會顯示。", en: "Conception mode is on, so goals above 16h are hidden." },
+  goalsBlockedIntake: { zh: "健康問卷勾選了禁忌事項，超過 16 小時的目標不會顯示。", en: "Your health intake lists a contraindication, so goals above 16h are hidden." },
+  "longLog.title": { zh: "長時間斷食的安全提醒", en: "Safety note for long fasts" },
+  "longLog.body24": {
+    zh: "記得補充水分與電解質（鈉、鉀、鎂）。結束時慢慢復食，先從少量、好消化的食物開始。出現頭暈、心悸、極度疲倦或意識混亂，就停止並就醫。",
+    en: "Keep up fluids and electrolytes (sodium, potassium, magnesium). Break the fast gradually, starting with small, easy-to-digest food. If you feel dizzy, have palpitations, extreme fatigue or confusion, stop and seek medical care.",
+  },
+  "longLog.body72": { zh: "72 小時以上的斷食研究，幾乎都在醫療監督下進行。", en: "Studies of fasts of 72h or more were almost all done under medical supervision." },
+  loggedDays: { zh: "記錄 {n} 天", en: "{n} days logged" },
+  "consult.fastLogged": { zh: "這週妳記錄了 {n} 天，平均 {avg} 小時。", en: "This week you logged {n} days, averaging {avg}h." },
+  "setup.title": { zh: "先告訴 Moonyou 妳的月經第一天", en: "First, tell Moonyou the first day of your period" },
+  "setup.body": {
+    zh: "輸入最近一次月經的第一天後，Moonyou 才會開始推估週期階段。在那之前，不會顯示任何推估。",
+    en: "Moonyou starts estimating cycle phases once you enter the first day of your most recent period. Until then, no estimates are shown.",
+  },
+  "setup.note": { zh: "週期長度預設 28 天，可以在「設定」調整。", en: "Cycle length defaults to 28 days; adjust it in Settings." },
+  "setup.pick": { zh: "點選設定日期", en: "Tap to set a date" },
 };
 
 const LangContext = createContext();
