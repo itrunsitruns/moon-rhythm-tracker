@@ -1444,6 +1444,21 @@ export default function MoonRhythm() {
                     }} />;
                   })}
                 </div>
+                {/* How to read the bar */}
+                <div style={{ fontSize: 11, color: "#999", lineHeight: 1.6, marginBottom: 6 }}>{t("fert.legend.intro")}</div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "4px 12px", fontSize: 11, color: "#aaa", marginBottom: 8 }}>
+                  {[
+                    { k: "ov", sw: { background: "#FF6B6B" } },
+                    { k: "window", sw: { background: "#FF6B6B", opacity: 0.6 } },
+                    { k: "low", sw: { background: "#2a2a3e" } },
+                    { k: "today", sw: { background: "transparent", outline: "2px solid #FFD24A", outlineOffset: -2 } },
+                  ].map(({ k, sw }) => (
+                    <span key={k} style={{ display: "inline-flex", alignItems: "center", gap: 5 }}>
+                      <span style={{ display: "inline-block", width: 10, height: 10, borderRadius: 2, ...sw }} />
+                      {t(`fert.legend.${k}`)}
+                    </span>
+                  ))}
+                </div>
                 <div style={{ fontSize: 11, color: "#666", fontFamily: "monospace" }}>
                   {t("ovulationEstimate")}：{fmt(ovDate)} · {t("dangerPeriod")}：{fmt(dangerStart)}–{fmt(dangerEnd)}
                 </div>

@@ -552,6 +552,11 @@ const translations = {
   "fert.high": { zh: "可能較易受孕的幾天", en: "Days you may be more likely to conceive" },
   "fert.low": { zh: "受孕機會較低的推估日", en: "Estimated lower-chance day" },
   "fert.none": { zh: "尚無週期資料", en: "No cycle data" },
+  "fert.legend.intro": { zh: "怎麼看：每一格是週期的一天，最左邊是月經第 1 天，往右依序到週期最後一天。", en: "How to read it: each block is one day of your cycle, from period day 1 on the left to the last day on the right." },
+  "fert.legend.ov": { zh: "推估排卵日", en: "Estimated ovulation day" },
+  "fert.legend.window": { zh: "推估易受孕期：較易受孕", en: "Estimated fertile window: more likely to conceive" },
+  "fert.legend.low": { zh: "受孕機會較低（不等於零）", en: "Lower chance (not zero)" },
+  "fert.legend.today": { zh: "今天", en: "Today" },
   "fert.lowNote": { zh: "較低不等於零：排卵可能提早，精子在體內可存活數天。", en: "Lower is not zero: ovulation can come early, and sperm can survive several days." },
   ovulationVaries: { zh: "實際排卵每月可能提早或延後，日期為日曆推估", en: "Actual ovulation can shift earlier or later each month; dates are calendar estimates" },
   "signal.mucus": {
