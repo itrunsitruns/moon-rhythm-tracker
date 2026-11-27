@@ -357,7 +357,7 @@ const translations = {
     zh: "這週還沒有斷食記錄。這個階段的參考節奏是 {rhythm}；有記錄之後，這裡會跟著妳的數字。",
     en: "No fasting logged this week. This phase's reference rhythm is {rhythm}; once you log, this note follows your numbers.",
   },
-  "consult.nutrition": { zh: "飲食上,這幾天我建議:{eat}", en: "On food, for these days I'd suggest: {eat}" },
+  "consult.nutrition": { zh: "這個階段給大家的一般飲食參考：{eat}", en: "General food ideas for this phase (the same for everyone): {eat}" },
   "consult.conceiveOv": {
     zh: "你正在備孕，現在是推估的易受孕期——可以多留意分泌物變化，同時別讓身體餓著。",
     en: "You're trying to conceive and this is the estimated fertile window — watch for mucus changes, and don't let your body run on empty.",
